@@ -1,2 +1,2 @@
 # core
-Free version of Phoenix Bot. Rewrite in process. 
+Free version of Phoenix Bot. Rewrite in progress. 
