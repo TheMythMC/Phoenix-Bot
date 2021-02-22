@@ -1,6 +1,7 @@
 const discord = require("discord.js");
 const BotCore = require("./Structure/BotCore");
 const GuildManager = require("./Structure/GuildManager");
+const DatabaseHandler = require("./handlers/DatabaseHandler");
 
 class Bot {
     constructor() {
@@ -9,6 +10,7 @@ class Bot {
             prefix: "!"
         });
         this.GuildManager = new GuildManager(this);
+        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI);
 
         this.CoreBot.start();
     }

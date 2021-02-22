@@ -23,14 +23,16 @@ class BotCore extends Client {
 
         this.on('message', async (message) => {
 
+            let prefix = this.getPrefix(message.guild);
+
             if (!message.guild || message.author.bot) return;
 
-            if (!message.content.startsWith(this.prefix)) return;
-
+            if (!message.content.startsWith(prefix)) return;
 
             //eslint-disable-next-line no-unused-vars
-            const [cmd, ...args] = message.content.slice(this.prefix.length).trim().split(/ +/g);
+            const [cmd, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);
             const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
+
             if (command) {
                 if (command.requiredPerms) {
                     let isAllowed = true;
@@ -65,6 +67,7 @@ class BotCore extends Client {
     }
 
     getPrefix(guild) {
+        return "!";
         // TODO: create GuildManager and stuff
     }
 }

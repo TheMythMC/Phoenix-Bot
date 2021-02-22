@@ -1,3 +1,5 @@
+const Guild = require("./Guild");
+
 class GuildManager {
     constructor(bot) {
         // holds guild data for guilds
@@ -7,6 +9,11 @@ class GuildManager {
 
     async loadGuilds() {
 
+    }
+
+    addGuild(doc) {
+        let guild = new Guild(doc);
+        this.guilds.push(guild);
     }
 }
 
