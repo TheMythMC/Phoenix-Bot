@@ -1,6 +1,7 @@
 const { Client, Collection } = require("discord.js");
 const { sendErrorMessage } = require("../utils/MessageUtils");
 const Util = require("../utils/Util");
+const path = require("path");
 
 class BotCore extends Client {
     constructor(bot, options = {}) {
@@ -51,14 +52,15 @@ class BotCore extends Client {
         this.token = options.token;
 
         // will migrate prefix to db
-        // if (!options.prefix) throw new Error('You must provide a prefix for the bot.');
+        if (!options.prefix) throw new Error('You must provide a prefix for the bot.');
 
         if (typeof options.prefix !== 'string') throw new TypeError('Prefix should be a string');
+        // TODO: databasify prefix
         this.prefix = options.prefix;
     }
 
     async start(token = this.token) {
-        await Util.loadCommands(this, "");
+        await Util.loadCommands(this, `Commands${path.sep}CoreCommands`);
         await super.login(token);
     }
 }

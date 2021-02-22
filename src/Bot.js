@@ -3,9 +3,12 @@ const BotCore = require("./Structure/BotCore");
 
 class Bot {
     constructor() {
-        this.CoreBot = new BotCore({
-            token: process.env.BOT_TOKEN
+        this.CoreBot = new BotCore(this, {
+            token: process.env.BOT_TOKEN,
+            prefix: "!"
         });
+
+        this.CoreBot.start();
     }
 }
 

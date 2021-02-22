@@ -1,5 +1,7 @@
 const Command = require("../Structure/Command");
 const path = require("path");
+const glob = require("glob");
+const fs = require("fs");
 
 class Util {
     static isClass(input) {
@@ -12,8 +14,11 @@ class Util {
     }
 
     static async loadCommands(client, path) {
-        return glob(`${this.directory}${path}`).then(commands => {
+        return glob(`${this.directory}${path}/**/*.js`, {}, (err, commands) => {
             for(const commandFile of commands) {
+                // TODO: why does path.parse not work :(
+                console.log(commandFile);
+                console.log(typeof commandFile);
                 delete require.cache[commandFile];
                 const { name } = path.parse(commandFile);
                 const File = require(commandFile);
@@ -28,7 +33,7 @@ class Util {
                     }
                 }
             }
-        })
+        });
     }
 }
 

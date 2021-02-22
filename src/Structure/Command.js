@@ -2,7 +2,7 @@
 module.exports = class Command {
     constructor(client, name, options = {}) {
         this.client = client
-        this.name = options.name || name;
+        this.name = name;
         this.aliases = options.aliases || [];
         this.description = options.description || "No description provided";
         this.category = options.category || "Misc";
