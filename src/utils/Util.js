@@ -17,8 +17,6 @@ class Util {
         return glob(`${this.directory}${path}/**/*.js`, {}, (err, commands) => {
             for(const commandFile of commands) {
                 // TODO: why does path.parse not work :(
-                console.log(commandFile);
-                console.log(typeof commandFile);
                 delete require.cache[commandFile];
                 const { name } = path.parse(commandFile);
                 const File = require(commandFile);
