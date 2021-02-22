@@ -63,6 +63,10 @@ class BotCore extends Client {
         await Util.loadCommands(this, `Commands${path.sep}CoreCommands`);
         await super.login(token);
     }
+
+    getPrefix(guild) {
+        // TODO: create GuildManager and stuff
+    }
 }
 
 

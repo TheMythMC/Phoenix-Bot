@@ -10,7 +10,11 @@ module.exports = class Command {
         this.requiredPerms = options.requiredPerms || [];
     }
 
-    async run(message, args, client, database) {
+    async run(message, args, client) {
         throw new Error(`Command ${this.name} doesnt provide a run method`);
+    }
+
+    getUsage(prefix) {
+        return this.usage.replaceAll("%p", prefix);
     }
 }

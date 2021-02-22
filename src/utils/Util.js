@@ -1,7 +1,7 @@
 const Command = require("../Structure/Command");
 const path = require("path");
 const glob = require("glob");
-const fs = require("fs");
+const pathParse = require('path-parse');
 
 class Util {
     static isClass(input) {
@@ -18,7 +18,7 @@ class Util {
             for(const commandFile of commands) {
                 // TODO: why does path.parse not work :(
                 delete require.cache[commandFile];
-                const { name } = path.parse(commandFile);
+                const { name } = pathParse(commandFile);
                 const File = require(commandFile);
                 if(!this.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
                 const command = new File(client, name.toLowerCase());

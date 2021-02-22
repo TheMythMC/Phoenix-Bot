@@ -10,4 +10,15 @@ const schema = new mongoose.Schema({
     GuildIDs: [guildSchema]
 });
 
-module.exports = mongoose.model("PremiumLinkData", schema);
+module.exports.Model = mongoose.model("PremiumLinkData", schema);
+const Default = {
+    DiscordID: "",
+    GuildIDs: []
+}
+module.exports.createDefault = (DiscordID) => {
+    let obj = {};
+
+    Object.assign(obj, Default);
+    obj.DiscordID = DiscordID;
+    return new module.exports.Model(obj);
+}

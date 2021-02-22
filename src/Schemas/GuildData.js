@@ -6,7 +6,6 @@ const RoleSchema = new mongoose.Schema({
 })
 
 const schema = new mongoose.Schema({
-    IsPremium: Boolean,
     ServerID: String,
     Roles: [RoleSchema],
     GuildID: String,
@@ -15,4 +14,19 @@ const schema = new mongoose.Schema({
     Prefix: String
 });
 
-module.exports = mongoose.model("GuildData", schema);
+module.exports.Model = mongoose.model("GuildData", schema);
+const Default = {
+    ServerID: "",
+    Roles: [],
+    GuildID: "",
+    GuildBotUUID: "",
+    GuildBotAPIKey: "",
+    Prefix: "!"
+}
+module.exports.createDefault = (ServerID) => {
+    let obj = {};
+
+    Object.assign(obj, Default);
+    obj.ServerID = ServerID;
+    return new module.exports.Model(obj);
+}
