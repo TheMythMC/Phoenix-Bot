@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const RoleSchema = new mongoose.Schema({
-    Name: String,
-    EXPReq: Number
+    DiscordRoleID: String,
+    RoleTemplate: String,
+    Params: []
 })
 
 const schema = new mongoose.Schema({

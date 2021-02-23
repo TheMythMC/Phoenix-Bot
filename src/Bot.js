@@ -10,7 +10,9 @@ class Bot {
             prefix: "!"
         });
         this.GuildManager = new GuildManager(this);
-        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI);
+        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, () => {
+            console.log("Database is connected. ");
+        });
 
         this.CoreBot.start();
     }

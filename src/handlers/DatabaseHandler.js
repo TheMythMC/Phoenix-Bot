@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 class DatabaseHandler {
-    constructor(databaseURI, parameters = {}) {
-        this._initConnection(databaseURI, parameters);
+    constructor(databaseURI, parameters = {}, callback = () => {}) {
+        this._initConnection(databaseURI, parameters, callback);
         this.connected = false;
     }
 
-    _initConnection(databaseURI, parameters) {
+    _initConnection(databaseURI, parameters, callback) {
         mongoose.connect(databaseURI, parameters);
 
         this.connection = mongoose.connection;
@@ -15,7 +15,7 @@ class DatabaseHandler {
 
         this.connection.once('open', () => {
             self.connected = true;
-            console.log("Database is connected. ");
+            callback();
         });
     }
 }
