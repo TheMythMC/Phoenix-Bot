@@ -6,19 +6,30 @@ const RoleSchema = new mongoose.Schema({
     Params: []
 })
 
+
+const GEXPSchema = new mongoose.Schema({
+    RoleName: String,
+    MinExp: Number
+})
+
 const schema = new mongoose.Schema({
     ServerID: String,
     Roles: [RoleSchema],
+    GEXPData: [GEXPSchema],
     GuildID: String,
     GuildBotUUID: String,
     GuildBotAPIKey: String,
     Prefix: String
 });
 
+
 module.exports.Model = mongoose.model("GuildData", schema);
+module.exports.GEXPSchema = GEXPSchema;
+module.exports.RoleSchema = RoleSchema;
 const Default = {
     ServerID: "",
     Roles: [],
+    GEXPData: [],
     GuildID: "",
     GuildBotUUID: "",
     GuildBotAPIKey: "",
