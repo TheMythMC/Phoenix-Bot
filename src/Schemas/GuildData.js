@@ -12,7 +12,7 @@ const GEXPSchema = new mongoose.Schema({
     MinExp: Number
 })
 
-const schema = new mongoose.Schema({
+const GeneralSchema = new mongoose.Schema({
     ServerID: String,
     Roles: [RoleSchema],
     GEXPData: [GEXPSchema],
@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
 });
 
 
-module.exports.Model = mongoose.model("GuildData", schema);
+module.exports.Model = mongoose.model("GuildData", GeneralSchema);
 module.exports.GEXPSchema = GEXPSchema;
 module.exports.RoleSchema = RoleSchema;
 const Default = {
