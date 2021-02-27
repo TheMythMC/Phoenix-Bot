@@ -12,10 +12,12 @@ const Default = {
     ServerID: "",
     ExpireDate: 0
 }
-module.exports.createDefault = (DiscordID) => {
+module.exports.createDefault = (DiscordID, ServerID, ExpireDate) => {
     let obj = {};
 
     Object.assign(obj, Default);
     obj.DiscordID = DiscordID;
+    obj.ServerID = ServerID;
+    obj.ExpireDate = ExpireDate;
     return new module.exports.Model(obj);
 }

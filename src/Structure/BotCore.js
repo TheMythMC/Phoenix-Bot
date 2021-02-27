@@ -2,6 +2,8 @@ const { Client, Collection } = require("discord.js");
 const { sendErrorMessage } = require("../utils/MessageUtils");
 const Util = require("../utils/Util");
 const path = require("path");
+const GuildData = require("../Schemas/GuildData");
+const PremiumLinkData = require("../Schemas/PremiumLinkData");
 
 class BotCore extends Client {
     constructor(bot, options = {}) {
@@ -16,6 +18,8 @@ class BotCore extends Client {
         this.aliases = new Collection();
 
         this.Bot = bot;
+
+        this.on('guildCreate', this.registerGuild);
 
         this.once('ready', () => {
             console.log(`Logged in as ${this.user.username}!`);
@@ -67,8 +71,20 @@ class BotCore extends Client {
     }
 
     getPrefix(guild) {
-        return "!";
-        // TODO: create GuildManager and stuff
+        return this.Bot.GuildManager.getGuild(guild.id)?.data.Prefix || "!";
+    }
+
+    async registerGuild(guild) {
+        if (await GuildData.Model.exists({ServerID: guild.id})) return;
+        let doc = GuildData.createDefault(guild.id);
+        doc.save();
+
+        this.Bot.GuildManager.addGuild(doc);
+
+
+        if (await PremiumLinkData.Model.exists({ServerID: guild.id})) {
+            this.Bot.GuildManager.getGuild(guild.id).premium = true;
+        }
     }
 }
 

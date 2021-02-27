@@ -10,8 +10,10 @@ class Bot {
             prefix: "!"
         });
         this.GuildManager = new GuildManager(this);
-        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, () => {
+        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, async () => {
             console.log("Database is connected. ");
+            console.log("Loading guilds...");
+            await this.GuildManager.loadGuilds();
         });
 
         this.CoreBot.start();

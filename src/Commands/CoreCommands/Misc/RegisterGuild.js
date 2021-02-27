@@ -27,7 +27,7 @@ class RegisterGuild extends Command {
 
         if (await PremiumLinkData.Model.exists({ServerID: message.guild.id})) {
             client.Bot.GuildManager.getGuild(message.guild.id).premium = true;
-            message.reply("")
+            message.reply("Guild is Premium!");
         }
     }
 }
