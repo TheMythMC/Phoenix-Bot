@@ -19,11 +19,13 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "eslint": "^7.21.0",
     "glob": "^7.1.6",
     "glob-promise": "^4.0.1",
     "minecraft-api": "^0.0.3",
     "mongoose": "^5.11.17",
-    "node-hypixel": "^1.0.1",
-    "path-parse": "^1.0.6"
+    "path-parse": "^1.0.6",
+    "phoenix-slothpixel": "^1.2.4",
+    "yarn": "^1.22.10"
   }
 }
