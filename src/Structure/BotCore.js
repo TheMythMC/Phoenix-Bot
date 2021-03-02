@@ -19,6 +19,8 @@ class BotCore extends Client {
 
         this.Bot = bot;
 
+        this.defaultPrefix = options.defaultPrefix || "!"; 
+
         this.on('guildCreate', this.registerGuild);
 
         this.once('ready', () => {
@@ -69,7 +71,7 @@ class BotCore extends Client {
 
     async registerGuild(guild) {
         if (await GuildData.Model.exists({ServerID: guild.id})) return;
-        let doc = GuildData.createDefault(guild.id);
+        let doc = GuildData.createDefault(guild.id, this.defaultPrefix);
         doc.save();
 
         this.Bot.GuildManager.addGuild(doc);

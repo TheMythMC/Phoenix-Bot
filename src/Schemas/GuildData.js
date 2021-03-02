@@ -49,10 +49,11 @@ const Default = {
     GuildBotAPIKey: "",
     Prefix: "!"
 }
-module.exports.createDefault = (ServerID) => {
+module.exports.createDefault = (ServerID, prefix = "!") => {
     let obj = {};
 
     Object.assign(obj, Default);
     obj.ServerID = ServerID;
+    obi.Prefix = prefix; 
     return new module.exports.Model(obj);
 }

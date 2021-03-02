@@ -6,8 +6,8 @@ const DatabaseHandler = require("./handlers/DatabaseHandler");
 class Bot {
     constructor() {
         this.CoreBot = new BotCore(this, {
-            token: process.env.BOT_TOKEN,
-            prefix: "!"
+            token: process.env.BOT_TOKEN, 
+            defaultPrefix: "!"
         });
         this.GuildManager = new GuildManager(this);
         this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, async () => {
