@@ -23,6 +23,7 @@
     "glob-promise": "^4.0.1",
     "mongoose": "^5.11.17",
     "path-parse": "^1.0.6",
-    "phoenix-slothpixel": "^1.2.6"
+    "phoenix-slothpixel": "^1.2.6",
+    "yarn": "^1.22.10"
   }
 }

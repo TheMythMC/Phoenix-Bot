@@ -21,12 +21,20 @@ class Utils {
         channel.send(embed);
     }
 
-    static sendCustomMessage(channel, color, message) {
-        let embed = new MessageEmbed();
+    static sendCustomMessage(channel, color, message, ...sections) {
+        let embed = new MessageEmbed()
 
         embed
             .setColor(color)
-            .setDescription(message);
+            .setDescription(message)
+            .setFooter("Phoenix Bot coded by Project Phoenix")
+            .setImage('');
+        if(!sections.size == 0
+        || !sections == null) {
+            for (let i = 0; (i < sections -1); i =+ 2) {
+                embed.addField(sections[i], sections[(i+1)]);
+            }
+        }
         channel.send(embed);
     }
 }
