@@ -1,20 +1,34 @@
 const mongoose = require("mongoose");
 
 const RoleSchema = new mongoose.Schema({
-    DiscordRoleID: String,
-    RoleTemplate: String,
-    Params: []
+    DiscordRoleID: String, // The role ID of the discord role
+    RoleTemplate: String, /*
+    * template of the role may include:
+    * Name(Parameters)
+    * Owner()
+    * Admin()
+    * Moderator()
+    * Helper()
+    * Youtuber()
+    * MVP++()
+    * MVP+()
+    * MVP()
+    * VIP+()
+    * VIP()
+    * GuildRole(RoleName)
+    */
+    Params: [] // parameters
 })
 
 
 const GEXPSchema = new mongoose.Schema({
-    RoleName: String,
-    MinExp: Number
+    RoleName: String, // guild role name as shown in the API
+    MinExp: Number // minimum exp needed to gain
 })
 
 const schema = new mongoose.Schema({
     ServerID: String,
-    Roles: [RoleSchema],
+    RoleLinks: [RoleSchema],
     GEXPData: [GEXPSchema],
     GuildID: String,
     GuildBotUUID: String,
@@ -28,7 +42,7 @@ module.exports.GEXPSchema = GEXPSchema;
 module.exports.RoleSchema = RoleSchema;
 const Default = {
     ServerID: "",
-    Roles: [],
+    RoleLinks: [],
     GEXPData: [],
     GuildID: "",
     GuildBotUUID: "",

@@ -56,13 +56,6 @@ class BotCore extends Client {
 
         if (!options.token) throw new Error('You must provide a token for the client');
         this.token = options.token;
-
-        // will migrate prefix to db
-        if (!options.prefix) throw new Error('You must provide a prefix for the bot.');
-
-        if (typeof options.prefix !== 'string') throw new TypeError('Prefix should be a string');
-        // TODO: databasify prefix
-        this.prefix = options.prefix;
     }
 
     async start(token = this.token) {
