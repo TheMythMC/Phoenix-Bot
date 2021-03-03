@@ -5,6 +5,7 @@ const DatabaseHandler = require("./handlers/DatabaseHandler");
 
 class Bot {
     constructor() {
+        Bot.bot = this; 
         this.CoreBot = new BotCore(this, {
             token: process.env.BOT_TOKEN, 
             defaultPrefix: "!"
@@ -19,6 +20,10 @@ class Bot {
         this.slothpixel = require("phoenix-slothpixel");
 
         this.CoreBot.start();
+    }
+
+    static getBot() {
+        return this.bot; 
     }
 }
 

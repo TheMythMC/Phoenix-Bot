@@ -11,7 +11,7 @@ module.exports = async (member, uuid, roleLinks) => {
         let meth = roleMethods[roleLink.RoleTemplate];
         if (!meth) continue;
 
-        const res = await meth();
+        const res = await meth(uuid, roleLinks.Params);
         if (res) {
             const role = await guild.roles.fetch(roleLink.DiscordRoleID);
 
