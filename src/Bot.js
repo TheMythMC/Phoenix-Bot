@@ -1,4 +1,3 @@
-const discord = require("discord.js");
 const BotCore = require("./Structure/BotCore");
 const GuildManager = require("./Structure/GuildManager");
 const DatabaseHandler = require("./handlers/DatabaseHandler");
