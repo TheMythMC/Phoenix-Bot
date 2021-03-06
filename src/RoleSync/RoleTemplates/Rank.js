@@ -1,6 +1,6 @@
 const Bot = require("../../Bot"); 
 
-const Rank = async (uuid, params) => {
+const Rank = async (uuid, cache, params) => {
     const rank = params[0];
     if (!rank) return;
 

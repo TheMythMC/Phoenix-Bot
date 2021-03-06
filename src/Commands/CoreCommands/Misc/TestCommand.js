@@ -12,6 +12,7 @@ class TestCommand extends Command {
     }
 
     async run(message, args, client) {
+
     }
 }
 
