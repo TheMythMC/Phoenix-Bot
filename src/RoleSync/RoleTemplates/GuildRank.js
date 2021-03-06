@@ -1,8 +1,8 @@
 const Bot = require("../../Bot"); 
 
-const GuildRole = async (uuid, cache, params) => {
-    const guild = params[0];
-    if (!guild) return;
+const GuildRank = async (uuid, cache, params) => {
+    const role = params[0];
+    if (!role) return;
 
     let slothpixel = Bot.getBot().slothpixel; 
 
@@ -14,14 +14,19 @@ const GuildRole = async (uuid, cache, params) => {
 
          if (!guildData) return false; 
 
-         if (guildData.name === guild || guildData.id === guild) {
+         
+
+         const member = guildData.members.find(m => m.rank === role && m.uuid === uuid); 
+         if (member) {
             if (!f) cache.guilds.push(guildData); 
-            return true; 
+             return true; 
          }
-         return false; 
+
     } catch (err) {
         return false; 
     }
+
+    return false; 
 }
 
-module.exports = GuildRole;
+module.exports = GuildRank;

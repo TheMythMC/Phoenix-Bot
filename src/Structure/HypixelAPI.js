@@ -4,8 +4,12 @@ async function getPlayerData(playerName) {
     return await Hypixel(`players/${playerName}`, 'http://localhost:5000/api');
 }
 
-async function getGuildData(guildName) {
+async function getGuildDataByName(guildName) {
     return await Hypixel(`guilds/name/${guildName}`, 'https://localhost:5000/api')
 }
 
-module.exports = { getGuildData, getPlayerData }
+async function getGuildDataByPlayer(playerName) {
+    return await Hypixel(`guilds/${playerName}`, 'https://localhost:5000/api')
+}
+
+module.exports = { getGuildDataByName, getGuildDataByPlayer, getPlayerData }

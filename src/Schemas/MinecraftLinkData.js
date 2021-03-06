@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
     DiscordID: String,
-    APIKey: String
+    MinecraftUUID: String
 });
 
-module.exports.Model = mongoose.model("APILinkData", schema);
+module.exports.Model = mongoose.model("MinecraftLinkData", schema);
 const Default = {
     DiscordID: "",
-    APIKey: ""
+    MinecraftUUID: ""
 }
-module.exports.createDefault = (DiscordID, APIKey) => {
+module.exports.createDefault = (DiscordID, MinecraftUUID) => {
     let obj = {};
 
     Object.assign(obj, Default);
     obj.DiscordID = DiscordID;
-    obj.APIKey = APIKey;
+    obj.MinecraftUUID = MinecraftUUID;
     return new module.exports.Model(obj);
 }
