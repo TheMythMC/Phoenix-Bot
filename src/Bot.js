@@ -18,12 +18,12 @@ class Bot {
 
         this.slothpixel = require("phoenix-slothpixel");
 
-        this.CoreBot.start();
-    }
+    this.CoreBot.start();
+  }
 
-    static getBot() {
-        return this.bot; 
-    }
+  static getBot() {
+    return this.bot; 
+  }
 }
 
 module.exports = Bot;

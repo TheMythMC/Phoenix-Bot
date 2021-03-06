@@ -21,12 +21,13 @@ class Utils {
         channel.send(embed);
     }
 
-    static sendCustomMessage(channel, color, message, ...sections) {
+    static sendCustomMessage(channel, color, message, title, ...sections) {
         let embed = new MessageEmbed()
 
         embed
             .setColor(color)
             .setDescription(message)
+            .setTitle(title)
             .setFooter("Phoenix Bot coded by Project Phoenix")
             .setImage('');
         if(!sections.size == 0
