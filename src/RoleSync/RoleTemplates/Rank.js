@@ -1,15 +1,23 @@
 const Bot = require("../../Bot"); 
 
+const HypixelAPI = require("../../Structure/HypixelAPI"); 
+
 const Rank = async (uuid, cache, params) => {
     const rank = params[0];
     if (!rank) return;
 
-    let slothpixel = Bot.getBot().slothpixel; 
+    if (!cache.guilds) cache.players = []; 
 
     try {
-        let player = await slothpixel(`players/${uuid}`);
+        const f = cache?.players.find(p => p.uuid === uuid); 
+        let player = f || await HypixelAPI.getPlayerData(uuid); 
+
          if (!player || !player.rank) return false; 
-        return player.rank === rank; 
+
+        if (player.rank === rank) {
+            if (!f) cache.players.push(player); 
+            return true; 
+        }
     } catch (err) {
         return false; 
     }

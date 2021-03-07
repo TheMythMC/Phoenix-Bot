@@ -16,8 +16,6 @@ class Bot {
             await this.GuildManager.loadGuilds();
         });
 
-        this.slothpixel = require("phoenix-slothpixel");
-
         this.CoreBot.start();
     }
 
