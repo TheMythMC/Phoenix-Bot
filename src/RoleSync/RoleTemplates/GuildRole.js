@@ -12,8 +12,6 @@ const GuildRole = async (uuid, cache, params) => {
         const f = cache?.guilds.find(g => g.id === guild || g.name === guild); 
         let guildData = f || await HypixelAPI.getGuildDataByPlayer(uuid); 
 
-        console.log(guildData);
-
          if (!guildData) return false; 
 
          if (guildData.name === guild || guildData.id === guild) {
@@ -22,7 +20,6 @@ const GuildRole = async (uuid, cache, params) => {
          }
          return false; 
     } catch (err) {
-        console.log(err);
         return false; 
     }
 }

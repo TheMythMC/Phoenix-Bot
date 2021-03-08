@@ -2,7 +2,9 @@ const Command = require("../../../Structure/Command");
 
 const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
 
-class Link extends Command {
+const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/MessageUtils"); 
+
+ class Link extends Command {
     constructor(client) {
         super(client, "link", {
             aliases: [],
@@ -16,11 +18,51 @@ class Link extends Command {
 
     async run(message, args, client) {
         const ign = args[0]; 
-        if (!ign) return message.channel.send("Invalid IGN. "); 
+        if (!ign) return sendErrorMessage(message.channel, "Invalid IGN. "); 
 
-        const plr = require("../../../Structure/HypixelAPI").getPlayerData(ign); 
+        let plr; 
+        
+        try {
+            plr = await require("../../../Structure/HypixelAPI").getPlayerData(ign); 
+        } catch(err) {
+            return sendErrorMessage(message.channel, "Invalid Player. "); 
+        }
+        
+        const discord = message.author.tag;  
 
-        if (!plr) return message.channel.send("Invalid IGN. "); 
+        let links; 
+
+        try {
+            links = plr.links.DISCORD;
+        } catch (err) {
+            return sendErrorMessage(message.channel, "Error: The specified player does not have discord linked!");
+        }
+
+        const existingLink = await MinecraftLinkData.Model.findOne({ MinecraftUUID: plr.uuid });
+
+        if (existingLink) {
+            if (existingLink.DiscordID !== message.member.id) return sendErrorMessage(message.channel, "This minecraft account has already been linked to another discord account. "); 
+
+            if (existingLink.DiscordID === message.member.id/*same data*/) return sendErrorMessage(message.channel, `The discord, \`${links}\` is already linked to \`${plr.username}\`. `); 
+
+        }
+
+        if (discord !== links) return sendErrorMessage(message.channel, `Please change your ingame discord from \`${links}\` to \`${discord}\`. `); 
+
+        if (await MinecraftLinkData.Model.findOne({DiscordID: message.member.id})) return sendErrorMessage(message.channel, client.parsePrefix(message.guild.id, `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `)); 
+        
+        const newData = new MinecraftLinkData.Model({
+            DiscordID: message.member.id, 
+            MinecraftUUID: plr.uuid
+        }); 
+
+        newData.save()
+            .then(() => {
+                sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. ` ); 
+            })
+            .catch((err) => {
+                sendErrorMessage(message.channel, "An error occurred while attempting to save the data. "); 
+            })
     }
 }
 

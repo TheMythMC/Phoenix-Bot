@@ -21,8 +21,6 @@ class RegisterGuild extends Command {
 
         client.Bot.GuildManager.addGuild(doc);
 
-        console.log(client.Bot.GuildManager.getGuild(message.guild.id));
-
         message.reply("Registered Guild!");
 
         if (await PremiumLinkData.Model.exists({ServerID: message.guild.id})) {

@@ -54,6 +54,6 @@ module.exports.createDefault = (ServerID, prefix = "!") => {
 
     Object.assign(obj, Default);
     obj.ServerID = ServerID;
-    obi.Prefix = prefix; 
+    obj.Prefix = prefix; 
     return new module.exports.Model(obj);
 }

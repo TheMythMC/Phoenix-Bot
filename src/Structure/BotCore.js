@@ -66,7 +66,7 @@ class BotCore extends Client {
     }
 
     getPrefix(guild) {
-        return this.Bot.GuildManager.getGuild(guild.id)?.data.Prefix || "!";
+        return this.Bot.GuildManager.getGuild(guild.id)?.data.Prefix || this.Bot.GuildManager.getGuild(guild)?.data.Prefix || "!";
     }
 
     async registerGuild(guild) {
@@ -80,6 +80,10 @@ class BotCore extends Client {
         if (await PremiumLinkData.Model.exists({ServerID: guild.id})) {
             this.Bot.GuildManager.getGuild(guild.id).premium = true;
         }
+    }
+
+    parsePrefix(guildID, text) {
+        return text.replace(/%p/g, this.getPrefix(guildID)); 
     }
 }
 

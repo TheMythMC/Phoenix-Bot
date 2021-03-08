@@ -16,14 +16,10 @@ class GuildManager {
         for (let guild of all) {
             let g = this.addGuild(guild);
 
-            console.log(guild.ServerID);
-
             if (await PremiumLinkData.Model.exists({ServerID: guild.ServerID})) {
                 g.premium = true;
             }
         }
-
-        console.log(this.guilds);
     }
 
     addGuild(doc, isPremium = false) {
