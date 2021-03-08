@@ -1,87 +1,87 @@
 {
     "games": {
-        "arcade": [
+        "Arcade": [
             "arcadde",
             "arc"
         ],
-        "bedwars": [
+        "BedWars": [
             "bedwars",
             "bw",
             "bedw",
             "bwars"
         ],
-        "skywars": [
+        "SkyWars": [
             "sw",
             "skyw",
             "swars",
             "skywars"
         ],
-        "tkr": [
+        "TKR": [
             "turbocartracers",
             "tkr"
         ],
-        "warlords": [
+        "Warlords": [
             "wl",
             "wlds",
             "war",
             "warlords"
         ],
-        "blitz": [
+        "Blitz": [
             "blizsg",
             "blitz",
             "bsg"
         ],
-        "duels": [
+        "Duels": [
             "duels",
             "dls"
         ],
-        "pit": [
+        "Pit": [
             "pit"
         ],
-        "tnt": [
+        "Tnt": [
             "tntgames",
             "tnt"
         ], 
-        "buildbattle": [
+        "Buildbattle": [
             "bb",
             "bbattle",
             "buildb",
             "buildbattle"
         ],
-        "murdermystery": [
+        "Murdermystery": [
             "mm",
             "murderm",
             "mmystery",
             "murdermystery"
         ],
-        "cvc": [
+        "CvC": [
             "cvc",
             "copsvscrims"
         ],
-        "paintball": [
+        "Paintball": [
             "pb",
             "paintball"
         ],
-        "quake": [
+        "Quake": [
             "quake"
         ],
-        "speeduhc": [
+        "SpeedUHC": [
             "suhc",
             "speeduhc"
         ],
-        "uhc": [
+        "UHC": [
             "uhc"
         ],
-        "vampirez": [
+        "VampireZ": [
             "vampz",
             "vz",
             "vampirez"
         ],
-        "walls": [
+        "Walls": [
             "walls",
             "w"
         ],
-        "megawalls": [
+        "MegaWalls": [
             "megawalls",
             "mw",
             "megaw",
