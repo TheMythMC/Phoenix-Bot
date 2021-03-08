@@ -15,13 +15,12 @@ class Bot {
             console.log("Loading guilds...");
             await this.GuildManager.loadGuilds();
         });
-
         this.CoreBot.start();
-    }
+    
 
-    static getBot() {
-        return this.bot; 
-    }
+  static getBot() {
+    return this.bot; 
+  }
 }
 
 module.exports = Bot;

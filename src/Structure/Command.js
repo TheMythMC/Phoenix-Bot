@@ -9,7 +9,7 @@ module.exports = class Command {
         this.usage = options.usage || "No usage provided";
         this.requiredPerms = options.requiredPerms || [];
     }
-
+//eslint-disable-next-line
     async run(message, args, client) {
         throw new Error(`Command ${this.name} doesnt provide a run method`);
     }
