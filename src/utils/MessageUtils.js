@@ -29,7 +29,7 @@ class Utils {
             .setDescription(message)
             .setTitle(title)
             .setFooter("Phoenix Bot coded by Project Phoenix")
-            .setImage('');
+            .setImage('https://i.ibb.co/m9RR0QG/Phoenix.png');
         if(!sections.size == 0
         || !sections == null) {
             for (let i = 0; (i < sections -1); i =+ 2) {

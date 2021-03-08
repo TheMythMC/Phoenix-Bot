@@ -45,7 +45,7 @@ module.exports = class StatsCommand extends Command {
 
 }
 
-parseStats(game, data) {
+function parseStats(game, data) {
     switch(game) {
         case 'arcade': {
             let coins = data.Arcade.coins;
@@ -107,10 +107,13 @@ parseStats(game, data) {
             **WINS**: ${wins}\n
             **FINAL KILLS**: ${final_kills}\n
             **FKDR**: ${fkdr}\n
-            **
-            `
+            **WINSTREAK**: ${winstreak}\n
+            **WLR**: ${wlr}\n
+            **COINS**: ${coins}`
         }
+        case 'buildbattle': {
 
+        }
 
     }
     return messageToSend;
