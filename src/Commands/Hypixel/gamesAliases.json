@@ -1,0 +1,91 @@
+{
+    "games": {
+        "Arcade": [
+            "arcadde",
+            "arc"
+        ],
+        "BedWars": [
+            "bedwars",
+            "bw",
+            "bedw",
+            "bwars"
+        ],
+        "SkyWars": [
+            "sw",
+            "skyw",
+            "swars",
+            "skywars"
+        ],
+        "TKR": [
+            "turbocartracers",
+            "tkr"
+        ],
+        "Warlords": [
+            "wl",
+            "wlds",
+            "war",
+            "warlords"
+        ],
+        "Blitz": [
+            "blizsg",
+            "blitz",
+            "bsg"
+        ],
+        "Duels": [
+            "duels",
+            "dls"
+        ],
+        "Pit": [
+            "pit"
+        ],
+        "Tnt": [
+            "tntgames",
+            "tnt"
+        ], 
+        "Buildbattle": [
+            "bb",
+            "bbattle",
+            "buildb",
+            "buildbattle"
+        ],
+        "Murdermystery": [
+            "mm",
+            "murderm",
+            "mmystery",
+            "murdermystery"
+        ],
+        "CvC": [
+            "cvc",
+            "copsvscrims"
+        ],
+        "Paintball": [
+            "pb",
+            "paintball"
+        ],
+        "Quake": [
+            "quake"
+        ],
+        "SpeedUHC": [
+            "suhc",
+            "speeduhc"
+        ],
+        "UHC": [
+            "uhc"
+        ],
+        "VampireZ": [
+            "vampz",
+            "vz",
+            "vampirez"
+        ],
+        "Walls": [
+            "walls",
+            "w"
+        ],
+        "MegaWalls": [
+            "megawalls",
+            "mw",
+            "megaw",
+            "mwalls"
+        ]
+    }
+}
