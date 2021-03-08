@@ -16,7 +16,7 @@ class Bot {
             await this.GuildManager.loadGuilds();
         });
         this.CoreBot.start();
-    
+    }
 
   static getBot() {
     return this.bot; 
