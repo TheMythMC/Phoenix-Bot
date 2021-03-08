@@ -6,6 +6,7 @@ async function getPlayerData(playerName) {
 }
 
 async function getGuildDataByName(guildName) {
+
     return await Hypixel(`guilds/name/${guildName}`, slothpixelURL || 'http://localhost:5000/api');
 }
 

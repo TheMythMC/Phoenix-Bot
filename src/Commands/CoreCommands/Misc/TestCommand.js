@@ -1,5 +1,9 @@
 const Command = require("../../../Structure/Command");
 
+const rank = require("../../../RoleSync/RoleTemplates/Rank"); 
+const guildrole = require("../../../RoleSync/RoleTemplates/GuildRole"); 
+const guildrank = require("../../../RoleSync/RoleTemplates/GuildRank"); 
+
 class TestCommand extends Command {
     constructor(client) {
         super(client, "testcommand", {
@@ -12,7 +16,7 @@ class TestCommand extends Command {
     }
 
     async run(message, args, client) {
-
+        
     }
 }
 
