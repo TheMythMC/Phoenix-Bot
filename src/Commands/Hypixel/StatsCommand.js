@@ -18,7 +18,7 @@ module.exports = class StatsCommand extends Command {
         });
     }
     // eslint-disable-next-line no-unused-vars
-    async run(message, _client, args) {
+    async run(message, args, _client) {
         let messageToSend;
         const data = await slothpixel(`players/${args[0]}`, 'localhost:5000/api');
         if(args[1]){
@@ -45,7 +45,7 @@ module.exports = class StatsCommand extends Command {
 
 }
 
-parseStats(game, data) {
+function parseStats(game, data) {
     switch(game) {
         case 'arcade': {
             let coins = data.Arcade.coins;
@@ -70,7 +70,7 @@ parseStats(game, data) {
             \n**WINS**: ${wins.toLocaleString()}
             \n**KILLS**: ${kills.toLocaleString()}
             \n**DEATHS**: ${deaths.toLocaleString()}
-            \n**KDR**: ${kdr}
+            \n**KDR**: ${kdr} 
             \n**WLR**: ${wlr}
             \n**WINSTREAK**: ${winstreak}`;
             break;

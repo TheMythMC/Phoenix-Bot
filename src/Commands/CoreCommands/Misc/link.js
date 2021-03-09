@@ -4,6 +4,8 @@ const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData");
 
 const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/MessageUtils"); 
 
+const RoleSync = require("../../../RoleSync/RoleSync"); 
+
  class Link extends Command {
     constructor(client) {
         super(client, "link", {
@@ -59,10 +61,12 @@ const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/Message
         newData.save()
             .then(() => {
                 sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. ` ); 
+
+                RoleSync(message.member, plr.uuid, client.Bot.GuildManager.getGuild(message.guild.id)?.data.RoleLinks); 
             })
             .catch((err) => {
                 sendErrorMessage(message.channel, "An error occurred while attempting to save the data. "); 
-            })
+            }) 
     }
 }
 

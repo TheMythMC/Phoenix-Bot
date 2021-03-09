@@ -6,9 +6,8 @@ const roleMethods = {
     "GuildRole": require("./RoleTemplates/GuildRole")
 };
 
-const HypixelAPI = require("../../Structure/HypixelAPI"); 
+module.exports = async (member, uuid, roleLinks = []) => {
 
-module.exports = async (member, uuid, roleLinks) => {
     const guild = member.guild;
 
     const cache = {}; // will be rewritten every run to avoid old data
