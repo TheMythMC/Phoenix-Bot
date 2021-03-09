@@ -17,12 +17,13 @@ const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/Message
 
     async run(message, args, client) {
 
-        const existingLink = await MinecraftLinkData.Model.findOne({ DiscordID: message.member.id });
+        const existingLink = client.Bot.LinkManager.getDataByDiscord(message.member.id); 
 
         if (!existingLink) return sendErrorMessage(message.channel, "You are not linked to any discord account. "); 
 
         await MinecraftLinkData.Model.deleteMany({ DiscordID: message.member.id })
-            .then(() => {
+            .then(async () => {
+                await client.Bot.LinkManager.removeDiscordFromCache(message.member.id); 
                 return sendSuccessMessage(message.channel, `Successfully unlinked minecraft account from discord. `); 
             })
             .catch(err => {

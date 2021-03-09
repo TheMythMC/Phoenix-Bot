@@ -1,6 +1,7 @@
 const BotCore = require("./Structure/BotCore");
 const GuildManager = require("./Structure/GuildManager");
 const DatabaseHandler = require("./handlers/DatabaseHandler");
+const LinkManager = require("./Structure/LinkManager"); 
 
 class Bot {
     constructor() {
@@ -9,6 +10,7 @@ class Bot {
             token: process.env.BOT_TOKEN, 
             defaultPrefix: "!"
         });
+        this.LinkManager = new LinkManager(this); 
         this.GuildManager = new GuildManager(this);
         this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, async () => {
             console.log("Database is connected. ");

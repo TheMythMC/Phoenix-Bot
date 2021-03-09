@@ -27,7 +27,7 @@ const RoleSync = require("../../../RoleSync/RoleSync");
         try {
             plr = await require("../../../Structure/HypixelAPI").getPlayerData(ign); 
         } catch(err) {
-            return sendErrorMessage(message.channel, "Invalid Player. "); 
+            return sendErrorMessage(message.channel, "Invalid Player or error contacting API. "); 
         }
         
         const discord = message.author.tag;  
@@ -40,7 +40,9 @@ const RoleSync = require("../../../RoleSync/RoleSync");
             return sendErrorMessage(message.channel, "Error: The specified player does not have discord linked!");
         }
 
-        const existingLink = await MinecraftLinkData.Model.findOne({ MinecraftUUID: plr.uuid });
+        if (await client.Bot.LinkManager.getDataByDiscord(message.member.id)) return sendErrorMessage(message.channel, client.parsePrefix(message.guild.id, `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `)); 
+
+        const existingLink = await client.Bot.LinkManager.getDataByUUID(plr.uuid); 
 
         if (existingLink) {
             if (existingLink.DiscordID !== message.member.id) return sendErrorMessage(message.channel, "This minecraft account has already been linked to another discord account. "); 
@@ -49,9 +51,7 @@ const RoleSync = require("../../../RoleSync/RoleSync");
 
         }
 
-        if (discord !== links) return sendErrorMessage(message.channel, `Please change your ingame discord from \`${links}\` to \`${discord}\`. `); 
-
-        if (await MinecraftLinkData.Model.findOne({DiscordID: message.member.id})) return sendErrorMessage(message.channel, client.parsePrefix(message.guild.id, `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `)); 
+        if (discord !== links) return sendErrorMessage(message.channel, `Please change your ingame discord from \`${links}\` to \`${discord}\`. `);
         
         const newData = new MinecraftLinkData.Model({
             DiscordID: message.member.id, 
@@ -59,10 +59,11 @@ const RoleSync = require("../../../RoleSync/RoleSync");
         }); 
 
         newData.save()
-            .then(() => {
-                sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. ` ); 
-
+            .then(async () => {
                 RoleSync(message.member, plr.uuid, client.Bot.GuildManager.getGuild(message.guild.id)?.data.RoleLinks); 
+                await client.Bot.LinkManager.addCache(newData); 
+
+                sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. ` ); 
             })
             .catch((err) => {
                 sendErrorMessage(message.channel, "An error occurred while attempting to save the data. "); 

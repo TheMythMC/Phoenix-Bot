@@ -46,6 +46,7 @@ module.exports = class StatsCommand extends Command {
 }
 
 function parseStats(game, data) {
+    // myth's awful coding (in banana's opinion)
     switch(game) {
         case 'arcade': {
             let coins = data.Arcade.coins;
