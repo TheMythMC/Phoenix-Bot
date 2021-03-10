@@ -5,6 +5,8 @@ const path = require("path");
 const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");
 
+const RoleSync = require("../RoleSync/RoleSync"); 
+
 class BotCore extends Client {
     constructor(bot, options = {}) {
         super({
@@ -22,6 +24,8 @@ class BotCore extends Client {
         this.defaultPrefix = options.defaultPrefix || "!"; 
 
         this.on('guildCreate', this.registerGuild);
+
+        this.on('guildMemberAdd', this.syncGuildMember); 
 
         this.once('ready', () => {
             console.log(`Logged in as ${this.user.username}!`);
@@ -68,7 +72,7 @@ class BotCore extends Client {
     }
 
     getPrefix(guild) {
-        return this.Bot.GuildManager.getGuild(guild.id)?.data.Prefix || "!";
+        return this.Bot.GuildManager.getGuild(guild.id)?.data.Prefix || this.Bot.GuildManager.getGuild(guild)?.data.Prefix || "!";
     }
 
     async registerGuild(guild) {
@@ -81,6 +85,17 @@ class BotCore extends Client {
 
         if (await PremiumLinkData.Model.exists({ServerID: guild.id})) {
             this.Bot.GuildManager.getGuild(guild.id).premium = true;
+        }
+    }
+
+    parsePrefix(guildID, text) {
+        return text.replace(/%p/g, this.getPrefix(guildID)); 
+    }
+
+    async syncGuildMember(member) {
+        const d = await this.Bot.LinkManager.getDataByDiscord(member.id);  
+        if (d) {
+            RoleSync(member, d.MinecraftUUID, this.Bot.GuildManager.getGuild(member.guild.id)?.data.RoleLinks); 
         }
     }
 }

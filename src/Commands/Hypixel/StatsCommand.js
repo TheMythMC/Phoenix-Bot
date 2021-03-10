@@ -1,11 +1,7 @@
 const Command = require('../../Structure/Command.js');
-const { sendCustomMessage } = require('../../utils/MessageUtils')
-const slothpixel = require('phoenix-slothpixel')
+const { sendCustomMessage, sendErrorMessage } = require('../../utils/MessageUtils')
+const HypixelAPI = require("../../Structure/HypixelAPI"); 
 const aliases = require('./gamesAliases.json');
-
-// Used because uhhhh, Java script 
-
-let messageToSend = '';
 
 module.exports = class StatsCommand extends Command {
     constructor(client) {
@@ -18,39 +14,39 @@ module.exports = class StatsCommand extends Command {
         });
     }
     // eslint-disable-next-line no-unused-vars
-    async run(message, _client, args) {
-        let messageToSend;
-        const data = await slothpixel(`players/${args[0]}`, 'localhost:5000/api');
-        if(args[1]){
-            for (let game in aliases) {
-                if (args[1] == game) {
-                 await parseStats(game.toLowerCase(), data);
-                } else {
-                    for(let alias in game) {
-                        if(args[1] == alias) {
-                            await parseStats(game.toLowerCase(), data);
-                        }
-                    }
+    async run(message, args, _client) {
+
+        if (!args[0]) return sendErrorMessage(message.channel, "Username not provided. "); 
+        let msg; 
+        const data = await HypixelAPI.getPlayerData(`${args[0]}`); 
+        if(args[1]) {
+            for (let game in aliases.games) {
+                if (args[1].toLowerCase() === game.toLowerCase() || aliases.games[game].includes(args[1].toLowerCase())) {
+                    msg = await parseStats(game.toLowerCase(), data.stats/*Most games are in .stats */);
+                    break; // EFFICIENCY
                 }
             }
         } else {
             await parseStats('all', data)
         }
-        if(messageToSend == null) {
-            sendCustomMessage(message.channel, "RED", "Error, cannot retreive data.");
+        if(msg == null) {
+            return sendErrorMessage(message.channel, "Error, cannot retreive data.");
         }
 
-        sendCustomMessage(message.channel, "PURPLE", messageToSend, `$`);
+        sendCustomMessage(message.channel, "PURPLE", msg, `$`);
     }
 
 }
 
 function parseStats(game, data) {
+
+    // myth's awful coding (in banana's opinion)
+    let messageToSend;
     switch(game) {
         case 'arcade': {
-            let coins = data.Arcade.coins;
+            let coins = data.Arcade.coins; 
             let wins = data.Arcade.wins;
-            messageToSend = `**COINS: ${coins}\n**WINS**: ${wins}`;
+            messageToSend = `**COINS**: ${coins}\n**WINS**: ${wins}`;
             break;
         }
         
@@ -70,7 +66,7 @@ function parseStats(game, data) {
             \n**WINS**: ${wins.toLocaleString()}
             \n**KILLS**: ${kills.toLocaleString()}
             \n**DEATHS**: ${deaths.toLocaleString()}
-            \n**KDR**: ${kdr}
+            \n**KDR**: ${kdr} 
             \n**WLR**: ${wlr}
             \n**WINSTREAK**: ${winstreak}`;
             break;
