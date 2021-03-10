@@ -1,6 +1,6 @@
 const Command = require('../../Structure/Command.js');
-const { sendCustomMessage } = require('../../utils/MessageUtils')
-const slothpixel = require('phoenix-slothpixel')
+const { sendCustomMessage, sendErrorMessage } = require('../../utils/MessageUtils')
+const HypixelAPI = require("../../Structure/HypixelAPI"); 
 const aliases = require('./gamesAliases.json');
 
 // Used because uhhhh, Java script 
@@ -19,9 +19,11 @@ module.exports = class StatsCommand extends Command {
     }
     // eslint-disable-next-line no-unused-vars
     async run(message, args, _client) {
+
+        if (!args[0]) return sendErrorMessage(message.channel, "Username not provided. "); 
         let messageToSend;
-        const data = await slothpixel(`players/${args[0]}`, 'localhost:5000/api');
-        if(args[1]){
+        const data = await HypixelAPI.getPlayerData(`${args[0]}`); 
+        if(args[1]) {
             for (let game in aliases) {
                 if (args[1] == game) {
                  await parseStats(game.toLowerCase(), data);
@@ -37,7 +39,7 @@ module.exports = class StatsCommand extends Command {
             await parseStats('all', data)
         }
         if(messageToSend == null) {
-            sendCustomMessage(message.channel, "RED", "Error, cannot retreive data.");
+            sendErrorMessage(message.channel, "Error, cannot retreive data.");
         }
 
         sendCustomMessage(message.channel, "PURPLE", messageToSend, `$`);
