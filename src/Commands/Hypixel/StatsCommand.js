@@ -21,39 +21,35 @@ module.exports = class StatsCommand extends Command {
     async run(message, args, _client) {
 
         if (!args[0]) return sendErrorMessage(message.channel, "Username not provided. "); 
-        let messageToSend;
+        let msg; 
         const data = await HypixelAPI.getPlayerData(`${args[0]}`); 
         if(args[1]) {
-            for (let game in aliases) {
-                if (args[1] == game) {
-                 await parseStats(game.toLowerCase(), data);
-                } else {
-                    for(let alias in game) {
-                        if(args[1] == alias) {
-                            await parseStats(game.toLowerCase(), data);
-                        }
-                    }
+            for (let game in aliases.games) {
+                if (args[1].toLowerCase() === game.toLowerCase() || aliases.games[game].includes(args[1].toLowerCase())) {
+                    msg = await parseStats(game.toLowerCase(), data.stats/*Most games are in .stats */);
+                    break; // EFFICIENCY
                 }
             }
         } else {
             await parseStats('all', data)
         }
-        if(messageToSend == null) {
-            sendErrorMessage(message.channel, "Error, cannot retreive data.");
+        if(msg == null) {
+            return sendErrorMessage(message.channel, "Error, cannot retreive data.");
         }
 
-        sendCustomMessage(message.channel, "PURPLE", messageToSend, `$`);
+        sendCustomMessage(message.channel, "PURPLE", msg, `$`);
     }
 
 }
 
 function parseStats(game, data) {
     // myth's awful coding (in banana's opinion)
+    let messageToSend; 
     switch(game) {
         case 'arcade': {
-            let coins = data.Arcade.coins;
+            let coins = data.Arcade.coins; 
             let wins = data.Arcade.wins;
-            messageToSend = `**COINS: ${coins}\n**WINS**: ${wins}`;
+            messageToSend = `**COINS**: ${coins}\n**WINS**: ${wins}`;
             break;
         }
         
