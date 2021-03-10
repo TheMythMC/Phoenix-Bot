@@ -15,6 +15,6 @@ module.exports = class Command {
     }
 
     getUsage(prefix) {
-        return this.usage.replaceAll("%p", prefix);
+        return this.usage.replace(/%p/g, prefix);
     }
 }
