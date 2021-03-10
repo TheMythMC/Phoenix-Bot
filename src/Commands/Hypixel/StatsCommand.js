@@ -3,10 +3,6 @@ const { sendCustomMessage, sendErrorMessage } = require('../../utils/MessageUtil
 const HypixelAPI = require("../../Structure/HypixelAPI"); 
 const aliases = require('./gamesAliases.json');
 
-// Used because uhhhh, Java script 
-
-let messageToSend = '';
-
 module.exports = class StatsCommand extends Command {
     constructor(client) {
         super(client, "stats", {
