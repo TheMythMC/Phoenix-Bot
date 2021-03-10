@@ -63,6 +63,7 @@ class BotCore extends Client {
     async start(token = this.token) {
         await Util.loadCommands(this, `Commands${path.sep}CoreCommands`);
         await Util.loadCommands(this, `Commands${path.sep}Hypixel`);
+        await Util.loadCommands(this, `Commands`);
         await super.login(token);
     }
 

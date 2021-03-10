@@ -36,6 +36,12 @@ class Util {
     static formatNumber(number) {
         return number.toLocaleString('en-US', {maximumFractionDigits:2});
     }
+    static removeDuplicates(arr) {
+        return [...new Set(arr)];
+    }
+    static capitalize(string) {
+        return string.split(' '.localeCompare(str => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' '));
+    }
 }
 
 module.exports = Util;

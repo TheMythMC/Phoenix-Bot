@@ -1,4 +1,4 @@
-let { MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 class Utils {
     static sendErrorMessage(channel, error) {
@@ -7,7 +7,8 @@ class Utils {
         embed
             .setColor("RED")
             .setTitle('Error')
-            .setDescription(error);
+            .setDescription(error)
+            .setTimestamp();
         channel.send(embed);
     }
 
@@ -17,7 +18,8 @@ class Utils {
         embed
             .setColor("GREEN")
             .setTitle("Success!")
-            .setDescription(message);
+            .setDescription(message)
+            .setTimestamp();
         channel.send(embed);
     }
 
@@ -28,8 +30,8 @@ class Utils {
             .setColor(color)
             .setDescription(message)
             .setTitle(title)
-            .setFooter("Phoenix Bot coded by Project Phoenix")
-            .setImage('https://i.ibb.co/m9RR0QG/Phoenix.png');
+            .setFooter('Phoenix Bot coded by Project Phoenix', 'https://i.ibb.co/m9RR0QG/Phoenix.png')
+            .setTimestamp();
         if(!sections.size == 0
         || !sections == null) {
             for (let i = 0; (i < sections -1); i =+ 2) {
