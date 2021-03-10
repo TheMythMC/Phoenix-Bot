@@ -1,10 +1,10 @@
 #!/bin/bash
 update(){
-    cd core;
+    cd ~/core;
     git pull;
-    cd ../extra;
+    cd ~/extra;
     git pull;
-    cd ..;
+    cd ~;
     cp -r -n ~/core/* ~/extra;
 }
 update;
