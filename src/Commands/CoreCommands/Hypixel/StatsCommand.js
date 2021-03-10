@@ -1,6 +1,6 @@
-const Command = require('../../Structure/Command.js');
-const { sendCustomMessage, sendErrorMessage } = require('../../utils/MessageUtils')
-const HypixelAPI = require("../../Structure/HypixelAPI"); 
+const Command = require('../../../Structure/Command');
+const { sendCustomMessage, sendErrorMessage } = require('../../../utils/MessageUtils')
+const HypixelAPI = require("../../../Structure/HypixelAPI"); 
 const aliases = require('./gamesAliases.json');
 
 module.exports = class StatsCommand extends Command {
