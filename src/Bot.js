@@ -19,10 +19,9 @@ class Bot {
         });
         this.CoreBot.start();
     }
-
   static getBot() {
     return this.bot; 
   }
 }
 
-module.exports = Bot;
+module.exports = Bot
