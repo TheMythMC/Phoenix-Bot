@@ -29,7 +29,7 @@ module.exports = class extends Command {
 
         if (cmd && foundCommand) {
 
-            let toSend = `\n\t**COMMAND:**: ${foundCommand.name}\n\t**ALIASES:** ${foundCommand.aliases.join(", ")}\n\t**USAGE:** ${foundCommand.getUsage(client.getPrefix(message.guild))}\n\t**DESCRIPTION:** ${foundCommand.description}`; 
+            let toSend = `\n\t**COMMAND:**: ${foundCommand.name}\n\t**ALIASES:** ${foundCommand.aliases.join(", ") || "None"}\n\t**USAGE:** ${foundCommand.getUsage(client.getPrefix(message.guild))}\n\t**DESCRIPTION:** ${foundCommand.description}`; 
 
              return messageutil.sendCustomMessage(message.channel, "PURPLE", toSend, `Help: ${cmd}`); 
         }
