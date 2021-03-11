@@ -11,7 +11,7 @@ module.exports = class extends Command {
             requiredPerms: []
         });
     }
-    run(message, args, client) {
+    async run(message, args, client) {
 
         const cmd = args[0]; 
 
