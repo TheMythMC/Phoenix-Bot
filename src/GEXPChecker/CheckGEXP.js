@@ -28,6 +28,8 @@ module.exports = async (client, guild, guildCheckDays) => {
         }
     }
 
+    return res; 
+
     /*
     
     {
