@@ -1,7 +1,5 @@
 const Command = require("../../../Structure/Command");
 
-const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
-
 class TestCommand extends Command {
     constructor(client) {
         super(client, "testcommand", {
@@ -14,7 +12,7 @@ class TestCommand extends Command {
     }
 
     async run(message, args, client) {
-        console.log(await checkGexp(client, message.guild)); 
+
     }
 }
 

@@ -9,7 +9,7 @@ module.exports = async (client, guild, guildCheckDays = 7) => {
     // get data for guild
     const guildData = await HypixelAPI.getGuildDataByName(g.data.GuildID); // TODO: replace with getGuildDataByID, pretend g.data.GuildID is guild name for now
     
-    let res = {}; 
+    let res = []; 
 
     // please optimize this looks so ugly i hate it but idk how to optimize  - Banana
     for (member of guildData.members) {
@@ -26,12 +26,17 @@ module.exports = async (client, guild, guildCheckDays = 7) => {
             RoleName: member.rank, 
             MinExp: 0
         }
-        res[member.uuid] = { // TODO: change to displaying name instead of UUID
+
+        res.push({
             Rank: roleReq.RoleName, 
             Gexp: gexp, 
-            Passed: gexp >= roleReq.MinExp 
-        }
+            Passed: gexp >= roleReq.MinExp, 
+            Size: xpHistory.length, 
+            UUID: member.uuid
+        })
     }
+
+    res.sort((a, b) => b.Gexp-a.Gexp); 
 
     return res; 
 
