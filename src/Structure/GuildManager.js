@@ -16,7 +16,7 @@ class GuildManager {
         for (let guild of all) {
             let g = this.addGuild(guild);
 
-            if (await this.isPremium(guild.ServerID) g.premium = true; 
+            if (await this.isPremium(guild.ServerID)) g.premium = true; 
         }
     }
 
