@@ -16,10 +16,12 @@ class GuildManager {
         for (let guild of all) {
             let g = this.addGuild(guild);
 
-            if (await PremiumLinkData.Model.exists({ServerID: guild.ServerID})) {
-                g.premium = true;
-            }
+            if (await this.isPremium(guild.ServerID) g.premium = true; 
         }
+    }
+
+    async isPremium(guildID) {
+        return await PremiumLinkData.Model.exists({ServerID: guildID}); 
     }
 
     addGuild(doc, isPremium = false) {
@@ -34,7 +36,7 @@ class GuildManager {
 
         const guild = await GuildData.Model.find({ ServerID: guildID }); 
         if (guild) {
-            this.guilds.push(guild); 
+            this.addGuild(guild, this.isPremium(guildID)); 
             return guild; 
         } 
     }
