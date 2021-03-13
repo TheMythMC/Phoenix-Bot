@@ -60,7 +60,7 @@ const RoleSync = require("../../../RoleSync/RoleSync");
 
         newData.save()
             .then(async () => {
-                RoleSync(message.member, plr.uuid, client.Bot.GuildManager.getGuild(message.guild.id)?.data.RoleLinks); 
+                RoleSync(message.member, plr.uuid, (await client.Bot.GuildManager.getGuild(message.guild.id))?.data.RoleLinks); 
                 await client.Bot.LinkManager.addCache(newData); 
 
                 sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. ` ); 

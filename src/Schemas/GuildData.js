@@ -2,21 +2,7 @@ const mongoose = require("mongoose");
 
 const RoleSchema = new mongoose.Schema({
     DiscordRoleID: String, // The role ID of the discord role
-    RoleTemplate: String, /*
-    * template of the role may include:
-    * Name(Parameters)
-    * Owner()
-    * Admin()
-    * Moderator()
-    * Helper()
-    * Youtuber()
-    * MVP++()
-    * MVP+()
-    * MVP()
-    * VIP+()
-    * VIP()
-    * GuildRole(RoleName)
-    */
+    RoleTemplate: String, 
     Params: [] // parameters
 })
 

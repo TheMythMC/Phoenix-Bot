@@ -28,13 +28,20 @@ class GuildManager {
         return guild;
     }
 
-    getGuild(guildID) {
-        return this.guilds.find(guild => guild.id === guildID);
+    async getGuild(guildID) {
+        const foundGuild = this.guilds.find(guild => guild.id === guildID);
+        if (foundGuild) return foundGuild; 
+
+        const guild = await GuildData.Model.find({ ServerID: guildID }); 
+        if (guild) {
+            this.guilds.push(guild); 
+            return guild; 
+        } 
     }
 
     async updateGuild(guildID) {
         const guildData = await GuildData.Model.find({ServerID: guildID});
-        let guild = this.getGuild(guildID);
+        let guild = await this.getGuild(guildID);
         if (!guild) return;
 
         guild.data = guildData;
