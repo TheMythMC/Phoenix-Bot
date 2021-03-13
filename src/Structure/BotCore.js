@@ -70,7 +70,7 @@ class BotCore extends Client {
     }
 
     async getPrefix(guild) {
-        return (await this.Bot.GuildManager.getGuild(guild.id))?.data.Prefix || (await this.Bot.GuildManager.getGuild(guild))?.data.Prefix || "!";
+        return (await this.Bot.GuildManager.getGuild(guild.id))?.data?.Prefix || (await this.Bot.GuildManager.getGuild(guild))?.data?.Prefix || "!";
     }
 
     async registerGuild(guild) {
@@ -87,7 +87,7 @@ class BotCore extends Client {
     }
 
     parsePrefix(guildID, text) {
-        return text.replace(/%p/g, await this.getPrefix(guildID)); 
+        return text.replace(/%p/g, await (this.getPrefix(guildID))); 
     }
 
     async syncGuildMember(member) {

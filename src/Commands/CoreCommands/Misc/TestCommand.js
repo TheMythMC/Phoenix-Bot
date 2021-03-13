@@ -1,8 +1,6 @@
 const Command = require("../../../Structure/Command");
 
-const rank = require("../../../RoleSync/RoleTemplates/Rank"); 
-const guildrole = require("../../../RoleSync/RoleTemplates/GuildRole"); 
-const guildrank = require("../../../RoleSync/RoleTemplates/GuildRank"); 
+const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
 class TestCommand extends Command {
     constructor(client) {
@@ -16,7 +14,7 @@ class TestCommand extends Command {
     }
 
     async run(message, args, client) {
-        
+        console.log(await checkGexp(client, message.guild)); 
     }
 }
 

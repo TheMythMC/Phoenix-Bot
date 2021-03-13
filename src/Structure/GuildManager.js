@@ -31,14 +31,18 @@ class GuildManager {
     }
 
     async getGuild(guildID) {
-        const foundGuild = this.guilds.find(guild => guild.id === guildID);
+        const foundGuild = this._getGuildFromCache(guildID); 
         if (foundGuild) return foundGuild; 
 
-        const guild = await GuildData.Model.find({ ServerID: guildID }); 
+        const guild = await GuildData.Model.findOne({ ServerID: guildID }); 
         if (guild) {
             this.addGuild(guild, this.isPremium(guildID)); 
-            return guild; 
+            return this._getGuildFromCache(guildID); 
         } 
+    }
+
+    _getGuildFromCache(guildID) {
+        return this.guilds.find(guild => guild.id === guildID);
     }
 
     async updateGuild(guildID) {
