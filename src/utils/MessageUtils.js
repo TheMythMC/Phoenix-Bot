@@ -13,11 +13,11 @@ class Utils {
         let embed = new MessageEmbed()
 
         embed
-            .setColor(color)
-            .setDescription(message)
-            .setTitle(title)
-            .setFooter('Phoenix Bot coded by Project Phoenix', 'https://i.ibb.co/m9RR0QG/Phoenix.png')
-            .setTimestamp();
+          .setColor(color)
+          .setDescription(message)
+          .setTitle(title)
+          .setFooter('Phoenix Bot coded by Project Phoenix', 'https://i.ibb.co/m9RR0QG/Phoenix.png')
+          .setTimestamp();
         if(!sections.size == 0
         || !sections == null) {
             for (let i = 0; (i < sections -1); i =+ 2) {
