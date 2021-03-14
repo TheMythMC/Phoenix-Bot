@@ -2,7 +2,7 @@ const Command = require("../../../Structure/Command");
 
 const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
 
-const { sendErrorMessage, sendSuccessMessage, sendCustomMessage } = require("../../../utils/MessageUtils"); 
+const { sendErrorMessage, sendCustomMessage } = require("../../../utils/MessageUtils"); 
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
@@ -12,7 +12,7 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
             aliases: ["cxp"],
             description: "Checks the Gexp of the guild",
             category: "Misc",
-            usage: `%checkgexp`,
+            usage: `%pcheckgexp`,
             requiredPerms: []
         });
     }

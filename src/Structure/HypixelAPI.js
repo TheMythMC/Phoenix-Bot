@@ -7,7 +7,6 @@ async function getPlayerData(playerName) {
 }
 
 async function getGuildDataByName(guildName) {
-
     return await Hypixel(`guilds/name/${guildName}`, slothpixelURL || backupSlothpixelURL);
 }
 

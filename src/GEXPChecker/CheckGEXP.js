@@ -1,4 +1,5 @@
 const HypixelAPI = require("../Structure/HypixelAPI"); 
+const MojangAPI = require('../Structure/MojangAPI');
 
 module.exports = async (client, guild, guildCheckDays = 7) => {
     const g = await client.Bot.GuildManager.getGuild(guild.id); 
@@ -32,8 +33,8 @@ module.exports = async (client, guild, guildCheckDays = 7) => {
             Gexp: gexp, 
             Passed: gexp >= roleReq.MinExp, 
             Size: xpHistory.length, 
-            UUID: member.uuid
-        })
+            Name: await MojangAPI.UUIDToName(member.uuid)
+        });
     }
 
     res.sort((a, b) => b.Gexp-a.Gexp); 
