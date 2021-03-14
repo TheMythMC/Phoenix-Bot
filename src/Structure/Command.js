@@ -8,6 +8,7 @@ module.exports = class Command {
         this.category = options.category || "Misc";
         this.usage = options.usage || "No usage provided";
         this.requiredPerms = options.requiredPerms || [];
+        this.requireBotOwner = options.requireBotOwner || false; 
     }
 //eslint-disable-next-line
     async run(message, args, client) {
