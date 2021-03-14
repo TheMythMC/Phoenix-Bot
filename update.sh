@@ -1,11 +1,11 @@
 #!/bin/bash
 update(){
-    cd ~/core;
+    cd ~/core || return;
     git pull;
-    cd ~/extra;
+    cd ~/extra || return;
     git pull;
-    cd ~;
+    cd ~ || return;
     cp -r -n ~/core/* ~/extra;
 }
 update;
-cd ~;
+cd ~ || return;

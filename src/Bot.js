@@ -2,6 +2,7 @@ const BotCore = require("./Structure/BotCore");
 const GuildManager = require("./Structure/GuildManager");
 const DatabaseHandler = require("./handlers/DatabaseHandler");
 const LinkManager = require("./Structure/LinkManager"); 
+const UUIDManager = require("./Structure/UUIDManager"); 
 
 class Bot {
     constructor() {
@@ -12,6 +13,7 @@ class Bot {
         });
         this.LinkManager = new LinkManager(this); 
         this.GuildManager = new GuildManager(this);
+        this.UUIDManager = new UUIDManager(this); 
         this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {
           useNewUrlParser: true,
           useUnifiedTopology: true
