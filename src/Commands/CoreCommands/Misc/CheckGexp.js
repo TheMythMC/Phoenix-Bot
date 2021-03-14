@@ -12,20 +12,31 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
             aliases: ["cxp"],
             description: "Checks the Gexp of the guild",
             category: "Misc",
-            usage: `%pcheckgexp`,
+            usage: `%pcheckgexp [all|passed|failed] [days]`,
             requiredPerms: []
         });
     }
 
     async run(message, args, client) {
-        const res = await checkGexp(client, message.guild); 
+        let mode = args[0]; 
+        let time = args[1] || 7; 
+        const guild = await client.Bot.GuildManager.getGuild(message.guild.id); 
+        const res = await checkGexp(client, guild, time); 
         if (!res) return sendErrorMessage("Guild not linked!"); 
 
         let text = ""; 
 
+        let i = 0; 
+
         for (let data of res) {
-            text += `\n\t${data.UUID} (${data.Rank}): ${data.Gexp}; ${data.Passed ? "Enough Gexp" : (data.Size >= 7 ? "Not enough Gexp" : "In guild for less than 7 days")}`; 
+            if (mode === "failed" && guild.data.GEXPWhitelist.includes(data.Rank)) continue; 
+            if ((data.Passed && mode === "failed")) continue; 
+            if (!data.Passed && !guild.data.GEXPWhitelist.includes(data.Rank) && mode === "passed") continue; 
+            text += `\n\t${i+1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === "passed" || mode === "failed" ? "" : (` - ${data.Passed ? "Enough Gexp" : (data.Size >= 7 ? "Not enough Gexp" : "In guild for less than 7 days")}`)}`; 
+            i++; 
         }
+
+        if (!text) text = "No users. "; 
 
         sendCustomMessage(message.channel, "GREEN", text, "GEXP"); 
     }
