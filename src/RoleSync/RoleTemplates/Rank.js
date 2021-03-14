@@ -2,7 +2,7 @@ const Bot = require("../../Bot");
 
 const HypixelAPI = require("../../Structure/HypixelAPI"); 
 
-const Rank = async (uuid, cache, params) => {
+const Rank = async (uuid, guildID, cache, params) => {
     const rank = params[0];
     if (!rank) return;
 

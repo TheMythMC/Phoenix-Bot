@@ -2,19 +2,16 @@ const Bot = require("../../Bot");
 
 const HypixelAPI = require("../../Structure/HypixelAPI"); 
 
-const GuildRole = async (uuid, cache, params) => {
-    const guild = params[0];
-    if (!guild) return;
-
+const GuildRole = async (uuid, guildID, cache, params) => {
     if (!cache.guilds) cache.guilds = []; 
 
     try {
-        const f = cache?.guilds.find(g => g.id === guild || g.name === guild); 
-        let guildData = f || await HypixelAPI.getGuildDataByPlayer(uuid); 
+        const f = cache?.guilds.find(g => g.id === guildID || g.name === guildID); 
+        let guildData = f || await HypixelAPI.getGuildDataByName(guildID); 
 
          if (!guildData) return false; 
 
-         if (guildData.name === guild || guildData.id === guild) {
+         if (guildData.members.find(m => m.uuid === uuid)) {
             if (!f) cache.guilds.push(guildData); 
             return true; 
          }
