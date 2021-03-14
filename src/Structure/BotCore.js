@@ -86,8 +86,8 @@ class BotCore extends Client {
         }
     }
 
-    parsePrefix(guildID, text) {
-        return text.replace(/%p/g, await (this.getPrefix(guildID))); 
+    async parsePrefix(guildID, text) {
+        return text.replace(/%p/g, await this.getPrefix(guildID)); 
     }
 
     async syncGuildMember(member) {

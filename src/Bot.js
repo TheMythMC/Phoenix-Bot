@@ -12,9 +12,11 @@ class Bot {
         });
         this.LinkManager = new LinkManager(this); 
         this.GuildManager = new GuildManager(this);
-        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {}, async () => {
+        this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        }, async () => {
             console.log("Database is connected. ");
-            console.log("Loading guilds...");
             // await this.GuildManager.loadGuilds(); Mark for removal; changed to cold start method (loading guilds into cache when necessary)
         });
         this.CoreBot.start();

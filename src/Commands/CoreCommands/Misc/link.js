@@ -40,7 +40,7 @@ const RoleSync = require("../../../RoleSync/RoleSync");
             return sendErrorMessage(message.channel, "Error: The specified player does not have discord linked!");
         }
 
-        if (await client.Bot.LinkManager.getDataByDiscord(message.member.id)) return sendErrorMessage(message.channel, client.parsePrefix(message.guild.id, `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `)); 
+        if (await client.Bot.LinkManager.getDataByDiscord(message.member.id)) return sendErrorMessage(message.channel, await client.parsePrefix(message.guild.id, `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `)); 
 
         const existingLink = await client.Bot.LinkManager.getDataByUUID(plr.uuid); 
 
