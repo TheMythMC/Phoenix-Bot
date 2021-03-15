@@ -14,9 +14,8 @@ async function getGuildDataByPlayer(playerName) {
     return await Hypixel(`guilds/${playerName}`, slothpixelURL || backupSlothpixelURL);
 }
 
-// NOT IMPLEMENTED
 async function getGuildDataByID(id) {
     return await Hypixel(`guilds/id/${id}`, slothpixelURL || backupSlothpixelURL); // TODO: yo myth please implement this :D
 }
 
-module.exports = { getGuildDataByName, getGuildDataByPlayer, getPlayerData }
+module.exports = { getGuildDataByName, getGuildDataByPlayer, getPlayerData, getGuildDataByID }
