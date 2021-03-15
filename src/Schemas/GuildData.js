@@ -18,8 +18,6 @@ const GeneralSchema = new mongoose.Schema({
     GEXPData: [GEXPSchema],
     GEXPWhitelist: [String], 
     GuildID: String,
-    GuildBotUUID: String,
-    GuildBotAPIKey: String,
     Prefix: String
 });
 

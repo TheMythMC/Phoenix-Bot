@@ -30,8 +30,8 @@ module.exports = async (client, g, guildCheckDays = 7) => {
             Rank: roleReq.RoleName, 
             Gexp: gexp, 
             Passed: gexp >= roleReq.MinExp, 
-            Size: xpHistory.length, 
-            Name: await await client.Bot.UUIDManager.getUserByUUID(member.uuid), 
+            isNew: member.joined >= ((new Date()).getTime() - (7*24*60*60*1000)), 
+            Name: await client.Bot.UUIDManager.getUserByUUID(member.uuid), 
             UUID: member.uuid
         });
     }

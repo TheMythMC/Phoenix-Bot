@@ -30,9 +30,9 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
 
         for (let data of res) {
             if (mode === "failed" && guild.data.GEXPWhitelist.includes(data.Rank)) continue; 
-            if ((data.Passed && mode === "failed")) continue; 
-            if (!data.Passed && !guild.data.GEXPWhitelist.includes(data.Rank) && mode === "passed") continue; 
-            text += `\n\t${i+1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === "passed" || mode === "failed" ? "" : (` - ${data.Passed ? "Enough Gexp" : (data.Size >= 7 ? "Not enough Gexp" : "In guild for less than 7 days")}`)}`; 
+            if ((data.Passed || data.isNew) && mode === "failed") continue; 
+            if (!data.Passed && !guild.data.GEXPWhitelist.includes(data.Rank) && mode === "passed" && !data.isNew) continue; 
+            text += `\n\t${i+1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === "passed" || mode === "failed" ? "" : (` - ${data.Passed ? "Enough Gexp" : (data.isNew ? "In guild for less than 7 days" : "Not enough Gexp")}`)}`; 
             i++; 
         }
 
