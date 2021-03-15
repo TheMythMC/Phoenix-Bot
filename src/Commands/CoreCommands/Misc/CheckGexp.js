@@ -2,7 +2,7 @@ const Command = require("../../../Structure/Command");
 
 const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
 
-const { sendErrorMessage, sendCustomMessage } = require("../../../utils/MessageUtils"); 
+const { sendErrorMessage, sendCustomMessage, createCustomEmbed, createErrorMessage } = require("../../../utils/MessageUtils"); 
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
@@ -20,9 +20,12 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
     async run(message, args, client) {
         let mode = args[0]; 
         let time = args[1] || 7; 
+
+        const msg = await sendCustomMessage(message.channel, "BLUE", "Checking gexp...", "GEXP"); 
+
         const guild = await client.Bot.GuildManager.getGuild(message.guild.id); 
         const res = await checkGexp(client, guild, time); 
-        if (!res) return sendErrorMessage("Guild not linked!"); 
+        if (!res || Object.keys(res).length === 0) return msg.edit(createErrorMessage("Guild not linked!")); 
 
         let text = ""; 
 
@@ -32,13 +35,16 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
             if (mode === "failed" && guild.data.GEXPWhitelist.includes(data.Rank)) continue; 
             if ((data.Passed || data.isNew) && mode === "failed") continue; 
             if (!data.Passed && !guild.data.GEXPWhitelist.includes(data.Rank) && mode === "passed" && !data.isNew) continue; 
-            text += `\n\t${i+1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === "passed" || mode === "failed" ? "" : (` - ${data.Passed ? "Enough Gexp" : (data.isNew ? "In guild for less than 7 days" : "Not enough Gexp")}`)}`; 
+            text += `\n\t${i+1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === "passed" || mode === "failed" ? "" : (` - ${data.Passed ? "<:approve:813433528964481045>" : (data.isNew ? "<:early:821022017607958546>" : "<:Deny:813433562052165653>")}`)}`; 
             i++; 
         }
 
         if (!text) text = "No users. "; 
 
-        sendCustomMessage(message.channel, "GREEN", text, "GEXP"); 
+        msg.edit(createCustomEmbed("GREEN", text, "GEXP", "", {
+            name: "Key Value", 
+            value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${guild.data.PardonNewGEXPMembers ? `\n<:early:821022017607958546> = In guild for less than 7 days` : ""}`
+        })); 
     }
 }
 

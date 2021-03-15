@@ -17,6 +17,7 @@ const GeneralSchema = new mongoose.Schema({
     RoleLinks: [RoleSchema],
     GEXPData: [GEXPSchema],
     GEXPWhitelist: [String], 
+    PardonNewGEXPMembers: Boolean, 
     GuildID: String,
     Prefix: String
 });
@@ -30,6 +31,7 @@ const Default = {
     RoleLinks: [],
     GEXPData: [],
     GEXPWhitelist: [], 
+    PardonNewGEXPMembers: false, 
     GuildID: "",
     GuildBotUUID: "",
     GuildBotAPIKey: "",
