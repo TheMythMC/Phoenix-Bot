@@ -30,8 +30,9 @@ class Utils {
             .setTitle(title)
             .setFooter(`Phoenix Bot coded by Project Phoenix ${footer || ""}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
             .setTimestamp();
-        if(sections !== undefined) {
+        if(sections !== undefined && sections.length != 0) {
             for (let i = 0; i < sections.length; i++) {
+                if (!sections[i] || !sections[i].name || !sections[i].value) continue; 
                 embed.addField(sections[i].name, sections[i].value);
             }
         }

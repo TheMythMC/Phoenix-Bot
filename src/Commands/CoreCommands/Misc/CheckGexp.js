@@ -41,7 +41,7 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
 
         if (!text) text = "No users. "; 
 
-        msg.edit(createCustomEmbed("GREEN", text, "GEXP", "", {
+        msg.edit(createCustomEmbed("GREEN", text, "GEXP", "", mode === "failed" || mode === "passed" ? {} : {
             name: "Key Value", 
             value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${guild.data.PardonNewGEXPMembers ? `\n<:early:821022017607958546> = In guild for less than 7 days` : ""}`
         })); 
