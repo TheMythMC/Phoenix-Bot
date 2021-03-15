@@ -20,6 +20,10 @@ class GuildManager {
         }
     }
 
+    unloadGuilds() {
+        this.guilds = []; 
+    }
+
     async isPremium(guildID) {
         return await PremiumLinkData.Model.exists({ServerID: guildID}); 
     }
@@ -36,7 +40,7 @@ class GuildManager {
 
         const guild = await GuildData.Model.findOne({ ServerID: guildID }); 
         if (guild) {
-            this.addGuild(guild, this.isPremium(guildID)); 
+            this.addGuild(guild, await this.isPremium(guildID)); 
             return this._getGuildFromCache(guildID); 
         } 
     }

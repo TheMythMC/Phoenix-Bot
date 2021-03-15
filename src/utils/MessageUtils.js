@@ -28,7 +28,7 @@ class Utils {
             .setColor(color)
             .setDescription(message)
             .setTitle(title)
-            .setFooter(`Phoenix Bot coded by Project Phoenix ${footer}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
+            .setFooter(`Phoenix Bot coded by Project Phoenix ${footer || ""}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
             .setTimestamp();
         if(sections !== undefined) {
             for (let i = 0; i < sections.length; i++) {
