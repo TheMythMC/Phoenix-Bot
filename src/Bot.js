@@ -19,7 +19,6 @@ class Bot {
           useUnifiedTopology: true
         }, async () => {
             console.log("Database is connected. ");
-            // await this.GuildManager.loadGuilds(); Mark for removal; changed to cold start method (loading guilds into cache when necessary)
         });
         this.CoreBot.start();
     }
