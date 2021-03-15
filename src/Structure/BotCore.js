@@ -4,6 +4,7 @@ const Util = require("../utils/Util");
 const path = require("path");
 const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");
+const config = require("../../config.json"); 
 
 const RoleSync = require("../RoleSync/RoleSync"); 
 
@@ -44,6 +45,7 @@ class BotCore extends Client {
             const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
 
             if (command) {
+                if (command.requireBotOwner && !config.BotOwners.includes(message.member.id)) return sendErrorMessage(message.channel, "Only the bot owners can execute this command!"); 
                 if (command.requiredPerms) {
                     let isAllowed = true;
                     command.requiredPerms.forEach((perm) => {

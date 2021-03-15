@@ -8,8 +8,9 @@ class RegisterGuild extends Command {
             aliases: [],
             description: "Registers guild in db",
             category: "Misc",
-            usage: `%pRegisterGuild`,
-            requiredPerms: []
+            usage: `%pregisterguild`,
+            requiredPerms: [], 
+            requireBotOwner: true
         });
     }
 
