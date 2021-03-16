@@ -12,8 +12,8 @@ class TestCommand extends Command {
     }
 
     async run(message, args, client) {
-        
+        message.channel.send("Yes, I work :confused:")
     }
 }
-
+6
 module.exports = TestCommand;
