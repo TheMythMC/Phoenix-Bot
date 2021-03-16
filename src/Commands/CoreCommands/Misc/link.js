@@ -48,7 +48,6 @@ const RoleSync = require("../../../RoleSync/RoleSync");
             if (existingLink.DiscordID !== message.member.id) return sendErrorMessage(message.channel, "This minecraft account has already been linked to another discord account. "); 
 
             if (existingLink.DiscordID === message.member.id/*same data*/) return sendErrorMessage(message.channel, `The discord, \`${links}\` is already linked to \`${plr.username}\`. `); 
-
         }
 
         if (discord !== links) return sendErrorMessage(message.channel, `Please change your ingame discord from \`${links}\` to \`${discord}\`. `);

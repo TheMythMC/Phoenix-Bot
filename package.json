@@ -21,6 +21,8 @@
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
     "glob": "^7.1.6",
     "glob-promise": "^4.0.1",
     "jslint": "^0.12.1",
