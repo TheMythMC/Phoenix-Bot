@@ -2,7 +2,7 @@ const Command = require("../../../Structure/Command");
 
 const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
 
-const { sendErrorMessage, sendCustomMessage, createCustomEmbed, createErrorMessage } = require("../../../utils/MessageUtils"); 
+const { sendCustomMessage, createCustomEmbed, createErrorMessage } = require("../../../utils/MessageUtils"); 
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
