@@ -1,4 +1,6 @@
 const express = require("express"); 
+const cookieParser = require("cookie-parser"); 
+const cors = require("cors"); 
 
 class Server {
     constructor(bot, port) {
@@ -12,11 +14,16 @@ class Server {
     }
 
     addMiddleware() {
+        this.app.use(express.json()); 
+        this.app.use(express.urlencoded()); 
+        this.app.use(cors()); 
+        this.app.use(cookieParser()); 
         this.addRouters(); 
     }
 
     addRouters() {
         this.app.use("/live", require("./routers/live")); 
+        this.app.use("/api", require("./routers/api")); 
     }
 }
 

@@ -2,6 +2,7 @@ const Command = require("../Structure/Command");
 const path = require("path");
 const glob = require("glob");
 const pathParse = require('path-parse');
+const crypto = require('crypto'); 
 
 class Util {
     static isClass(input) {
@@ -41,6 +42,10 @@ class Util {
     }
     static capitalize(string) {
         return string.split(' '.localeCompare(str => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' '));
+    }
+
+    static genRandomKey(bytes = 16) {
+        return crypto.randomBytes(bytes).toString("base64"); 
     }
 }
 

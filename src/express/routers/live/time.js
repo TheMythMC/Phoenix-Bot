@@ -4,12 +4,11 @@ const router = express.Router();
 router.ws("/", (ws, req) => {
     
     const e = setInterval(() => {
-        ws.send(new Date().getTime()); 
+        ws.send(Date.now()); 
     }, 1000); 
 
     ws.on('close', () => {
         clearInterval(e); 
-        console.log("CLOSING..."); 
     }); 
 }); 
 
