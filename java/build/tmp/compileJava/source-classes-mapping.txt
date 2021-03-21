@@ -1,4 +1,0 @@
-xyz/projectphoenix/music/Listener.java
- xyz.projectphoenix.music.Listener
-xyz/projectphoenix/music/Bot.java
- xyz.projectphoenix.music.Bot
