@@ -109,3 +109,4 @@ config.json
 # java
 **/build/
 **/out
+*.class
