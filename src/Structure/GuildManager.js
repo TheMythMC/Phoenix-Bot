@@ -61,6 +61,13 @@ class GuildManager {
         }
         guild.premium = false;
     }
+
+    editKey(guildID, key, value) {
+        let guild = this.getGuild(guildID);
+        if(!guild) return;
+
+        if(PremiumLinkData.Model.exists({ServerID: guild.ServerID})
+    }
 }
 
 module.exports = GuildManager;

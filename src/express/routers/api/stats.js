@@ -7,13 +7,11 @@ router.use('/', (req, res) => {
     let guilds = bot.guilds.cache.size;
     let users = bot.users.cache.size;
     let uptime = bot.uptime;
-    res.json(
-        {
+    res.json({
             botsActive: 0,
             servers: guilds,
             users: users,
             uptime: uptime
-        }
-    )
+    });
 }); 
 module.exports = router;

@@ -19,9 +19,11 @@ const GeneralSchema = new mongoose.Schema({
     GEXPWhitelist: [String], 
     PardonNewGEXPMembers: Boolean, 
     GuildID: String,
-    Prefix: String
+    Prefix: String,
+    BotUsername: String, 
+    BotPassword: String,
+    BotAuth: String
 });
-
 
 module.exports.Model = mongoose.model("GuildData", GeneralSchema);
 module.exports.GEXPSchema = GEXPSchema;
@@ -35,7 +37,7 @@ const Default = {
     GuildID: "",
     GuildBotUUID: "",
     GuildBotAPIKey: "",
-    Prefix: "!"
+    Prefix: "!",
 }
 module.exports.createDefault = (ServerID, prefix = "!") => {
     let obj = {};

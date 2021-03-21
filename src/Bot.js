@@ -4,6 +4,7 @@ const DatabaseHandler = require("./handlers/DatabaseHandler");
 const LinkManager = require("./Structure/LinkManager"); 
 const UUIDManager = require("./Structure/UUIDManager"); 
 const Server = require("./express/Server"); 
+const MineflayerManager = require('./Structure/MineflayerManager');
 
 class Bot {
     constructor() {
@@ -15,14 +16,16 @@ class Bot {
         this.LinkManager = new LinkManager(this); 
         this.GuildManager = new GuildManager(this);
         this.UUIDManager = new UUIDManager(this); 
-        this.WebServer = new Server(this, 4000); 
+        this.WebServer = new Server(this, 4000);
         this.DatabaseHandler = new DatabaseHandler(process.env.DB_URI, {
           useNewUrlParser: true,
           useUnifiedTopology: true
-        }, async () => {
+        }, () => {
             console.log("Database is connected. ");
         });
         this.CoreBot.start();
+        // this shouldn't work, but screw it; it might ¯\_(ツ)_/¯ idk
+        this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
     }
   static getBot() {
     return this.bot; 
