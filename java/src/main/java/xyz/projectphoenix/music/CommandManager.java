@@ -7,6 +7,8 @@ import xyz.projectphoenix.music.command.CommandContext;
 import xyz.projectphoenix.music.command.ICommand;
 import xyz.projectphoenix.music.command.commands.JoinCommand;
 import xyz.projectphoenix.music.command.commands.PlayCommand;
+import xyz.projectphoenix.music.command.commands.SkipCommand;
+import xyz.projectphoenix.music.command.commands.StopCommand;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class CommandManager {
     public CommandManager() {
         addCommand(new JoinCommand());
         addCommand(new PlayCommand());
+        addCommand(new StopCommand());
+        addCommand(new SkipCommand());
     }
 
     private void addCommand(ICommand cmd) {

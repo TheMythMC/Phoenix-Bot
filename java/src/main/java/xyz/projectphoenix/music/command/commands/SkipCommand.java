@@ -1,26 +1,20 @@
 package xyz.projectphoenix.music.command.commands;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import xyz.projectphoenix.music.command.CommandContext;
 import xyz.projectphoenix.music.command.ICommand;
+import xyz.projectphoenix.music.lavaplayer.GuildMusicManager;
 import xyz.projectphoenix.music.lavaplayer.PlayerManager;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Objects;
 
-public class PlayCommand implements ICommand {
-    public static boolean isSearch = false;
+public class SkipCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
-
-        if(ctx.getArgs().isEmpty()) {
-            channel.sendMessage("You must specify a link/title").queue();
-            return;
-        }
 
         final Member selfMember = ctx.getSelfMember();
         final GuildVoiceState selfVoiceState = selfMember.getVoiceState();
@@ -39,30 +33,20 @@ public class PlayCommand implements ICommand {
             channel.sendMessage("You need to be in the same voice channel as me for this to work").queue();
             return;
         }
+        final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        final AudioPlayer audioPlayer = musicManager.audioPlayer;
 
-        String link = String.join(" ", ctx.getArgs());
-        if(isURL(link) && (!link.startsWith("http://") || !link.startsWith("https://"))) {
-
-            link = "ytsearch:" + link;
-            isSearch = true;
-            System.out.println("fudge you retard 2");
-
+        if(audioPlayer.getPlayingTrack() == null) {
+            channel.sendMessage("There is no track currently playing.").queue();
+            return;
         }
-        
-        PlayerManager.getInstance().loadAndPlay(channel, link);
+
+        musicManager.scheduler.nextTrack();
+        channel.sendMessage("Skipped the current track").queue();
     }
 
     @Override
     public String getName() {
-        return "play";
-    }
-
-    private boolean isURL(String link) {
-        try {
-            new URL(link);
-            return false;
-        } catch (MalformedURLException e) {
-            return true;
-        }
+        return "skip";
     }
 }

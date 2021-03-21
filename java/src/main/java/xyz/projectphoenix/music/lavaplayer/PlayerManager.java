@@ -10,6 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import xyz.projectphoenix.music.command.commands.PlayCommand;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.Map;
 public class PlayerManager {
     private static PlayerManager INSTANCE;
 
-    private final Map<Long, GuildMusicManager> musicManagers;
-    private final AudioPlayerManager audioPlayerManager;
+    public final Map<Long, GuildMusicManager> musicManagers;
+    public final AudioPlayerManager audioPlayerManager;
 
     public PlayerManager() {
         this.audioPlayerManager = new DefaultAudioPlayerManager();
@@ -58,16 +59,28 @@ public class PlayerManager {
             public void playlistLoaded(AudioPlaylist playlist) {
                 List<AudioTrack> tracks = playlist.getTracks();
 
-                channel.sendMessage("Adding to queue: `")
-                        .append(String.valueOf(tracks.size()))
-                        .append("` tracks from playlist `")
-                        .append(playlist.getName())
-                        .append('`')
-                        .queue();
-
-                for (AudioTrack track : tracks) {
+                if(PlayCommand.isSearch) {
+                    AudioTrack track = tracks.get(0);
                     musicManager.scheduler.queue(track);
+                    channel.sendMessage("Adding to queue: `")
+                            .append(track.getInfo().title)
+                            .append("` by `")
+                            .append(track.getInfo().author)
+                            .append('`')
+                            .queue();
+                } else {
+                    for (AudioTrack track : tracks) {
+                        musicManager.scheduler.queue(track);
+                    }
+
+                    channel.sendMessage("Adding to queue: `")
+                            .append(String.valueOf(tracks.size()))
+                            .append("` tracks from playlist `")
+                            .append(playlist.getName())
+                            .append('`')
+                            .queue();
                 }
+
             }
 
             @Override
@@ -77,7 +90,7 @@ public class PlayerManager {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                channel.sendMessage("Load failed, please try again or alert the devs at discord.gg/phoenixbot").queue();
             }
         });
     }
