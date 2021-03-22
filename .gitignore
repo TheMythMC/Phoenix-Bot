@@ -110,3 +110,6 @@ config.json
 **/build/
 **/out
 *.class
+java/bin
+.gradle/
+**/.gradle

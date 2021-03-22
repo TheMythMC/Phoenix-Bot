@@ -66,7 +66,6 @@ class GuildManager {
         let guild = this.getGuild(guildID);
         if(!guild) return;
 
-        if(PremiumLinkData.Model.exists({ServerID: guild.ServerID})
     }
 }
 

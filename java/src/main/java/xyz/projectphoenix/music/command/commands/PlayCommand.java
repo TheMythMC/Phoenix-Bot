@@ -3,12 +3,11 @@ package xyz.projectphoenix.music.command.commands;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import xyz.projectphoenix.music.Util;
 import xyz.projectphoenix.music.command.CommandContext;
 import xyz.projectphoenix.music.command.ICommand;
 import xyz.projectphoenix.music.lavaplayer.PlayerManager;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Objects;
 
 public class PlayCommand implements ICommand {
@@ -41,14 +40,13 @@ public class PlayCommand implements ICommand {
         }
 
         String link = String.join(" ", ctx.getArgs());
-        if(isURL(link) && (!link.startsWith("http://") || !link.startsWith("https://"))) {
+        if(!Util.isURL(link)) {
 
             link = "ytsearch:" + link;
             isSearch = true;
-            System.out.println("fudge you retard 2");
 
         }
-        
+        System.out.println(link);
         PlayerManager.getInstance().loadAndPlay(channel, link);
     }
 
@@ -57,12 +55,5 @@ public class PlayCommand implements ICommand {
         return "play";
     }
 
-    private boolean isURL(String link) {
-        try {
-            new URL(link);
-            return false;
-        } catch (MalformedURLException e) {
-            return true;
-        }
-    }
+
 }

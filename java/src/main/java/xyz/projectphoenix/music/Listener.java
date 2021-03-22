@@ -27,7 +27,7 @@ public class Listener extends ListenerAdapter {
         if(user.isBot() || event.isWebhookMessage()) return;
 
         final long guildID = event.getGuild().getIdLong();
-        String prefix = xyz.projectphoenix.music.Config.get("prefix");
+        String prefix = Config.get("prefix");
         String raw = event.getMessage().getContentRaw();
 
         if(raw.equalsIgnoreCase(prefix + "shutdown") && event.getAuthor().getId() == Config.get("OWNER_ID")) {
