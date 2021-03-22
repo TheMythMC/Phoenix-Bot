@@ -2,7 +2,10 @@ import os
 
 path = os.getcwd()
 
-os.chdir((path + '/../java'))
+if path.endswith('/src'):
+    os.chdir((path + '/../java'))
+else:
+    os.chdir((path + '/java'))
 
 os.system('./gradlew shadowJar')
 
