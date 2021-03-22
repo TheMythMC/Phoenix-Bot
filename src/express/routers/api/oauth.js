@@ -111,6 +111,7 @@ router.get("/isValidSession", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
   const session = req.cookies.session_id;
+  // TODO: finish this
 });
 
 module.exports = router;
