@@ -1,24 +1,29 @@
 const mongoose = require("mongoose");
+const ttl = require("mongoose-ttl"); 
 
 const GeneralSchema = new mongoose.Schema({
     SessionID: String, 
     AccessToken: String, 
-    RefreshToken: String
+    RefreshToken: String, 
+    ExpireTime: Number
 });
 
+GeneralSchema.plugin(ttl, { ttl: 1000*60*60*24*30 }); 
+
 module.exports.Model = mongoose.model("DiscordOAuthData", GeneralSchema);
-module.exports.GEXPSchema = GEXPSchema;
-module.exports.RoleSchema = RoleSchema;
 const Default = {
     SessionID: "", 
     AccessToken: "", 
-    ResfreshToken: ""
+    RefreshToken: "", 
+    ExpireTime: 0
 }
-module.exports.createDefault = (ServerID, prefix = "!") => {
+module.exports.createDefault = (SessionID, AccessToken, RefreshToken, expiresIn) => {
     let obj = {};
 
     Object.assign(obj, Default);
-    obj.ServerID = ServerID;
-    obj.Prefix = prefix; 
+    obj.SessionID = SessionID;
+    obj.AccessToken = AccessToken; 
+    obj.RefreshToken = RefreshToken; 
+    obj.ExpireTime = Date.now() + (expiresIn * 1000)
     return new module.exports.Model(obj);
 }
