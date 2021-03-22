@@ -45,7 +45,7 @@ class Util {
     }
 
     static genRandomKey(bytes = 16) {
-        return crypto.randomBytes(bytes).toString("base64"); 
+        return crypto.randomBytes(bytes).toString("hex"); 
     }
 }
 

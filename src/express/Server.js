@@ -16,7 +16,10 @@ class Server {
     addMiddleware() {
         this.app.use(express.json()); 
         this.app.use(express.urlencoded()); 
-        this.app.use(cors()); 
+        this.app.use(cors({
+            origin: 'http://localhost:3000', // CORS policy
+            credentials: true
+        })); 
         this.app.use(cookieParser()); 
         this.addRouters(); 
     }
