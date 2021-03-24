@@ -9,5 +9,7 @@ public class DatabaseHelper {
 
     public DatabaseHelper() {
         mongoClient = MongoClients.create(Config.get("DB_URI"));
+        mongoClient.close();
     }
+    
 }

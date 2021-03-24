@@ -26,7 +26,7 @@ public class Listener extends ListenerAdapter {
         User user = event.getAuthor();
         if(user.isBot() || event.isWebhookMessage()) return;
 
-        final long guildID = event.getGuild().getIdLong();
+        // final long guildID = event.getGuild().getIdLong();
         String prefix = Config.get("prefix");
         String raw = event.getMessage().getContentRaw();
 

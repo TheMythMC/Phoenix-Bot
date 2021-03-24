@@ -1,6 +1,5 @@
 package xyz.projectphoenix.music.lavaplayer;
 
-import com.iwebpp.crypto.TweetNaclFast;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
