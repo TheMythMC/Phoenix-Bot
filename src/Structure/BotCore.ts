@@ -8,8 +8,8 @@ const config = require("../../config.json");
 
 const RoleSync = require("../RoleSync/RoleSync"); 
 
-class BotCore extends Client {
-    constructor(bot, options = {}) {
+export default class BotCore extends Client {
+    constructor(bot, options = {} as IBotCore) {
         super({
             disableMentions: 'everyone'
         });
@@ -98,6 +98,11 @@ class BotCore extends Client {
             RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks); 
         }
     }
+}
+
+interface IBotCore {
+    token: string,
+    defaultPrefix: string
 }
 
 

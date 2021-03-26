@@ -3,6 +3,9 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors"); 
 
 class Server {
+    app: any;
+    port: any;
+    Bot: any;
     constructor(bot, port) {
         this.app = express(); 
         require('express-ws')(this.app); 

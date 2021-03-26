@@ -1,4 +1,4 @@
-const BotCore = require("./Structure/BotCore");
+import BotCore from "./Structure/BotCore"
 const GuildManager = require("./Structure/GuildManager");
 const DatabaseHandler = require("./handlers/DatabaseHandler");
 const LinkManager = require("./Structure/LinkManager"); 
@@ -6,6 +6,13 @@ const UUIDManager = require("./Structure/UUIDManager");
 const Server = require("./express/Server"); 
 
 class Bot {
+  static bot: Bot;
+  CoreBot: typeof GuildManager;
+  LinkManager: any;
+  GuildManager: any;
+  UUIDManager: any;
+  WebServer: any;
+  DatabaseHandler: any;
     constructor() {
         Bot.bot = this; 
         this.CoreBot = new BotCore(this, {

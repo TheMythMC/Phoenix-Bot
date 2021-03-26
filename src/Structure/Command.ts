@@ -1,6 +1,14 @@
 // noinspection JSUnusedLocalSymbols
-module.exports = class Command {
-    constructor(client, name, options = {}) {
+export default class Command {
+    client: any;
+    name: any;
+    aliases: string[];
+    description: string;
+    category: string;
+    usage: string;
+    requiredPerms: string[];
+    requireBotOwner: boolean;
+    constructor(client, name, options = {} as ICommand) {
         this.client = client
         this.name = name;
         this.aliases = options.aliases || [];
@@ -18,4 +26,13 @@ module.exports = class Command {
     getUsage(prefix) {
         return this.usage.replace(/%p/g, prefix);
     }
+}
+
+interface ICommand {
+    aliases?: string[],
+    description?: string,
+    category?: string,
+    usage?: string,
+    requiredPerms?: string[],
+    requireBotOwner?: boolean
 }
