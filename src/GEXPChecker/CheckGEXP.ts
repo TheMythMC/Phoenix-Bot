@@ -11,8 +11,8 @@ module.exports = async (client, g, guildCheckDays = 7) => {
     let res = []; 
 
     // please optimize this looks so ugly i hate it but idk how to optimize  - Banana
-    for (member of guildData.members) {
-        let gexp = 0; 
+    for (let member of guildData.members) {
+        let gexp: any = 0; 
         const xpHistory = Object.values(member.exp_history);
 
         for (let i = 0; i < guildCheckDays; i++) { // standard for loop cuz of the guildCheckDays

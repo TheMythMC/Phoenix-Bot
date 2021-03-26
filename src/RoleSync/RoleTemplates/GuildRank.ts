@@ -1,6 +1,6 @@
 const Bot = require("../../Bot"); 
 
-const HypixelAPI = require("../../Structure/HypixelAPI"); 
+import { getGuildDataByID, } from "../../Structure/HypixelAPI"
 
 const GuildRank = async (uuid, guildID, cache, params) => {
     const role = params[0];
@@ -10,7 +10,7 @@ const GuildRank = async (uuid, guildID, cache, params) => {
 
     try {
         const f = cache?.guilds.find(g => g.id === guildID || g.name === guildID); 
-        let guildData = f || await HypixelAPI.getGuildDataByName(guildID); 
+        let guildData = f || await getGuildDataByID(guildID); 
 
          if (!guildData) return false;          
 

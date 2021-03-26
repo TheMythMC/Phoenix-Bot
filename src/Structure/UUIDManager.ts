@@ -1,7 +1,8 @@
-const MojangAPI = require('./MojangAPI');
+const {getUUIDByUser, getUserByUUID} = require('./MojangAPI');
 const conf = require("../../config.json"); 
 
 class UUIDManager {
+    cache: any[];
     constructor() {
         this.cache = []; 
         if (conf.UUIDUsernameAPICache) {
@@ -12,7 +13,7 @@ class UUIDManager {
         }
     }
 
-    async getUUIDByUser(username) {
+    async getUUIDByUser(username: String): Promise<String> {
         if (conf.UUIDUsernameAPICache) {
             let cacheHit = this.cache.find(data => (data).name.toLowerCase() === username.toLowerCase()); 
             if (cacheHit) return cacheHit.id; 
@@ -25,7 +26,7 @@ class UUIDManager {
         }
     }
 
-    async getUserByUUID(uuid) {
+    async getUserByUUID(uuid: String): Promise<String> {
         if (conf.UUIDUsernameAPICache) {
             let cacheHit = this.cache.find(data => (data).name.toLowerCase() === uuid.toLowerCase()); 
             if (cacheHit) return cacheHit.name; 
@@ -38,15 +39,14 @@ class UUIDManager {
         }
     }
 
-    saveCache(data) {
+    saveCache(data): void {
         if (conf.UUIDUsernameAPICache) {
             this.cache.push(data); 
         }
     }
 
-    _resetCache(self) {
+    _resetCache(self: UUIDManager): void {
         self.cache = []; 
     }
 }
-
-module.exports = UUIDManager; 
+module.exports = UUIDManager;

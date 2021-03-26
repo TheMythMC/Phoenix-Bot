@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "target": "ES5",
+        "outDir": "tsbuild",
+        "downlevelIteration": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}

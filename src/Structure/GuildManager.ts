@@ -1,9 +1,11 @@
-const Guild = require("./Guild");
+import Guild from './Guild'
 const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");
 
 
 class GuildManager {
+    guilds: any[];
+    bot: any;
     constructor(bot) {
         // holds guild data for guilds
         this.guilds = [];

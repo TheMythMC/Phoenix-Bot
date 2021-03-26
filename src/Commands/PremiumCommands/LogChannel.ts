@@ -1,13 +1,16 @@
-const Command = require('../../Structure/Command');
+import Command from '../../Structure/Command'
 const { sendErrorMessage, sendCustomMessage, sendSuccessMessage } = require('../../utils/MessageUtils');
 const { getBot } = require('../../Bot');
 
 module.exports = class extends Command {
     constructor(client) {
         super(client, 'logChannel', {
-            category: 'Premium',
-            usage: '%plogChannel <channel ID>',
-            requiredPerms: ['ADMINISTRATOR']
+            category: "Premium",
+            usage: "%plogChannel <channel ID>",
+            requiredPerms: ['ADMINISTRATOR'],
+            aliases: [],
+            description: "Set the channel for your bot to use",
+            requireBotOwner: false
         });
     }
 

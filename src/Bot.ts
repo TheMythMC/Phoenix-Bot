@@ -1,4 +1,4 @@
-const BotCore = require("./Structure/BotCore");
+import BotCore from "./Structure/BotCore"
 const GuildManager = require("./Structure/GuildManager");
 const DatabaseHandler = require("./handlers/DatabaseHandler");
 const LinkManager = require("./Structure/LinkManager"); 
@@ -6,7 +6,15 @@ const UUIDManager = require("./Structure/UUIDManager");
 const Server = require("./express/Server"); 
 const MineflayerManager = require('./Structure/MineflayerManager');
 
-class Bot {
+export default class Bot {
+  static bot: Bot;
+  CoreBot: BotCore;
+  LinkManager: typeof LinkManager;
+  GuildManager: typeof GuildManager;
+  UUIDManager: UUIDManager;
+  WebServer: Server;
+  DatabaseHandler: DatabaseHandler;
+  MineflayerManagerV: any;
     constructor() {
         Bot.bot = this; 
         this.CoreBot = new BotCore(this, {
@@ -21,11 +29,11 @@ class Bot {
           useNewUrlParser: true,
           useUnifiedTopology: true
         }, () => {
-            console.log("Database is connected. ");
+            console.log("Database is connected.");
         });
         this.CoreBot.start();
         // this shouldn't work, but screw it; it might ¯\_(ツ)_/¯ idk
-        this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
+        this.MineflayerManagerV = new MineflayerManager(this.CoreBot.guilds.cache);
     }
   static getBot() {
     return this.bot; 

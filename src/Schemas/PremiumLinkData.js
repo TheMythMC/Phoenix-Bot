@@ -8,7 +8,9 @@ const schema = new mongoose.Schema({
     BotPassword: String,
     BotAuth: String,
     BotAuth: String,
-    LogChannel: Number
+    LogChannel: Number,
+    MCPrefix: String,
+    Logging: Boolean
 });
 
 module.exports.Model = mongoose.model("PremiumLinkData", schema);
@@ -19,9 +21,11 @@ const Default = {
     BotUsername: "",
     BotPassword: "",
     BotAuth: "mojang",
-    LogChannel: ""
+    LogChannel: "",
+    MCPrefix: "!",
+    Logging: false
 }
-module.exports.createDefault = (DiscordID, ServerID, ExpireDate, BotUsername, BotPassword, BotAuth, LogChannel) => {
+module.exports.createDefault = (DiscordID, ServerID, ExpireDate, BotUsername, BotPassword, BotAuth, LogChannel, MCPrefix, Logging) => {
     let obj = {};
 
     Object.assign(obj, Default);
@@ -32,5 +36,7 @@ module.exports.createDefault = (DiscordID, ServerID, ExpireDate, BotUsername, Bo
     obj.BotPassword = BotPassword;
     obj.BotAuth = BotAuth;
     obj.LogChannel = LogChannel;
+    obj.MCPrefix = MCPrefix;
+    obj.Logging = Logging;
     return new module.exports.Model(obj);
 }

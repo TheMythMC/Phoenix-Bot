@@ -1,4 +1,6 @@
-class Guild {
+export default class Guild {
+    data: any;
+    isPremium: boolean;
     constructor(data, isPremium = false) {
         this.data = data;
         this.isPremium = isPremium;
@@ -12,5 +14,3 @@ class Guild {
         this.isPremium = premium;
     }
 }
-
-module.exports = Guild;

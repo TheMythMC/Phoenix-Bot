@@ -2,15 +2,15 @@ const Command = require("../Structure/Command");
 const path = require("path");
 const glob = require("glob");
 const pathParse = require('path-parse');
-const crypto = require('crypto'); 
+import { randomBytes } from 'crypto'
 
-class Util {
-    static isClass(input) {
+export default class Util {
+    static isClass(input): Boolean {
         return typeof input === 'function' &&
             typeof input.prototype === 'object' &&
             input.toString().substring(0, 5) === 'class';
     }
-    static get directory() {
+    static get directory(): String {
         return `${path.dirname(require.main.filename)}${path.sep}`;
     }
 
@@ -34,18 +34,26 @@ class Util {
             }
         });
     }
-    static formatNumber(number) {
+    static formatNumber(number: Number): String {
         return number.toLocaleString('en-US', {maximumFractionDigits:2});
     }
-    static removeDuplicates(arr) {
+    static removeDuplicates(arr: Array<any>): Array<any>
+     {
         return [...new Set(arr)];
     }
-    static capitalize(string) {
-        return string.split(' '.localeCompare(str => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' '));
+    static capitalize(string: String): String {
+        let capitalized: String[] = string.split(' ');
+        let tempArray = new Array<String>();
+        for(let word in capitalized) {
+            let temparray = word.split('');
+            tempArray[0].toUpperCase();
+            tempArray.push(temparray.join(''));
+        }
+        return tempArray.join(' ');
     }
 
-    static genRandomKey(bytes = 16) {
-        return crypto.randomBytes(bytes).toString("hex"); 
+    static genRandomKey(bytes = 16): String {
+        return randomBytes(bytes).toString("hex"); 
     }
 }
 

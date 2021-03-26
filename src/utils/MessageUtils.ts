@@ -1,27 +1,29 @@
+import { TextChannel } from "discord.js";
+
 const { MessageEmbed } = require("discord.js");
 
-class Utils {
-    static sendErrorMessage(channel, error) {
+export class Utils {
+    static sendErrorMessage(channel: TextChannel, error) {
         return channel.send(Utils.createErrorMessage(error)); 
     }
 
-    static sendSuccessMessage(channel, message) {
+    static sendSuccessMessage(channel: TextChannel, message: String) {
         return channel.send(Utils.createSuccessMessage(message)); 
     }
 
     static createSuccessMessage(message) {
-        return Utils.createCustomEmbed("GREEN", message, "Success!")
+        return Utils.createCustomEmbed("GREEN", message, "Success!", undefined)
     }
 
     static createErrorMessage(error) {
-        return Utils.createCustomEmbed("RED", error, "Error"); 
+        return Utils.createCustomEmbed("RED", error, "Error", undefined); 
     }
 
-    static sendCustomMessage(channel, color, message, title, footer, ...sections) {
+    static sendCustomMessage(channel: TextChannel, color, message, title, footer, ...sections) {
         return channel.send(Utils.createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    static createCustomEmbed(color, message, title, footer, ...sections) {
+    static createCustomEmbed(color: String, message: String, title: String, footer: String, ...sections) {
         let embed = new MessageEmbed(); 
 
         embed
@@ -39,5 +41,3 @@ class Utils {
         return embed; 
     }
 }
-
-module.exports = Utils;

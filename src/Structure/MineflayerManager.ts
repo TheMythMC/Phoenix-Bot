@@ -1,9 +1,11 @@
-const { glob } = require('glob-promise');
 const mineflayer = require('mineflayer');
 const mainBot = require('../Bot')
+const MineflayerCommandManager = require('./Mineflayer/MineflayerCommandManager')
 
-module.exports = class MineflayerManager {
+export default class MineflayerManager {
+    MineCraftBots: Map<Number, any>;
     constructor(guilds) {
+        new MineflayerCommandManager().loadCommands(this, './Mineflayer/Commands/**/*.js');
         this.MineCraftBots = new Map();
         guilds.each(async (guild) => {
             if (mainBot.getBot().GuildManager.isPremium(guild.id) || !(guild.id === null) || !(guild.id === undefined)) {
@@ -11,12 +13,15 @@ module.exports = class MineflayerManager {
             }
         });
     }
+
+    
+
     getMCBots() {
         return this.MineCraftBots;
     }
-    createBot(guildData){
+    createBot(guildData) {
         let realGuildData = (guildData).data;
-        const bot = mineflayer.createBot({
+        let bot = mineflayer.createBot({
             username: realGuildData.BotUsername,
             password: realGuildData.BotPassword,
             auth: guildData.BotAuth,
@@ -25,7 +30,7 @@ module.exports = class MineflayerManager {
             port: '25565'
         });
 
-        bot.on('error', () => {
+        bot.on('error', (err) => {
             console.log(err);
         });
 
@@ -36,8 +41,12 @@ module.exports = class MineflayerManager {
         bot.chatAddPattern(/(\[.+\]) (.+) \[(.+)\]: (.+)/, 'guildChat')
 
         bot.on('guildChat', (_globalRank, name, _guildRank, message) => {
-            
+            if(message.startsWith('!')) {
+                MineflayerCommandManager.runCommand(message.subString(1, message.length), name, bot, mainBot.getBot().CoreBot);
+            }
         });
+
         return bot;
     }
 }
+module.exports = MineflayerManager;

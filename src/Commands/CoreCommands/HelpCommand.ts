@@ -1,4 +1,4 @@
-const Command = require('../../Structure/Command');
+import Command from '../../Structure/Command'
 const messageutil = require('../../utils/MessageUtils');
 
 module.exports = class extends Command {
@@ -8,7 +8,8 @@ module.exports = class extends Command {
             description: "Displays this message",
             category: "Core",
             usage: `%phelp [command]`,
-            requiredPerms: []
+            requiredPerms: [],
+            requireBotOwner: false
         });
     }
     async run(message, args, client) {

@@ -1,4 +1,4 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
 
 class TestCommand extends Command {
     constructor(client) {
@@ -7,7 +7,8 @@ class TestCommand extends Command {
             description: "Test Command to see if bot is working",
             category: "Misc",
             usage: `%pTestCommand`,
-            requiredPerms: []
+            requiredPerms: [],
+            requireBotOwner: false
         });
     }
 

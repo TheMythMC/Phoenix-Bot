@@ -1,5 +1,5 @@
 const { Client, Collection } = require("discord.js");
-const { sendErrorMessage } = require("../utils/MessageUtils");
+import {Utils} from '../utils/MessageUtils'
 const Util = require("../utils/Util");
 const path = require("path");
 const GuildData = require("../Schemas/GuildData");
@@ -8,8 +8,11 @@ const config = require("../../config.json");
 
 const RoleSync = require("../RoleSync/RoleSync"); 
 
-class BotCore extends Client {
-    constructor(bot, options = {}) {
+export default class BotCore extends Client {
+    constructor(bot, options = {
+        defaultPrefix: '',
+        token: ''
+    }) {
         super({
             disableMentions: 'everyone'
         });
@@ -51,7 +54,7 @@ class BotCore extends Client {
                     command.requiredPerms.forEach((perm) => {
                         if (!message.member.hasPermission(perm)) isAllowed = false;
                     });
-                    if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
+                    if (!isAllowed) return Utils.sendErrorMessage(message.channel, "You are not a high enough role to use this.");
                 }
                 // noinspection ES6MissingAwait
                 command.run(message, args, this);
@@ -99,6 +102,3 @@ class BotCore extends Client {
         }
     }
 }
-
-
-module.exports = BotCore;

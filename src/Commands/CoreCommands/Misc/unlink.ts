@@ -1,4 +1,4 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
 
 const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
 
@@ -11,7 +11,8 @@ const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/Message
             description: "Unlinks discord from a minecraft player",
             category: "Misc",
             usage: `%punlink`,
-            requiredPerms: []
+            requiredPerms: [],
+            requireBotOwner: false
         });
     }
 
