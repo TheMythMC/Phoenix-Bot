@@ -1,10 +1,10 @@
-const Command = require('../../../Structure/Command');
+import Command from '../../../Structure/Command'
 const { createCustomEmbed } = require('../../../utils/MessageUtils');
 
 module.exports = class extends Command {
     constructor(client) {
 		super(client, 'ping', {
-			aliases: ['p'],
+			aliases: ['pi'],
 			description: 'Shows the ping of the bot',
 			category: 'Utilities',
 			usage: '%pping',

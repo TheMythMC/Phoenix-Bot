@@ -1,6 +1,6 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
 
-const MinecraftLinkData = require("../../../Schemas/MinecraftLinkData"); 
+import MinecraftLinkData from "../../../Schemas/MinecraftLinkData"
 
 const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/MessageUtils"); 
 

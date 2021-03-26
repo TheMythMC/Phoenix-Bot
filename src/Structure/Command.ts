@@ -2,12 +2,12 @@
 export default class Command {
     client: any;
     name: any;
-    aliases: any;
-    description: any;
-    category: any;
-    usage: any;
-    requiredPerms: any;
-    requireBotOwner: any;
+    aliases: string[];
+    description: string;
+    category: string;
+    usage: string;
+    requiredPerms: string[];
+    requireBotOwner: boolean;
     constructor(client, name, options = {} as ICommand) {
         this.client = client
         this.name = name;
@@ -27,11 +27,12 @@ export default class Command {
         return this.usage.replace(/%p/g, prefix);
     }
 }
+
 interface ICommand {
-    aliases: string[],
-    description,
-    category,
-    usage,
-    requiredPerms,
-    requireBotOwner
+    aliases?: string[],
+    description?: string,
+    category?: string,
+    usage?: string,
+    requiredPerms?: string[],
+    requireBotOwner?: boolean
 }

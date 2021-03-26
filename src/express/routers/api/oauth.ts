@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const jwt = require("jsonwebtoken");
-const { genRandomKey } = require("../../../utils/Util");
-const fetch = require("node-fetch");
-const qs = require("querystring");
+import express from 'express'
+const router = express.Router(); 
+const jwt = require('jsonwebtoken'); 
+const { genRandomKey } = require('../../../utils/Util'); 
+const fetch = require('node-fetch'); 
+const qs = require("querystring"); 
 const DiscordOAuthData = require("../../../Schemas/DiscordOAuthData");
+
 
 const url = encodeURIComponent(`http://localhost:4000/api/oauth/auth`);
 

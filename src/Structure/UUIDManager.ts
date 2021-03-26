@@ -1,4 +1,4 @@
-const {getUUIDByUser, getUserByUUID} = require('./MojangAPI');
+import * as MojangAPI from './MojangAPI'
 const conf = require("../../config.json"); 
 
 class UUIDManager {

@@ -1,6 +1,4 @@
-const Bot = require("../../Bot"); 
-
-import { getPlayerData, } from "../../Structure/HypixelAPI"
+import * as HypixelAPI from '../../Structure/HypixelAPI'
 
 const Rank = async (uuid, guildID, cache, params) => {
     const rank = params[0];
@@ -10,7 +8,7 @@ const Rank = async (uuid, guildID, cache, params) => {
 
     try {
         const f = cache?.players.find(p => p.uuid === uuid); 
-        let player = f || await getPlayerData(uuid); 
+        let player = f || await HypixelAPI.getPlayerData(uuid); 
 
          if (!player || !player.rank) return false; 
 

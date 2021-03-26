@@ -1,17 +1,17 @@
 const ky = require('ky-universal');
 
-export async function UUIDToName(uuid: String): Promise<String> {
+export async function UUIDToName(uuid) {
     return (await getByUUID(uuid)).name;
 }
 
-export async function nameToUUID(name: String): Promise<String> {
+export async function nameToUUID(name) {
     return (await getByName(name)).id;
 }
 
-async function getByName(name: String): Promise<Object> {
+export async function getByName(name) {
     return await ky.get(`https://api.mojang.com/users/profiles/minecraft/${name}`).json(); 
 }
 
-async function getByUUID(uuid): Promise<Object> {
+export async function getByUUID(uuid) {
     return await ky.get(`https://api.mojang.com/user/profile/${uuid}`).json(); 
 }

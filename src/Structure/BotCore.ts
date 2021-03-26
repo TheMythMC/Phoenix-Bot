@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
-import {Utils} from '../utils/MessageUtils'
-const Util = require("../utils/Util");
+const { sendErrorMessage } = require("../utils/MessageUtils");
+import Util from '../utils/Util'
 const path = require("path");
 const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");
@@ -9,10 +9,7 @@ const config = require("../../config.json");
 const RoleSync = require("../RoleSync/RoleSync"); 
 
 export default class BotCore extends Client {
-    constructor(bot, options = {
-        defaultPrefix: '',
-        token: ''
-    }) {
+    constructor(bot, options = {} as IBotCore) {
         super({
             disableMentions: 'everyone'
         });
@@ -102,3 +99,11 @@ export default class BotCore extends Client {
         }
     }
 }
+
+interface IBotCore {
+    token: string,
+    defaultPrefix: string
+}
+
+
+module.exports = BotCore;

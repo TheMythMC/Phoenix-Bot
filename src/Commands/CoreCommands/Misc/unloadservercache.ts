@@ -15,7 +15,6 @@ class UnloadServerCache extends Command {
             requireBotOwner: true
         });
     }
-
     async run(message, args, client) {
 
         let msg = await sendCustomMessage(message.channel, "BLUE", "Unloading all guild data...", "Unload"); 

@@ -9,12 +9,12 @@ const MineflayerManager = require('./Structure/MineflayerManager');
 export default class Bot {
   static bot: Bot;
   CoreBot: BotCore;
-  LinkManager: typeof LinkManager;
-  GuildManager: typeof GuildManager;
-  UUIDManager: UUIDManager;
-  WebServer: Server;
-  DatabaseHandler: DatabaseHandler;
-  MineflayerManagerV: any;
+  LinkManager: any;
+  GuildManager: any;
+  UUIDManager: any;
+  WebServer: any;
+  DatabaseHandler: any;
+  MineflayerManager: any;
     constructor() {
         Bot.bot = this; 
         this.CoreBot = new BotCore(this, {
@@ -33,11 +33,9 @@ export default class Bot {
         });
         this.CoreBot.start();
         // this shouldn't work, but screw it; it might ¯\_(ツ)_/¯ idk
-        this.MineflayerManagerV = new MineflayerManager(this.CoreBot.guilds.cache);
+        this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
     }
   static getBot() {
     return this.bot; 
   }
 }
-
-module.exports = Bot

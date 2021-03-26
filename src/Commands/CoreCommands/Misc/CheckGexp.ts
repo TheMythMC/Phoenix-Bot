@@ -1,6 +1,6 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
+import { Utils } from '../../../utils/MessageUtils' 
 
-import { Utils } from "../../../utils/MessageUtils"
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
  class CheckGexp extends Command {
