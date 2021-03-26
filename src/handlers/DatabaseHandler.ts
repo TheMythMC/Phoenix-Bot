@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
 class DatabaseHandler {
+    connected: boolean;
+    connection: any;
     constructor(databaseURI, parameters = {}, callback = () => {}) {
         this._initConnection(databaseURI, parameters, callback);
         this.connected = false;

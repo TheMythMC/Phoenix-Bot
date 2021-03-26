@@ -1,6 +1,4 @@
-const Bot = require("../../Bot"); 
-
-const HypixelAPI = require("../../Structure/HypixelAPI"); 
+import * as HypixelAPI from '../../Structure/HypixelAPI'
 
 const Rank = async (uuid, guildID, cache, params) => {
     const rank = params[0];

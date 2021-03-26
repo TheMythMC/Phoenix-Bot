@@ -2,9 +2,9 @@ const Command = require("../Structure/Command");
 const path = require("path");
 const glob = require("glob");
 const pathParse = require('path-parse');
-const crypto = require('crypto'); 
+import {randomBytes} from 'crypto'
 
-class Util {
+export default class Util {
     static isClass(input) {
         return typeof input === 'function' &&
             typeof input.prototype === 'object' &&
@@ -23,7 +23,6 @@ class Util {
                 const File = require(commandFile);
                 if(!this.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
                 const command = new File(client, name.toLowerCase());
-                if(!(command instanceof Command)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
                 client.commands.set(command.name, command);
                 console.log(`Set ${command.name} as a command`);
                 if(command.aliases.length) {
@@ -41,11 +40,18 @@ class Util {
         return [...new Set(arr)];
     }
     static capitalize(string) {
-        return string.split(' '.localeCompare(str => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' '));
+        let capitalized: String[] = string.split(' ');
+        let tempArray = new Array<String>();
+        for(let word in capitalized) {
+            let temparray = word.split('');
+            tempArray[0].toUpperCase();
+            tempArray.push(temparray.join(''));
+        }
+        return tempArray.join(' ');
     }
 
     static genRandomKey(bytes = 16) {
-        return crypto.randomBytes(bytes).toString("hex"); 
+        return randomBytes(bytes).toString("hex"); 
     }
 }
 

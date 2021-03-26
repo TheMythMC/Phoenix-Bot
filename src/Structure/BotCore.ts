@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { sendErrorMessage } = require("../utils/MessageUtils");
-const Util = require("../utils/Util");
+import Util from '../utils/Util'
 const path = require("path");
 const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");

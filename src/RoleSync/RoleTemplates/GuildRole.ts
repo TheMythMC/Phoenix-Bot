@@ -1,6 +1,4 @@
-const Bot = require("../../Bot"); 
-
-const HypixelAPI = require("../../Structure/HypixelAPI"); 
+import * as HypixelAPI from '../../Structure/HypixelAPI'
 
 const GuildRole = async (uuid, guildID, cache, params) => {
     if (!cache.guilds) cache.guilds = []; 

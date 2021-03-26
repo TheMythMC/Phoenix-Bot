@@ -1,4 +1,4 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
 const GuildData = require("../../../Schemas/GuildData");
 const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
 
@@ -15,7 +15,6 @@ class UnloadServerCache extends Command {
             requireBotOwner: true
         });
     }
-
     async run(message, args, client) {
 
         let msg = await sendCustomMessage(message.channel, "BLUE", "Unloading all guild data...", "Unload"); 

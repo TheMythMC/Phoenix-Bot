@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 
-class Utils {
+export default class Utils {
     static sendErrorMessage(channel, error) {
         return channel.send(Utils.createErrorMessage(error)); 
     }
@@ -10,11 +10,11 @@ class Utils {
     }
 
     static createSuccessMessage(message) {
-        return Utils.createCustomEmbed("GREEN", message, "Success!")
+        return Utils.createCustomEmbed("GREEN", message, "Success!", undefined)
     }
 
     static createErrorMessage(error) {
-        return Utils.createCustomEmbed("RED", error, "Error"); 
+        return Utils.createCustomEmbed("RED", error, "Error", undefined); 
     }
 
     static sendCustomMessage(channel, color, message, title, footer, ...sections) {

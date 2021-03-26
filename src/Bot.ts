@@ -7,7 +7,7 @@ const Server = require("./express/Server");
 
 class Bot {
   static bot: Bot;
-  CoreBot: typeof GuildManager;
+  CoreBot: BotCore;
   LinkManager: any;
   GuildManager: any;
   UUIDManager: any;

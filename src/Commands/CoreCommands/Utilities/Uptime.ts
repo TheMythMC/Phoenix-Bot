@@ -1,8 +1,8 @@
-const command = require('../../../Structure/Command');
+import Command from '../../../Structure/Command'
 const { sendCustomMessage } = require('../../../utils/MessageUtils');
 const ms = require('ms');
 
-module.exports = class extends command {
+module.exports = class extends Command {
     constructor(client) {
 		super(client, 'uptime', {
 			aliases: ['up'],

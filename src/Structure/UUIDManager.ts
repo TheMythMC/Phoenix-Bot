@@ -1,7 +1,8 @@
-const MojangAPI = require('./MojangAPI');
+import * as MojangAPI from './MojangAPI'
 const conf = require("../../config.json"); 
 
 class UUIDManager {
+    cache: any[];
     constructor() {
         this.cache = []; 
         if (conf.UUIDUsernameAPICache) {

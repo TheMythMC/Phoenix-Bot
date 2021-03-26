@@ -1,4 +1,4 @@
-const Command = require('../../Structure/Command');
+import Command from '../../Structure/Command'
 const messageutil = require('../../utils/MessageUtils');
 
 module.exports = class extends Command {

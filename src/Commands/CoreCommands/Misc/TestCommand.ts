@@ -1,4 +1,4 @@
-const Command = require("../../../Structure/Command");
+import Command from '../../../Structure/Command'
 
 class TestCommand extends Command {
     constructor(client) {

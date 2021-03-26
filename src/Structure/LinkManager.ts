@@ -1,6 +1,7 @@
-const MinecraftLinkData = require("../Schemas/MinecraftLinkData"); 
+import * as MinecraftLinkData from '../Schemas/MinecraftLinkData' 
 
 class LinkManager {
+    cache: any[];
     constructor() {
         this.cache = []; 
     }
