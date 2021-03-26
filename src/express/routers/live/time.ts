@@ -3,9 +3,13 @@ const router = express.Router();
 
 router.ws("/", (ws, req) => {
     
-    const e = setInterval(() => {
-        ws.send(Date.now()); 
-    }, 1000); 
+    let e; 
+    ws.on('open', () => {
+        e = setInterval(() => {
+            ws.send(Date.now()); 
+        }, 1000); 
+    })
+    
 
     ws.on('close', () => {
         clearInterval(e); 
