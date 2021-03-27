@@ -1,5 +1,5 @@
 import Command from '../../../Structure/Command'
-const { createCustomEmbed } = require('../../../utils/MessageUtils');
+import MessageUtils from '../../../utils/MessageUtils'
 
 module.exports = class extends Command {
     constructor(client) {
@@ -19,7 +19,7 @@ module.exports = class extends Command {
     'The Phoenix Devs are perfect, there is no reason to run this command :rolling_eyes:'];
         let response = choices[Math.floor(Math.random() * choices.length)];
 
-        await msg.edit(createCustomEmbed("PURPLE", `${response} - Bot Latency: \`${latency}ms\`, 
-        API Latency: \`${Math.round(client.ws.ping)}ms\``, 'Ping'))
+        await msg.edit(MessageUtils.createCustomEmbed("PURPLE", `${response} - Bot Latency: \`${latency}ms\`, 
+        API Latency: \`${Math.round(client.ws.ping)}ms\``, 'Ping', undefined))
     }
 }

@@ -1,5 +1,5 @@
 import Command from '../../../Structure/Command'
-const { sendCustomMessage } = require('../../../utils/MessageUtils');
+import MessageUtils from '../../../utils/MessageUtils'
 const ms = require('ms');
 
 module.exports = class extends Command {
@@ -14,6 +14,6 @@ module.exports = class extends Command {
 	}
     
     async run(message, _args, client) {
-        sendCustomMessage(message.channel, "PURPLE", `\`${ms(client.uptime, {long: true})}\``, "Uptime");
+        MessageUtils.sendCustomMessage(message.channel, "PURPLE", `\`${ms(client.uptime, {long: true})}\``, "Uptime", null);
     }
 }

@@ -2,7 +2,7 @@ import Command from '../../../Structure/Command'
 const GuildData = require("../../../Schemas/GuildData");
 const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
 
-const { sendCustomMessage, createSuccessMessage } = require("../../../utils/MessageUtils"); 
+import MessageUtils from '../../../utils/MessageUtils'
 
 class UnloadServerCache extends Command {
     constructor(client) {
@@ -17,10 +17,10 @@ class UnloadServerCache extends Command {
     }
     async run(message, args, client) {
 
-        let msg = await sendCustomMessage(message.channel, "BLUE", "Unloading all guild data...", "Unload"); 
+        let msg = await MessageUtils.sendCustomMessage(message.channel, "BLUE", "Unloading all guild data...", "Unload", undefined); 
 
         client.Bot.GuildManager.unloadGuilds(); 
-            msg.edit(createSuccessMessage("Guild cache successfully unloaded. ")); 
+            msg.edit(MessageUtils.createSuccessMessage("Guild cache successfully unloaded. ")); 
     }
 }
 

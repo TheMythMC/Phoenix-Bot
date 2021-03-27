@@ -1,8 +1,7 @@
 import Command from '../../../Structure/Command'
+import MessageUtils from '../../../utils/MessageUtils';
 const GuildData = require("../../../Schemas/GuildData");
 const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
-
-const { sendCustomMessage, createErrorMessage, createSuccessMessage } = require("../../../utils/MessageUtils"); 
 
 class ReloadServerCache extends Command {
     constructor(client) {
@@ -16,22 +15,22 @@ class ReloadServerCache extends Command {
         });
     }
 
-    async run(message, args, client) {
+    async run(message, args, client): Promise<any> {
 
         let id = args[0] || message.guild.id; 
 
-        let msg = await sendCustomMessage(message.channel, "BLUE", "reloading guild data...", "Reload"); 
+        let msg = await MessageUtils.sendCustomMessage(message.channel, "BLUE", "reloading guild data...", "Reload", undefined); 
 
         const guildData = await client.Bot.GuildManager.getGuild(id); 
 
-        if (!guildData) return msg.edit(createErrorMessage("No guild found with id. ")); 
+        if (!guildData) return msg.edit(MessageUtils.createErrorMessage("No guild found with id. ")); 
 
         client.Bot.GuildManager.updateGuild(id).then(async () => {
-            msg.edit(createSuccessMessage(`Guild cache for \`${id}\` successfully reloaded. `)); 
+            msg.edit(MessageUtils.createSuccessMessage(`Guild cache for \`${id}\` successfully reloaded. `)); 
 
         })
         .catch(err => {
-            msg.edit(createErrorMessage(`There was an error when reloading guild cache: ${err.message}`)); 
+            msg.edit(MessageUtils.createErrorMessage(`There was an error when reloading guild cache: ${err.message}`)); 
         })
     }
 }

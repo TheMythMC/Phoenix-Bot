@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "target": "ES2017",
-        "outDir": "tsbuild",
-        "downlevelIteration": true,
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "esModuleInterop": true
-    },
-    "include": [
-        "./src/**/*"
-    ]
+  "compilerOptions": {
+      "allowJs": true,
+      "target": "ES2017",
+      "outDir": "tsbuild",
+      "downlevelIteration": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "module": "commonjs"
+  },
+  "include": [
+      "./src/**/*"
+  ]
 }
