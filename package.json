@@ -2,9 +2,10 @@
   "name": "phoenixbot-core",
   "version": "0.1.0",
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
-  "main": "src/index.js",
+  "main": "tsbuild/index.js",
   "scripts": {
-    "start": "node ."
+    "start": "tsc && node .",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
     "mongoose-ttl": "0.0.3",
     "node-fetch": "^2.6.1",
     "path-parse": "^1.0.6",
-    "phoenix-slothpixel": "^1.2.6"
+    "phoenix-slothpixel": "^1.2.6",
+    "ts-node": "*",
+    "typescript": "*"
   }
 }
