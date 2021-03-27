@@ -113,6 +113,16 @@ router.get("/isValidSession", async (req, res) => {
 router.post("/logout", async (req, res) => {
   const session = req.cookies.session_id;
   // TODO: finish this
+  if (!session) res.status(404).end();
+
+  const foundData = await DiscordOAuthData.Model.findOne({
+    SessionID: session,
+  });
+
+  if (!foundData) res.status(404).end();
+
+  await foundData.remove();
+  res.status(200).end();
 });
 
 module.exports = router;
