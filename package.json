@@ -4,7 +4,8 @@
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
   "main": "tsbuild/index.js",
   "scripts": {
-    "start": "tsc && node ."
+    "start": "tsc && node .",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
