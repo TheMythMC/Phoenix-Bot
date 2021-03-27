@@ -2,18 +2,18 @@ const { glob } = require('glob-promise')
 import MineflayerCommand from './MineflayerCommand'
 const path = require('path');
 const Util = require('../../utils/Util');
+import { Bot } from 'mineflayer'
 
 
 export default class MineflayerCommandManager {
     commands: Map<String, MineflayerCommand>;
-    aliases: Map<any, any>;
+    aliases: Map<String, String>;
     filepath: string;
-    minecraftBot: any;
-    constructor (mineflayerBot) {
+    minecraftBot: Bot;
+    constructor () {
         this.commands = new Map();
         this.aliases = new Map();
         this.filepath = `${path.dirname(require.main.filename)}${path.sep}`;
-        this.minecraftBot = mineflayerBot;
     }
     
     runCommand(message, playername, bot, discordBot) {

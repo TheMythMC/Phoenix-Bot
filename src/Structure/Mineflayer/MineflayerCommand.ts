@@ -1,14 +1,14 @@
 import BotCore from '../BotCore'
+import mineflayer from 'mineflayer'
 
 export default class MineflayerCommand {
-    bot: any;
-    name: any;
-    aliases: any;
-    description: any;
-    usage: any;
-    requiredPerms: any;
-    minecraftBot: any;
-    discordBot: any;
+    name: string;
+    aliases: string[];
+    description: string;
+    usage: string;
+    requiredPerms: string[];
+    minecraftBot: mineflayer.Bot;
+    discordBot: BotCore;
     constructor(discordBot: BotCore, minecraftBot, name, options = {} as IMineflayerCommand) {
         this.minecraftBot = minecraftBot;
         this.discordBot = discordBot;
@@ -24,8 +24,8 @@ export default class MineflayerCommand {
     }
 }
 interface IMineflayerCommand {
-    aliases: [],
-    description,
-    usage,
-    requiredPerms
+    aliases: string[],
+    description: string,
+    usage: string,
+    requiredPerms: string[]
 }
