@@ -32,8 +32,8 @@ export default class Bot {
             console.log("Database is connected.");
         });
         this.CoreBot.start();
-        // this shouldn't work, but screw it; it might ¯\_(ツ)_/¯ idk
-        this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
+        // Commented for now, need to test if it works without mineflayer attached
+        // this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
     }
   static getBot() {
     return this.bot; 

@@ -2,13 +2,8 @@ import { TextChannel } from "discord.js";
 
 const { MessageEmbed } = require("discord.js");
 
-<<<<<<< HEAD:src/utils/MessageUtils.ts
-export class Utils {
-    static sendErrorMessage(channel: TextChannel, error) {
-=======
 export default class Utils {
     static sendErrorMessage(channel, error) {
->>>>>>> 4a25b116bbac39420db258e2755e7b66d7068d76:src/utils/MessageUtils.js
         return channel.send(Utils.createErrorMessage(error)); 
     }
 

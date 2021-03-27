@@ -9,7 +9,7 @@ export default class MineflayerCommandManager {
     aliases: Map<any, any>;
     filepath: string;
     minecraftBot: any;
-    constructor (mineflayerBot){
+    constructor (mineflayerBot) {
         this.commands = new Map();
         this.aliases = new Map();
         this.filepath = `${path.dirname(require.main.filename)}${path.sep}`;
@@ -35,7 +35,7 @@ export default class MineflayerCommandManager {
                 const File = require(match);
                 if(!Util.isClass()) throw new TypeError(`The command ${name} does not export a class.`);
                 const command = new File(mcBot, name.toLowerCase());
-                if(!(command instanceof Command)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
+                if(!(command instanceof MineflayerCommand)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
                 // LEFT HERE FOR REFRENCE
                 /*client.commands.set(command.name, command);
                 console.log(`Set ${command.name} as a command`);

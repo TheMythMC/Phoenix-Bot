@@ -1,5 +1,5 @@
 import Command from '../../../Structure/Command'
-import { Utils } from '../../../utils/MessageUtils' 
+import Utils from "../../../utils/MessageUtils" 
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
@@ -14,7 +14,7 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
         });
     }
 
-    async run(message, args, client) {
+    async run(message, args, client): Promise<any> {
         let mode = args[0]; 
         let time = args[1] || 7; 
 

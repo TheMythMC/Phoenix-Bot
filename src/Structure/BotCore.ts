@@ -51,7 +51,7 @@ export default class BotCore extends Client {
                     command.requiredPerms.forEach((perm) => {
                         if (!message.member.hasPermission(perm)) isAllowed = false;
                     });
-                    if (!isAllowed) return Utils.sendErrorMessage(message.channel, "You are not a high enough role to use this.");
+                    if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
                 }
                 // noinspection ES6MissingAwait
                 command.run(message, args, this);

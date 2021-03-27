@@ -1,9 +1,12 @@
 {
     "compilerOptions": {
         "allowJs": true,
-        "target": "ES5",
+        "target": "ES2017",
         "outDir": "tsbuild",
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true
     },
     "include": [
         "./src/**/*"
