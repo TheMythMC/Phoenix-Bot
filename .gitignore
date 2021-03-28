@@ -117,5 +117,5 @@ config.json
 java/bin
 .gradle/
 **/.gradle
-tsbuild/
+.tsbuild/
 

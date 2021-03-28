@@ -1,5 +1,5 @@
 import BotCore from '../BotCore'
-import mineflayer from 'mineflayer'
+import { Bot } from 'mineflayer'
 
 export default class MineflayerCommand {
     name: string;
@@ -7,9 +7,9 @@ export default class MineflayerCommand {
     description: string;
     usage: string;
     requiredPerms: string[];
-    minecraftBot: mineflayer.Bot;
+    minecraftBot: Bot;
     discordBot: BotCore;
-    constructor(discordBot: BotCore, minecraftBot, name, options = {} as IMineflayerCommand) {
+    constructor(discordBot: BotCore, minecraftBot: Bot, name: string, options: IMineflayerCommand = {} as IMineflayerCommand) {
         this.minecraftBot = minecraftBot;
         this.discordBot = discordBot;
         this.name = name;
@@ -19,7 +19,7 @@ export default class MineflayerCommand {
         this.requiredPerms = options.requiredPerms || [];
     }
 
-    async run(args, mcBot, discBot, playerName) {
+    async run(args: string[], mcBot: Bot, discBot: BotCore, playerName: string) {
         throw new Error('Must specify run method');
     }
 }
