@@ -105,4 +105,4 @@ dist
 
 # config
 config.json
-tsbuild/
+.tsbuild/
