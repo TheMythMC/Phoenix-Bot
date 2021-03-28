@@ -1,4 +1,4 @@
-import { Client } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import Command from '../../../Structure/Command'
 import { sendCustomMessage } from '../../../utils/MessageUtils';
 import ms from 'ms';
@@ -14,7 +14,7 @@ module.exports = class extends Command {
 		});
 	}
     
-    async run(message, _args: string[], client: Client) {
+    async run (message: Message, _args: string[], client: Client) {
         sendCustomMessage(message.channel, "PURPLE", `\`${ms(client.uptime, {long: true})}\``, "Uptime", undefined);
     }
 }

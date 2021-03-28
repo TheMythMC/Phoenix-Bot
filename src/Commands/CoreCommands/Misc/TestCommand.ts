@@ -1,3 +1,5 @@
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command'
 
 class TestCommand extends Command {
@@ -12,7 +14,7 @@ class TestCommand extends Command {
         });
     }
 
-    async run(message, args, client) {
+    async run(message: Message, _args: string[], _client: BotCore) {
         message.channel.send("Yes, I work :confused:")
     }
 }

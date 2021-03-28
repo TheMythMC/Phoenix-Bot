@@ -1,8 +1,10 @@
+import { Message } from 'discord.js';
+import BotCore from '../../Structure/BotCore';
 import Command from '../../Structure/Command'
-const messageutil = require('../../utils/MessageUtils');
+import { sendCustomMessage } from '../../utils/MessageUtils';
 
 module.exports = class extends Command {
-    constructor(client) {
+    constructor(client: BotCore) {
         super(client, 'help', {
             aliases: ['h'],
             description: "Displays this message",
@@ -12,11 +14,11 @@ module.exports = class extends Command {
             requireBotOwner: false
         });
     }
-    async run(message, args, client) {
+    async run (message: Message, args: string[], client: BotCore) {
 
         const cmd = args[0]; 
 
-        let foundCommand; 
+        let foundCommand: Command; 
 
             for (let [k, command] of client.commands) {
                 if (!cmd) break;  
@@ -26,13 +28,11 @@ module.exports = class extends Command {
                 }
             }
 
-
-
         if (cmd && foundCommand) {
 
             let toSend = `\n\t**COMMAND:**: ${foundCommand.name}\n\t**ALIASES:** ${foundCommand.aliases.join(", ") || "None"}\n\t**USAGE:** ${foundCommand.getUsage(await client.getPrefix(message.guild))}\n\t**DESCRIPTION:** ${foundCommand.description}`; 
 
-             return messageutil.sendCustomMessage(message.channel, "PURPLE", toSend, `Help: ${cmd}`); 
+             return sendCustomMessage(message.channel, "PURPLE", toSend, `Help: ${cmd}`, undefined); 
         }
 
         let cmdText = ""; 
@@ -41,6 +41,6 @@ module.exports = class extends Command {
             cmdText = cmdText + `\n${command.name}`; 
         }
 
-        return messageutil.sendCustomMessage(message.channel, "PURPLE", cmdText, "Commands");
+        return sendCustomMessage(message.channel, "PURPLE", cmdText, "Commands", undefined);
     }
 }

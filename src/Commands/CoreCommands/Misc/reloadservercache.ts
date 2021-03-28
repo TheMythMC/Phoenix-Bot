@@ -3,6 +3,8 @@ import GuildData from "../../../Schemas/GuildData";
 import PremiumLinkData from "../../../Schemas/PremiumLinkData";
 
 import { sendCustomMessage, createErrorMessage, createSuccessMessage } from "../../../utils/MessageUtils"; 
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
 class ReloadServerCache extends Command {
     constructor(client) {
@@ -16,7 +18,7 @@ class ReloadServerCache extends Command {
         });
     }
 
-    async run(message, args, client): Promise<any> {
+    async run(message: Message, args: string[], client: BotCore) {
 
         let id = args[0] || message.guild.id; 
 

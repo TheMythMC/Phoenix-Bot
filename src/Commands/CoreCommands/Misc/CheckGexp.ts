@@ -1,6 +1,8 @@
 import Command from '../../../Structure/Command'
 import MinecraftLinkData from '../../../Schemas/MinecraftLinkData'
 import { sendCustomMessage, createErrorMessage, createCustomEmbed } from '../../../utils/MessageUtils' 
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
@@ -15,7 +17,7 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
         });
     }
 
-    async run(message, args, client): Promise<any> {
+    async run (message: Message, args: string[], client: BotCore) {
         let mode = args[0]; 
         let time = args[1] || 7; 
 
