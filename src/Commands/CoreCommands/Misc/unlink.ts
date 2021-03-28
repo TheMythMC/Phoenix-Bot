@@ -2,6 +2,7 @@ import Command from '../../../Structure/Command';
 import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
 import { sendErrorMessage, sendSuccessMessage } from "../../../utils/MessageUtils"; 
 import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
  class Unlink extends Command {
     constructor(client) {
@@ -14,7 +15,7 @@ import { Message } from 'discord.js';
         });
     }
 
-    async run(message: Message, _args, client) {
+    async run(message: Message, _args: string[], client: BotCore) {
 
         const existingLink = client.Bot.LinkManager.getDataByDiscord(message.member.id); 
 

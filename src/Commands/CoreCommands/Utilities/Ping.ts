@@ -1,3 +1,5 @@
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command'
 import { createCustomEmbed } from '../../../utils/MessageUtils';
 
@@ -11,7 +13,7 @@ module.exports = class extends Command {
 			requiredPerms: []
 		});
 	}
-    async run (message, _args, client) {
+    async run (message: Message, _args: string[], client: BotCore) {
         const msg = await message.channel.send("Pong!");
 
         const latency = msg.createdTimestamp - message.createdTimestamp;

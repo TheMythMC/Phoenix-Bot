@@ -1,3 +1,5 @@
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command'
 const GuildData = require("../../../Schemas/GuildData");
 const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
@@ -14,7 +16,7 @@ export default class RegisterGuild extends Command {
         });
     }
 
-    async run(message, args, client) {
+    async run(message: Message, _args: string[], client: BotCore): Promise<any> {
 
         if (await GuildData.Model.exists({ServerID: message.guild.id})) return message.reply("Guild already exists in database. ");
         let doc = GuildData.createDefault(message.guild.id);

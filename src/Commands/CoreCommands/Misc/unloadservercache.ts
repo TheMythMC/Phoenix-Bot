@@ -3,6 +3,8 @@ import GuildData from "../../../Schemas/GuildData";
 import PremiumLinkData from "../../../Schemas/PremiumLinkData";
 
 import { sendCustomMessage, createSuccessMessage } from "../../../utils/MessageUtils"; 
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
 class UnloadServerCache extends Command {
     constructor(client) {
@@ -15,7 +17,7 @@ class UnloadServerCache extends Command {
             requireBotOwner: true
         });
     }
-    async run(message, args, client) {
+    async run(message: Message, _args: string[], client: BotCore) {
 
         let msg = await sendCustomMessage(message.channel, "BLUE", "Unloading all guild data...", "Unload", undefined); 
 

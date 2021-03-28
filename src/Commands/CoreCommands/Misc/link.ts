@@ -1,10 +1,9 @@
-import Command from '../../../Structure/Command'
-
-import MinecraftLinkData from "../../../Schemas/MinecraftLinkData"
-
+import Command from '../../../Structure/Command';
+import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
 import { sendErrorMessage, sendSuccessMessage } from "../../../utils/MessageUtils"; 
-
 import RoleSync from "../../../RoleSync/RoleSync"; 
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
 export default class Link extends Command {
     constructor(client) {
@@ -18,7 +17,7 @@ export default class Link extends Command {
         });
     }
 
-    async run(message, args, client) {
+    async run(message: Message, args: string[], client: BotCore) {
         const ign = args[0]; 
         if (!ign) return sendErrorMessage(message.channel, "Invalid IGN. "); 
 
