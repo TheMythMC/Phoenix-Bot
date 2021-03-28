@@ -1,11 +1,11 @@
-const Command = require("../Structure/Command");
-const path = require("path");
-const glob = require("glob");
-const pathParse = require('path-parse');
-import {randomBytes} from 'crypto'
+import path from "path";
+import glob from "glob";
+import pathParse from 'path-parse';
+import {randomBytes} from 'crypto';
+import Command from '../Structure/Command'
 
 export default class Util {
-    static isClass(input) {
+    static isClass(input: Object) {
         return typeof input === 'function' &&
             typeof input.prototype === 'object' &&
             input.toString().substring(0, 5) === 'class';
@@ -14,7 +14,7 @@ export default class Util {
         return `${path.dirname(require.main.filename)}${path.sep}`;
     }
 
-    static async loadCommands(client, path) {
+    static async loadCommands(client, path: string) {
         return glob(`${this.directory}${path}/**/*.js`, {}, (err, commands) => {
             for(const commandFile of commands) {
                 // TODO: why does path.parse not work :(
@@ -33,15 +33,15 @@ export default class Util {
             }
         });
     }
-    static formatNumber(number) {
+    static formatNumber(number: number) {
         return number.toLocaleString('en-US', {maximumFractionDigits:2});
     }
-    static removeDuplicates(arr) {
+    static removeDuplicates(arr: any[]) {
         return [...new Set(arr)];
     }
-    static capitalize(string) {
-        let capitalized: String[] = string.split(' ');
-        let tempArray = new Array<String>();
+    static capitalize(string: string) {
+        let capitalized = string.split(' ');
+        let tempArray = new Array();
         for(let word in capitalized) {
             let temparray = word.split('');
             tempArray[0].toUpperCase();

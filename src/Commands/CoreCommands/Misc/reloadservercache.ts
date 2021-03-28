@@ -1,8 +1,8 @@
 import Command from '../../../Structure/Command'
-const GuildData = require("../../../Schemas/GuildData");
-const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
+import GuildData from "../../../Schemas/GuildData";
+import PremiumLinkData from "../../../Schemas/PremiumLinkData";
 
-const { sendCustomMessage, createErrorMessage, createSuccessMessage } = require("../../../utils/MessageUtils"); 
+import { sendCustomMessage, createErrorMessage, createSuccessMessage } from "../../../utils/MessageUtils"; 
 
 class ReloadServerCache extends Command {
     constructor(client) {
@@ -20,7 +20,7 @@ class ReloadServerCache extends Command {
 
         let id = args[0] || message.guild.id; 
 
-        let msg = await sendCustomMessage(message.channel, "BLUE", "reloading guild data...", "Reload"); 
+        let msg = await sendCustomMessage(message.channel, "BLUE", "reloading guild data...", "Reload", undefined); 
 
         const guildData = await client.Bot.GuildManager.getGuild(id); 
 

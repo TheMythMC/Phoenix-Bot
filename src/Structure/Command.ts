@@ -1,14 +1,17 @@
+import { Message } from "discord.js";
+import BotCore from "./BotCore";
+
 // noinspection JSUnusedLocalSymbols
 export default class Command {
-    client: any;
-    name: any;
+    client: BotCore;
+    name: string;
     aliases: string[];
     description: string;
     category: string;
     usage: string;
     requiredPerms: string[];
     requireBotOwner: boolean;
-    constructor(client, name, options = {} as ICommand) {
+    constructor(client: BotCore, name: string, options = {} as ICommand) {
         this.client = client
         this.name = name;
         this.aliases = options.aliases || [];
@@ -19,7 +22,7 @@ export default class Command {
         this.requireBotOwner = options.requireBotOwner || false; 
     }
 //eslint-disable-next-line
-    async run(message, args, client) {
+    async run(message: Message, args: string[], client: BotCore) {
         throw new Error(`Command ${this.name} doesnt provide a run method`);
     }
 
@@ -30,9 +33,9 @@ export default class Command {
 
 interface ICommand {
     aliases?: string[],
-    description?: string,
-    category?: string,
-    usage?: string,
+    description: string,
+    category: string,
+    usage: string,
     requiredPerms?: string[],
     requireBotOwner?: boolean
 }

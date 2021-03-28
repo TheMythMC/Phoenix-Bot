@@ -2,11 +2,11 @@ import Command from '../../../Structure/Command'
 
 import MinecraftLinkData from "../../../Schemas/MinecraftLinkData"
 
-const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/MessageUtils"); 
+import { sendErrorMessage, sendSuccessMessage } from "../../../utils/MessageUtils"; 
 
-const RoleSync = require("../../../RoleSync/RoleSync"); 
+import RoleSync from "../../../RoleSync/RoleSync"; 
 
- class Link extends Command {
+export default class Link extends Command {
     constructor(client) {
         super(client, "link", {
             aliases: [],
@@ -69,5 +69,4 @@ const RoleSync = require("../../../RoleSync/RoleSync");
             }) 
     }
 }
-
 module.exports = Link;

@@ -1,8 +1,7 @@
-import Command from '../../../Structure/Command'
-import MinecraftLinkData from "../../../Schemas/MinecraftLinkData"
-
-
-const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/MessageUtils"); 
+import Command from '../../../Structure/Command';
+import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
+import { sendErrorMessage, sendSuccessMessage } from "../../../utils/MessageUtils"; 
+import { Message } from 'discord.js';
 
  class Unlink extends Command {
     constructor(client) {
@@ -15,7 +14,7 @@ const { sendErrorMessage, sendSuccessMessage } = require("../../../utils/Message
         });
     }
 
-    async run(message, args, client) {
+    async run(message: Message, _args, client) {
 
         const existingLink = client.Bot.LinkManager.getDataByDiscord(message.member.id); 
 

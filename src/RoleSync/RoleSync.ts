@@ -6,7 +6,7 @@ const roleMethods = {
     "GuildRole": require("./RoleTemplates/GuildRole")
 };
 
-module.exports = async (member, uuid, roleLinks = []) => {
+export default async (member, uuid, roleLinks = []) => {
 
     const guild = member.guild;
 

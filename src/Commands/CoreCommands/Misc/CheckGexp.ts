@@ -1,6 +1,6 @@
 import Command from '../../../Structure/Command'
 import MinecraftLinkData from '../../../Schemas/MinecraftLinkData'
-import Utils from '../../../utils/MessageUtils' 
+import { sendCustomMessage, createErrorMessage, createCustomEmbed } from '../../../utils/MessageUtils' 
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
@@ -19,11 +19,11 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
         let mode = args[0]; 
         let time = args[1] || 7; 
 
-        const msg = await Utils.sendCustomMessage(message.channel, "BLUE", "Checking gexp...", "GEXP", undefined); 
+        const msg = await sendCustomMessage(message.channel, "BLUE", "Checking gexp...", "GEXP", undefined); 
 
         const guild = await client.Bot.GuildManager.getGuild(message.guild.id); 
         const res = await checkGexp(client, guild, time); 
-        if (!res || Object.keys(res).length === 0) return msg.edit(Utils.createErrorMessage("Guild not linked!")); 
+        if (!res || Object.keys(res).length === 0) return msg.edit(createErrorMessage("Guild not linked!")); 
 
         let text = ""; 
 
@@ -39,7 +39,7 @@ const checkGexp = require("../../../GEXPChecker/CheckGEXP");
 
         if (!text) text = "No users. "; 
 
-        msg.edit(Utils.createCustomEmbed("GREEN", text, "GEXP", "", mode === "failed" || mode === "passed" ? {} : {
+        msg.edit(createCustomEmbed("GREEN", text, "GEXP", "", mode === "failed" || mode === "passed" ? {} : {
             name: "Key Value", 
             value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${guild.data.PardonNewGEXPMembers ? `\n<:early:821022017607958546> = In guild for less than 7 days` : ""}`
         })); 

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 export default class DatabaseHandler {
     connected: boolean;

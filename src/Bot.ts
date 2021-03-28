@@ -5,7 +5,7 @@ import LinkManager from "./Structure/LinkManager";
 import UUIDManager from "./Structure/UUIDManager"; 
 import Server from "./express/Server";
 
-class Bot {
+export default class Bot {
   static bot: Bot;
   CoreBot: BotCore;
   LinkManager: LinkManager;
@@ -35,5 +35,3 @@ class Bot {
     return this.bot; 
   }
 }
-
-module.exports = Bot

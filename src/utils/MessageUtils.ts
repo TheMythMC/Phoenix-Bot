@@ -1,27 +1,26 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-export default class Utils {
-    static sendErrorMessage(channel, error) {
-        return channel.send(Utils.createErrorMessage(error)); 
+    export function sendErrorMessage(channel, error) {
+        return channel.send(createErrorMessage(error)); 
     }
 
-    static sendSuccessMessage(channel, message) {
-        return channel.send(Utils.createSuccessMessage(message)); 
+    export function sendSuccessMessage(channel, message) {
+        return channel.send(createSuccessMessage(message));
     }
 
-    static createSuccessMessage(message) {
-        return Utils.createCustomEmbed("GREEN", message, "Success!", undefined)
+    export function createSuccessMessage(message) {
+        return createCustomEmbed("GREEN", message, "Success!", undefined)
     }
 
-    static createErrorMessage(error) {
-        return Utils.createCustomEmbed("RED", error, "Error", undefined); 
+    export function createErrorMessage(error) {
+        return createCustomEmbed("RED", error, "Error", undefined);
     }
 
-    static sendCustomMessage(channel, color, message, title, footer, ...sections) {
-        return channel.send(Utils.createCustomEmbed(color, message, title, footer, ...sections));
+    export function sendCustomMessage(channel, color, message, title, footer, ...sections) {
+        return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    static createCustomEmbed(color, message, title, footer, ...sections) {
+    export function createCustomEmbed(color, message, title, footer, ...sections) {
         let embed = new MessageEmbed(); 
 
         embed
@@ -38,6 +37,3 @@ export default class Utils {
         }
         return embed; 
     }
-}
-
-module.exports = Utils;
