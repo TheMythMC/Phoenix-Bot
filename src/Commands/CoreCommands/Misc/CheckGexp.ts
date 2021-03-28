@@ -1,10 +1,6 @@
 import Command from '../../../Structure/Command'
-<<<<<<< HEAD
-import Utils from "../../../utils/MessageUtils" 
-=======
 import MinecraftLinkData from '../../../Schemas/MinecraftLinkData'
 import { sendCustomMessage, createErrorMessage, createCustomEmbed } from '../../../utils/MessageUtils' 
->>>>>>> 54c786afe523ba13f42c5f6e3dfdc3416d5e456a
 
 const checkGexp = require("../../../GEXPChecker/CheckGEXP"); 
 
