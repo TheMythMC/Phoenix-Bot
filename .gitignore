@@ -109,6 +109,7 @@ dist
 # config
 config.json
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # java
 **/build/
@@ -118,4 +119,3 @@ java/bin
 .gradle/
 **/.gradle
 .tsbuild/
-

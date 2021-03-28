@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import Bot from './Bot'
+import Bot from './Bot';
 
 //Initialize Needed Bots
 new Bot();

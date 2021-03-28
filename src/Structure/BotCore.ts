@@ -1,14 +1,19 @@
-const { Client, Collection } = require("discord.js");
-const { sendErrorMessage } = require("../utils/MessageUtils");
+import { Client, Collection } from "discord.js";
+import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from '../utils/Util'
-const path = require("path");
-const GuildData = require("../Schemas/GuildData");
-const PremiumLinkData = require("../Schemas/PremiumLinkData");
-const config = require("../../config.json"); 
+import path from "path";
+import GuildData from "../Schemas/GuildData";
+import PremiumLinkData from "../Schemas/PremiumLinkData";
+import config from "../../config.json"; 
 
-const RoleSync = require("../RoleSync/RoleSync"); 
+import RoleSync from "../RoleSync/RoleSync"; 
+import Bot from "../Bot";
 
 export default class BotCore extends Client {
+    commands: any;
+    aliases: any;
+    Bot: Bot;
+    defaultPrefix: string;
     constructor(bot, options = {} as IBotCore) {
         super({
             disableMentions: 'everyone'
@@ -104,6 +109,3 @@ interface IBotCore {
     token: string,
     defaultPrefix: string
 }
-
-
-module.exports = BotCore;

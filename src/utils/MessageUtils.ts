@@ -1,29 +1,26 @@
-import { TextChannel } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
-const { MessageEmbed } = require("discord.js");
-
-export default class MessageUtils {
-    static sendErrorMessage(channel, error) {
-        return channel.send(MessageUtils.createErrorMessage(error)); 
+    export function sendErrorMessage(channel, error) {
+        return channel.send(createErrorMessage(error)); 
     }
 
-    static sendSuccessMessage(channel: TextChannel, message: String) {
-        return channel.send(MessageUtils.createSuccessMessage(message)); 
+    export function sendSuccessMessage(channel, message) {
+        return channel.send(createSuccessMessage(message));
     }
 
-    static createSuccessMessage(message) {
-        return MessageUtils.createCustomEmbed("GREEN", message, "Success!", undefined)
+    export function createSuccessMessage(message) {
+        return createCustomEmbed("GREEN", message, "Success!", undefined)
     }
 
-    static createErrorMessage(error) {
-        return MessageUtils.createCustomEmbed("RED", error, "Error", undefined); 
+    export function createErrorMessage(error) {
+        return createCustomEmbed("RED", error, "Error", undefined);
     }
 
-    static sendCustomMessage(channel: TextChannel, color, message, title, footer, ...sections) {
-        return channel.send(MessageUtils.createCustomEmbed(color, message, title, footer, ...sections));
+    export function sendCustomMessage(channel, color, message, title, footer, ...sections) {
+        return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    static createCustomEmbed(color: String, message: String, title: String, footer: String, ...sections) {
+    export function createCustomEmbed(color, message, title, footer, ...sections) {
         let embed = new MessageEmbed(); 
 
         embed
@@ -40,4 +37,3 @@ export default class MessageUtils {
         }
         return embed; 
     }
-}

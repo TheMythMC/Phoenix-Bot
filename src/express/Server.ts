@@ -1,8 +1,8 @@
-import express from 'express' 
-const cookieParser = require("cookie-parser"); 
-const cors = require("cors"); 
+import express from "express"; 
+import cookieParser from "cookie-parser"; 
+import cors from "cors"; 
 
-class Server {
+export default class Server {
     app: any;
     port: any;
     Bot: any;
@@ -32,5 +32,3 @@ class Server {
         this.app.use("/api", require("./routers/api")); 
     }
 }
-
-module.exports = Server; 

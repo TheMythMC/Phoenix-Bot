@@ -2,7 +2,7 @@ import Command from '../../../Structure/Command'
 const GuildData = require("../../../Schemas/GuildData");
 const PremiumLinkData = require("../../../Schemas/PremiumLinkData");
 
-class RegisterGuild extends Command {
+export default class RegisterGuild extends Command {
     constructor(client) {
         super(client, "registerguild", {
             aliases: [],

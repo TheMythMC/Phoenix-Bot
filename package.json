@@ -2,7 +2,7 @@
   "name": "phoenixbot-core",
   "version": "0.1.0",
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
-  "main": "tsbuild/index.js",
+  "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "tsc && node .",
     "build": "tsc"
@@ -37,5 +37,9 @@
     "path-parse": "^1.0.6",
     "phoenix-slothpixel": "^1.2.6",
     "typescript": "*"
+  },
+  "devDependencies": {
+    "@types/ms": "*",
+    "@types/path-parse": "*"
   }
 }
