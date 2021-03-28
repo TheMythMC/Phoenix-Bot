@@ -3,7 +3,7 @@ const GuildData = require("../Schemas/GuildData");
 const PremiumLinkData = require("../Schemas/PremiumLinkData");
 
 
-class GuildManager {
+export default class GuildManager {
     guilds: any[];
     bot: any;
     constructor(bot) {

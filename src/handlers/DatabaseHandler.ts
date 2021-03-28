@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-class DatabaseHandler {
+export default class DatabaseHandler {
     connected: boolean;
     connection: any;
     constructor(databaseURI, parameters = {}, callback = () => {}) {
@@ -21,5 +21,3 @@ class DatabaseHandler {
         });
     }
 }
-
-module.exports = DatabaseHandler;

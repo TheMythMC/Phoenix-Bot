@@ -1,6 +1,6 @@
 import * as MinecraftLinkData from '../Schemas/MinecraftLinkData' 
 
-class LinkManager {
+export default class LinkManager {
     cache: any[];
     constructor() {
         this.cache = []; 
@@ -42,5 +42,3 @@ class LinkManager {
         this.cache.push(obj); 
     }
 }
-
-module.exports = LinkManager; 
