@@ -13,7 +13,7 @@ export default class UUIDManager {
         }
     }
 
-    async getUUIDByUser(username) {
+    async getUUIDByUser(username: string) {
         if (conf.UUIDUsernameAPICache) {
             let cacheHit = this.cache.find(data => (data).name.toLowerCase() === username.toLowerCase()); 
             if (cacheHit) return cacheHit.id; 
@@ -22,11 +22,11 @@ export default class UUIDManager {
         let data = await MojangAPI.getByName(username); 
         if (data) {
             this.saveCache(data); 
-            return data.id; 
+            return data.uuid; 
         }
     }
 
-    async getUserByUUID(uuid) {
+    async getUserByUUID(uuid: string) {
         if (conf.UUIDUsernameAPICache) {
             let cacheHit = this.cache.find(data => (data).name.toLowerCase() === uuid.toLowerCase()); 
             if (cacheHit) return cacheHit.name; 
@@ -35,7 +35,7 @@ export default class UUIDManager {
         let data = await MojangAPI.getByUUID(uuid); 
         if (data) {
             this.saveCache(data); 
-            return data.name; 
+            return data.username; 
         }
     }
 
@@ -45,7 +45,7 @@ export default class UUIDManager {
         }
     }
 
-    _resetCache(self) {
+    _resetCache(self: this) {
         self.cache = []; 
     }
 }

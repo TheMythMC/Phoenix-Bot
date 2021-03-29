@@ -5,16 +5,16 @@ import path from "path";
 import GuildData from "../Schemas/GuildData";
 import PremiumLinkData from "../Schemas/PremiumLinkData";
 import config from "../../config.json"; 
-
 import RoleSync from "../RoleSync/RoleSync"; 
 import Bot from "../Bot";
+import Command from "./Command";
 
 export default class BotCore extends Client {
-    commands: any;
-    aliases: any;
+    commands: Map<string, Command>;
+    aliases: Map<string, string>;
     Bot: Bot;
     defaultPrefix: string;
-    constructor(bot, options = {} as IBotCore) {
+    constructor(bot: Bot, options = {} as IBotCore) {
         super({
             disableMentions: 'everyone'
         });
@@ -54,6 +54,8 @@ export default class BotCore extends Client {
                 if (command.requiredPerms) {
                     let isAllowed = true;
                     command.requiredPerms.forEach((perm) => {
+                        // Put here because it can be both PermissionResolvable but also a String
+                        // @ts-ignore
                         if (!message.member.hasPermission(perm)) isAllowed = false;
                     });
                     if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
