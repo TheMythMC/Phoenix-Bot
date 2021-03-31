@@ -1,11 +1,13 @@
 import mineflayer from "mineflayer";
 import { Document } from "mongoose";
 import mainBot from "../Bot";
+import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
+import Util from "../utils/Util";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
 
 export default class MineflayerManager {
   MineCraftBots: Map<string, mineflayer.Bot>;
-  constructor(guilds) {
+  constructor(guilds: IPremiumLinkData[]) {
     new MineflayerCommandManager().loadCommands(
       this,
       "./Mineflayer/Commands/**/*.js"
@@ -46,6 +48,7 @@ export default class MineflayerManager {
     });
 
     bot.on("spawn", () => {
+      Util.wait(500);
       bot.chat("/achat §c"); // send to limbo
     });
 
@@ -54,12 +57,12 @@ export default class MineflayerManager {
     });
 
     // @ts-ignore
-    bot.on("guildChat", (_globalRank, name, _guildRank, message) => {
+    bot.on("guildChat", (_globalRank: string, name: string, _guildRank: string, message: string) => {
       if (message.startsWith("!")) {
         new MineflayerCommandManager().runCommand(
-          message.subString(1, message.length),
+          message.substring(1, message.length),
           name,
-          bot,
+          this,
           mainBot.getBot().CoreBot
         );
       }

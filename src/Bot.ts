@@ -5,7 +5,7 @@ import LinkManager from "./Structure/LinkManager";
 import UUIDManager from "./Structure/UUIDManager";
 import Server from "./express/Server";
 import MineflayerManager from "./Structure/MineflayerManager";
-const PremiumLinkData = require("./Schemas/PremiumLinkData");
+import PremiumLinkData from "./Schemas/PremiumLinkData";
 
 export default class Bot {
   static bot: Bot;
@@ -44,7 +44,7 @@ export default class Bot {
   }
 
   async loadMineflayerBots() {
-    const data = await PremiumLinkData.Model.find().exec(); // get all PREMIUM bots
+    const data = await PremiumLinkData.find().exec(); // get all PREMIUM bots
 
     // this.MineflayerManager = new MineflayerManager(data);
 
