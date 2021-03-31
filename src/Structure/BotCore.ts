@@ -4,10 +4,10 @@ import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
 import PremiumLinkData from "../Schemas/PremiumLinkData";
-import config from "../../config.json";
-
-import RoleSync from "../RoleSync/RoleSync";
+import config from "../../config.json"; 
+import RoleSync from "../RoleSync/RoleSync"; 
 import Bot from "../Bot";
+import Command from "./Command";
 
 export default class BotCore extends Client {
   commands: any;
