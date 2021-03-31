@@ -1,37 +1,35 @@
-
 // im too lazy to make registration system so im just resorting to this
 const roleMethods = {
-    "GuildRank": require("./RoleTemplates/GuildRank"), 
-    "Rank": require("./RoleTemplates/Rank"), 
-    "GuildRole": require("./RoleTemplates/GuildRole")
+  GuildRank: require("./RoleTemplates/GuildRank"),
+  Rank: require("./RoleTemplates/Rank"),
+  GuildRole: require("./RoleTemplates/GuildRole"),
 };
 
 export default async (member, uuid, roleLinks = []) => {
+  const guild = member.guild;
 
-    const guild = member.guild;
+  const cache = {}; // will be rewritten every run to avoid old data
 
-    const cache = {}; // will be rewritten every run to avoid old data
+  const roleData = {};
 
-    const roleData = {}; 
+  for (const roleLink of roleLinks) {
+    let meth = roleMethods[roleLink.RoleTemplate];
+    if (!meth) continue;
 
-    for (const roleLink of roleLinks) {
-        let meth = roleMethods[roleLink.RoleTemplate];
-        if (!meth) continue;
+    const res = await meth(uuid, guild.id, cache, roleLink.Params);
 
-        const res = await meth(uuid, cache, roleLink.Params);
+    roleData[roleLink.DiscordRoleID] = res;
 
-        roleData[roleLink.DiscordRoleID] = res;
+    const role = await guild.roles.fetch(roleLink.DiscordRoleID);
 
-        const role = await guild.roles.fetch(roleLink.DiscordRoleID);
+    if (!role) continue;
 
-        if (!role) continue;
-
-        if (res) {
-                await member.roles.add(role); // throws error; make it silently be caught higher up (not here)
-        } else {
-            await member.roles.remove(role); 
-        }
+    if (res) {
+      await member.roles.add(role); // throws error; make it silently be caught higher up (not here)
+    } else {
+      await member.roles.remove(role);
     }
-}
+  }
+};
 
 module.exports.RoleMethods = roleMethods;
