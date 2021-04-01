@@ -40,17 +40,17 @@ const Default = {
   isBotOnline: false,
 };
 export const createDefault = (
-  DiscordID,
-  ServerID,
-  ExpireDate,
-  BotUsername,
-  BotPassword,
-  BotAuth,
-  LogChannel,
-  MCPrefix,
-  Logging
+  DiscordID: string,
+  ServerID: string,
+  ExpireDate: number,
+  BotUsername: string,
+  BotPassword: string,
+  BotAuth: string,
+  LogChannel: number,
+  MCPrefix: string,
+  Logging: boolean
 ) => {
-  let obj: any = {};
+  let obj = {} as IPremiumLinkData;
 
   Object.assign(obj, Default);
   obj.DiscordID = DiscordID;

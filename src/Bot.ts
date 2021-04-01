@@ -22,9 +22,9 @@ export default class Bot {
       token: process.env.BOT_TOKEN,
       defaultPrefix: "!",
     });
-    this.LinkManager = new LinkManager(/*this*/);
+    this.LinkManager = new LinkManager(/* this */);
     this.GuildManager = new GuildManager(this);
-    this.UUIDManager = new UUIDManager(/*this*/);
+    this.UUIDManager = new UUIDManager(/* this */);
     this.WebServer = new Server(this, 4000);
     this.DatabaseHandler = new DatabaseHandler(
       process.env.DB_URI,

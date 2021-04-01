@@ -14,7 +14,7 @@ export default class BotCore extends Client {
   aliases: any;
   Bot: Bot;
   defaultPrefix: string;
-  constructor(bot, options = {} as IBotCore) {
+  constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: "everyone",
     });
@@ -79,7 +79,7 @@ export default class BotCore extends Client {
     });
   }
 
-  validate(options) {
+  validate(options: any) {
     if (typeof options !== "object")
       throw new TypeError("Options must be type of object");
 
