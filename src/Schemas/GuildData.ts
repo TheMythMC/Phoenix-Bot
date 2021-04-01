@@ -61,8 +61,8 @@ const Default = {
   Prefix: "!",
 };
 
-export const createDefault = (ServerID, prefix = "!") => {
-  let obj: any = {};
+export const createDefault = (ServerID: string, prefix = "!") => {
+  let obj = {} as IGuildData;
 
   Object.assign(obj, Default);
   obj.ServerID = ServerID;
