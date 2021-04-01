@@ -7,7 +7,8 @@
     "testJS": "tsc && node .",
     "testJava": "./startJava.sh",
     "start": "tsc && node . & ./startJava.sh",
-    "build": "tsc"
+    "build": "tsc && ./buildJava",
+    "start_no_build": "node . & npm run testJava"
   },
   "repository": {
     "type": "git",

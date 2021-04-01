@@ -1,16 +1,27 @@
 import mongoose from "mongoose";
 
 export interface IPremiumLinkData extends mongoose.Document {
+  // Discord owner Snowflake
   DiscordID: string;
+  // Discord server Snowflake
   ServerID: string;
+  // UTC time of expire
   ExpireDate: number;
+  // Username of Minecraft Bot
   BotUsername: string;
+  // Password of MinecraftBot
   BotPassword: string;
+  // Authentication of Minecraft Bot
   BotAuth: string;
+  // Log channel Snowflake
   LogChannel: number;
+  // String of prefix for Minecraft Bot
   MCPrefix: string;
+  // If server has logging enabled
   Logging: boolean;
+  // Boolean to see if the bot is online
   isBotOnline: boolean;
+  // To see if bot should start automatically
   botAutoRun: boolean;
 }
 
