@@ -1,22 +1,22 @@
-const { glob } = require('glob-promise')
+import { glob } from 'glob-promise';
 import MineflayerCommand from './MineflayerCommand'
-const path = require('path');
-const Util = require('../../utils/Util');
-import { Bot } from 'mineflayer'
+import path from 'path';
+import Util from '../../utils/Util';
+import MineflayerManager from '../MineflayerManager';
+import BotCore from '../BotCore';
 
 
 export default class MineflayerCommandManager {
     commands: Map<String, MineflayerCommand>;
     aliases: Map<String, String>;
     filepath: string;
-    minecraftBot: Bot;
     constructor () {
         this.commands = new Map();
         this.aliases = new Map();
         this.filepath = `${path.dirname(require.main.filename)}${path.sep}`;
     }
     
-    runCommand(message, playername, bot, discordBot) {
+    runCommand(message: string, playername: string, bot: MineflayerManager, discordBot: BotCore) {
         let [cmd, ...args] = message.split(/\S+/g) || [];
         for(const [key, value] of this.commands) {
             if(key === cmd) value.run(args, bot, discordBot, playername);
@@ -26,14 +26,14 @@ export default class MineflayerCommandManager {
         }
     }
 
-    loadCommands(path, mcBot) {
-        return glob(`${this.filepath}${path}/**/*.js`, 
+    loadCommands(mcBot: MineflayerManager, dirPath: string) {
+        return glob(`${this.filepath}${dirPath}/**/*.js`, 
         (err, matches) => {
             for (let match of matches) {
                 delete require.cache[match];
                 const { name } = path.parse(match);
                 const File = require(match);
-                if(!Util.isClass()) throw new TypeError(`The command ${name} does not export a class.`);
+                if(!Util.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
                 const command = new File(mcBot, name.toLowerCase());
                 if(!(command instanceof MineflayerCommand)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
                 // LEFT HERE FOR REFRENCE
@@ -44,9 +44,9 @@ export default class MineflayerCommandManager {
                         client.aliases.set(alias, command.name);
                     }
                 } */
-                this.commands.set(match.name, match);
-                if(match.aliases.length) {
-                    for(const alias of match.aliases) {
+                this.commands.set(File.name, File);
+                if(File.aliases.length) {
+                    for(const alias of File.aliases) {
                         this.aliases.set(alias, command.name);
                     }
                 }

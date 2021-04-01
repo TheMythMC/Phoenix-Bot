@@ -56,6 +56,9 @@ export default class Util {
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString("hex");
   }
+  static wait(milliseconds: number) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  }
 }
 
 module.exports = Util;

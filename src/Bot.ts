@@ -5,8 +5,8 @@ import LinkManager from "./Structure/LinkManager";
 import UUIDManager from "./Structure/UUIDManager";
 import Server from "./express/Server";
 import MineflayerManager from "./Structure/MineflayerManager";
-const PremiumLinkData = require("./Schemas/PremiumLinkData");
 import EventEmmiter from "events";
+import PremiumLinkData from "./Schemas/PremiumLinkData";
 
 export default class Bot {
   static bot: Bot;
@@ -25,9 +25,9 @@ export default class Bot {
       token: process.env.BOT_TOKEN,
       defaultPrefix: "!",
     });
-    this.LinkManager = new LinkManager(/*this*/);
+    this.LinkManager = new LinkManager(/* this */);
     this.GuildManager = new GuildManager(this);
-    this.UUIDManager = new UUIDManager(/*this*/);
+    this.UUIDManager = new UUIDManager(/* this */);
     this.WebServer = new Server(this, 4000);
     this.DatabaseHandler = new DatabaseHandler(
       process.env.DB_URI,
@@ -47,7 +47,7 @@ export default class Bot {
   }
 
   async loadMineflayerBots() {
-    const data = await PremiumLinkData.Model.find().exec(); // get all PREMIUM bots
+    const data = await PremiumLinkData.find().exec(); // get all PREMIUM bots
 
     // this.MineflayerManager = new MineflayerManager(data);
 

@@ -1,5 +1,6 @@
 import BotCore from "../BotCore";
 import { Bot } from "mineflayer";
+import MineflayerManager from "../MineflayerManager";
 
 export default class MineflayerCommand {
   name: string;
@@ -24,7 +25,7 @@ export default class MineflayerCommand {
     this.requiredPerms = options.requiredPerms || [];
   }
 
-  async run(args: string[], mcBot: Bot, discBot: BotCore, playerName: string) {
+  async run(args: string[], mcBot: MineflayerManager, discBot: BotCore, playerName: string) {
     throw new Error("Must specify run method");
   }
 }

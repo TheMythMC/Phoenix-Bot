@@ -4,17 +4,17 @@ import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
 import PremiumLinkData from "../Schemas/PremiumLinkData";
-import config from "../../config.json";
-
-import RoleSync from "../RoleSync/RoleSync";
+import config from "../../config.json"; 
+import RoleSync from "../RoleSync/RoleSync"; 
 import Bot from "../Bot";
+import Command from "./Command";
 
 export default class BotCore extends Client {
   commands: any;
   aliases: any;
   Bot: Bot;
   defaultPrefix: string;
-  constructor(bot, options = {} as IBotCore) {
+  constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: "everyone",
     });
@@ -79,7 +79,7 @@ export default class BotCore extends Client {
     });
   }
 
-  validate(options) {
+  validate(options: any) {
     if (typeof options !== "object")
       throw new TypeError("Options must be type of object");
 
