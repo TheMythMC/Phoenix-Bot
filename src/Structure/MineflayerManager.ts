@@ -47,7 +47,6 @@ export default class MineflayerManager {
     });
 
     bot.on("spawn", () => {
-      Util.wait(500);
       bot.chat("/achat §c"); // send to limbo
     });
 
