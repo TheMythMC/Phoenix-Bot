@@ -1,14 +1,13 @@
 import mineflayer from "mineflayer";
 import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
-import mainBot from "../Bot";
-import Util from "../utils/Util";
+import Bot from "../Bot";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
 import { Channel, TextChannel } from "discord.js";
 
 export default class MineflayerManager {
-  bot: mainBot;
+  bot: Bot;
   MineCraftBots: Map<string, mineflayer.Bot>;
-  constructor(bot: mainBot, guilds: IPremiumLinkData[]) {
+  constructor(bot: Bot, guilds: IPremiumLinkData[]) {
     new MineflayerCommandManager().loadCommands(
       this,
       "./Mineflayer/Commands/**/*.js"
@@ -17,13 +16,14 @@ export default class MineflayerManager {
     this.MineCraftBots = new Map();
     guilds.forEach(async (guild) => {
       if (
-        mainBot.getBot().GuildManager.isPremium(guild.id) &&
+        Bot.getBot().GuildManager.isPremium(guild.id) &&
         guild.ServerID &&
         guild.isBotOnline &&
         guild.BotUsername &&
         guild.BotPassword
       ) {
-        this.MineCraftBots.set(guild.ServerID, await this.createBot(guild));
+        console.log(`Set mineflayer bot for guild ${bot.CoreBot.guilds.cache.get(guild.ServerID).name}`)
+        this.MineCraftBots.set(guild.ServerID, this.createBot(guild));
       }
     });
   }
@@ -68,25 +68,32 @@ export default class MineflayerManager {
 
     bot.on(
       // @ts-ignore
-      "guildChat",
-      async (
+      "guildChat", async (
         _globalRank: string,
         name: string,
         _guildRank: string,
         message: string
       ) => {
-        if (message.startsWith(guildData.MCPrefix)) {
+        if (message.startsWith(guildData.MCPrefix) && name.toLowerCase() === bot.username.toLowerCase()) {
           new MineflayerCommandManager().runCommand(
-            message.substring(1, message.length),
+            message.substring(guildData.MCPrefix.length, message.length),
             name,
             this,
-            mainBot.getBot().CoreBot
+            Bot.getBot().CoreBot
           );
         }
         if(guildData.Logging) {
-          let logChannel: TextChannel = await this.bot.CoreBot.channels.fetch(guildData.LogChannel) as TextChannel
-          if (logChannel) {
-            logChannel.send(`\`${name}: ${message}\``)
+          let tempLogChannel: Channel = await this.bot.CoreBot.channels.fetch(guildData.LogChannel) || null;
+
+          if(tempLogChannel === null) 
+            bot.chat("The log channel has an invalid ID. Please contact guild administrators if this issue isn\'t resolved");
+
+          // Checks if its text (should always be, will throw error)
+          if (tempLogChannel.isText()) {
+            let logChannel: TextChannel = tempLogChannel as TextChannel;
+            logChannel.send(`\`${name}: ${message}\``);
+          } else {
+            bot.chat("The log channel has an invalid ID or is a Voice Channel. Please contact guild staff/the guild master.")
           }
         }
       }

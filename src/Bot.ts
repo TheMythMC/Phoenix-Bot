@@ -42,8 +42,6 @@ export default class Bot {
       }
     );
     this.CoreBot.start();
-    // Commented for now, need to test if it works without mineflayer attached
-    // this.MineflayerManager = new MineflayerManager(this, this.CoreBot.guilds.cache);
   }
 
   async loadMineflayerBots() {

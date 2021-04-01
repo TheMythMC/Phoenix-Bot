@@ -3,6 +3,7 @@ import glob from "glob";
 import pathParse from "path-parse";
 import { randomBytes } from "crypto";
 import Command from "../Structure/Command";
+import Bot from "../Bot";
 
 export default class Util {
   static isClass(input: Object) {
@@ -55,6 +56,15 @@ export default class Util {
 
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString("hex");
+  }
+
+  static getMinecraftBotForGuild(discGuildID: string) {
+    let bot = Bot.getBot().MineflayerManager.getMCBots().get(discGuildID) || null;
+    if (bot !== null) {
+      return bot;
+    } else {
+      return null; 
+    }
   }
 }
 
