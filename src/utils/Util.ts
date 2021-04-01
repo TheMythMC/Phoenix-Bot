@@ -36,7 +36,7 @@ export default class Util {
       }
     });
   }
-  static formatNumber(number: number) {
+  static formatNumber(number: number): string {
     return number.toLocaleString("en-US", { maximumFractionDigits: 2 });
   }
   static removeDuplicates(arr: any[]) {
@@ -55,9 +55,6 @@ export default class Util {
 
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString("hex");
-  }
-  static wait(milliseconds: number) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 }
 
