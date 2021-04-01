@@ -11,6 +11,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   MCPrefix: string;
   Logging: boolean;
   isBotOnline: boolean;
+  botAutoRun: boolean;
 }
 
 export const schema = new mongoose.Schema({
@@ -24,6 +25,7 @@ export const schema = new mongoose.Schema({
   MCPrefix: String,
   Logging: Boolean,
   isBotOnline: Boolean,
+  botAutoRun: Boolean,
 });
 
 const model = mongoose.model<IPremiumLinkData>("PremiumLinkData", schema);
@@ -38,6 +40,7 @@ const Default = {
   MCPrefix: "!",
   Logging: false,
   isBotOnline: false,
+  botAutoRun: false,
 };
 export const createDefault = (
   DiscordID,

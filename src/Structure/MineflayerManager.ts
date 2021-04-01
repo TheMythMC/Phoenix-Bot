@@ -1,26 +1,27 @@
 import mineflayer from "mineflayer";
-import { Document } from "mongoose";
+import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import mainBot from "../Bot";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
 
 export default class MineflayerManager {
+  bot: mainBot;
   MineCraftBots: Map<string, mineflayer.Bot>;
-  constructor(guilds) {
+  constructor(bot: mainBot, guilds: IPremiumLinkData[]) {
     new MineflayerCommandManager().loadCommands(
       this,
       "./Mineflayer/Commands/**/*.js"
     );
+    this.bot = bot;
     this.MineCraftBots = new Map();
     guilds.forEach(async (guild) => {
       if (
         mainBot.getBot().GuildManager.isPremium(guild.id) &&
-        !(guild.ServerID === null) &&
-        !(guild.ServerID === undefined)
+        guild.ServerID &&
+        guild.isBotOnline &&
+        guild.BotUsername &&
+        guild.BotPassword
       ) {
-        this.MineCraftBots.set(
-          guild.id,
-          this.createBot(mainBot.getBot().GuildManager.getGuild(guild.id))
-        );
+        this.MineCraftBots.set(guild.ServerID, this.createBot(guild));
       }
     });
   }
@@ -29,10 +30,9 @@ export default class MineflayerManager {
     return this.MineCraftBots;
   }
   createBot(guildData) {
-    let realGuildData = guildData.data;
     let bot = mineflayer.createBot({
-      username: realGuildData.BotUsername,
-      password: realGuildData.BotPassword,
+      username: guildData.BotUsername,
+      password: guildData.BotPassword,
       auth: guildData.BotAuth,
       version: "1.8.9",
       host: "buyphoenix.hypixel.net",
@@ -49,9 +49,19 @@ export default class MineflayerManager {
       bot.chat("/achat §c"); // send to limbo
     });
 
-    bot.on("end", () => {
-      this.MineCraftBots.set(guildData.GuildID, this.createBot(guildData));
+    bot.on("kicked", (reason, isLoggedIn) => {
+      if (!isLoggedIn) {
+        // error on joining
+        this.bot.EventEmmiter.emit("botJoinFailed", [reason]);
+        this.MineCraftBots.delete(guildData.ServerID); // remove the bot
+        return;
+      }
+      this.MineCraftBots.set(guildData.ServerID, this.createBot(guildData));
     });
+
+    // bot.on("end", () => {
+    //   this.MineCraftBots.set(guildData.ServerID, this.createBot(guildData));
+    // });
 
     // @ts-ignore
     bot.on("guildChat", (_globalRank, name, _guildRank, message) => {
@@ -68,4 +78,3 @@ export default class MineflayerManager {
     return bot;
   }
 }
-module.exports = MineflayerManager;

@@ -6,9 +6,11 @@ import UUIDManager from "./Structure/UUIDManager";
 import Server from "./express/Server";
 import MineflayerManager from "./Structure/MineflayerManager";
 const PremiumLinkData = require("./Schemas/PremiumLinkData");
+import EventEmmiter from "events";
 
 export default class Bot {
   static bot: Bot;
+  EventEmmiter: EventEmmiter;
   CoreBot: BotCore;
   LinkManager: LinkManager;
   GuildManager: GuildManager;
@@ -18,6 +20,7 @@ export default class Bot {
   MineflayerManager: MineflayerManager;
   constructor() {
     Bot.bot = this;
+    this.EventEmmiter = new EventEmmiter();
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
       defaultPrefix: "!",
@@ -40,7 +43,7 @@ export default class Bot {
     );
     this.CoreBot.start();
     // Commented for now, need to test if it works without mineflayer attached
-    // this.MineflayerManager = new MineflayerManager(this.CoreBot.guilds.cache);
+    // this.MineflayerManager = new MineflayerManager(this, this.CoreBot.guilds.cache);
   }
 
   async loadMineflayerBots() {
