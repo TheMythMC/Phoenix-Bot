@@ -1,16 +1,10 @@
 export default class Guild {
-    data: any;
-    isPremium: boolean;
-    constructor(data, isPremium = false) {
-        this.data = data;
-        this.isPremium = isPremium;
-    }
+  data: any;
+  constructor(data) {
+    this.data = data;
+  }
 
-    get id() {
-        return this.data.ServerID;
-    }
-
-    set premium(premium) {
-        this.isPremium = premium;
-    }
+  get id() {
+    return this.data.ServerID;
+  }
 }

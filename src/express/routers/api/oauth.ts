@@ -1,11 +1,12 @@
-import express from 'express'
-const router = express.Router(); 
-const jwt = require('jsonwebtoken'); 
-const { genRandomKey } = require('../../../utils/Util'); 
-const fetch = require('node-fetch'); 
-const qs = require("querystring"); 
-const DiscordOAuthData = require("../../../Schemas/DiscordOAuthData");
-
+import express from "express";
+const router = express.Router();
+const jwt = require("jsonwebtoken");
+const { genRandomKey } = require("../../../utils/Util");
+const fetch = require("node-fetch");
+const qs = require("querystring");
+import DiscordOAuthData, {
+  createDefault,
+} from "../../../Schemas/DiscordOAuthData";
 
 const url = encodeURIComponent(`http://localhost:4000/api/oauth/auth`);
 
@@ -51,11 +52,11 @@ router.get("/auth", async (req, res) => {
 
   let json = await response.json();
 
-  DiscordOAuthData.Model.deleteMany({
+  DiscordOAuthData.deleteMany({
     SessionID: decrypted.session_id,
   });
 
-  let d = DiscordOAuthData.createDefault(
+  let d = createDefault(
     decrypted.session_id,
     json.access_token,
     json.refresh_token,
@@ -88,11 +89,11 @@ router.get("/refresh", async (req, res) => {
 
   if (response.status !== 200) return;
 
-  DiscordOAuthData.Model.deleteMany({
+  DiscordOAuthData.deleteMany({
     SessionID: req.query.session_id,
   });
 
-  let d = DiscordOAuthData.createDefault(
+  let d = createDefault(
     req.query.session_id,
     json.access_token,
     json.refresh_token,
@@ -105,7 +106,7 @@ router.get("/isValidSession", async (req, res) => {
   const session = req.cookies.session_id;
   if (!session) return res.status(200).json(false);
   // A valid auth code must be in the database and not be expired
-  const data = await DiscordOAuthData.Model.findOne({ SessionID: session });
+  const data = await DiscordOAuthData.findOne({ SessionID: session });
   if (data && Date.now() < data.ExpireTime) return res.status(200).json(true);
   return res.status(200).json(false);
 });
@@ -115,7 +116,7 @@ router.post("/logout", async (req, res) => {
   // TODO: finish this
   if (!session) res.status(404).end();
 
-  const foundData = await DiscordOAuthData.Model.findOne({
+  const foundData = await DiscordOAuthData.findOne({
     SessionID: session,
   });
 
