@@ -3,6 +3,7 @@ import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import mainBot from "../Bot";
 import Util from "../utils/Util";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
+import { Channel, TextChannel } from "discord.js";
 
 export default class MineflayerManager {
   bot: mainBot;
@@ -22,7 +23,7 @@ export default class MineflayerManager {
         guild.BotUsername &&
         guild.BotPassword
       ) {
-        this.MineCraftBots.set(guild.ServerID, this.createBot(guild));
+        this.MineCraftBots.set(guild.ServerID, await this.createBot(guild));
       }
     });
   }
@@ -30,10 +31,11 @@ export default class MineflayerManager {
   getMCBots() {
     return this.MineCraftBots;
   }
-  createBot(guildData) {
+  createBot(guildData: IPremiumLinkData) {
     let bot = mineflayer.createBot({
       username: guildData.BotUsername,
       password: guildData.BotPassword,
+      // @ts-ignore
       auth: guildData.BotAuth,
       version: "1.8.9",
       host: "buyphoenix.hypixel.net",
@@ -67,19 +69,25 @@ export default class MineflayerManager {
     bot.on(
       // @ts-ignore
       "guildChat",
-      (
+      async (
         _globalRank: string,
         name: string,
         _guildRank: string,
         message: string
       ) => {
-        if (message.startsWith("!")) {
+        if (message.startsWith(guildData.MCPrefix)) {
           new MineflayerCommandManager().runCommand(
             message.substring(1, message.length),
             name,
             this,
             mainBot.getBot().CoreBot
           );
+        }
+        if(guildData.Logging) {
+          let logChannel: TextChannel = await this.bot.CoreBot.channels.fetch(guildData.LogChannel) as TextChannel
+          if (logChannel) {
+            logChannel.send(`\`${name}: ${message}\``)
+          }
         }
       }
     );

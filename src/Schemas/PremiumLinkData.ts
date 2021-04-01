@@ -14,7 +14,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   // Authentication of Minecraft Bot
   BotAuth: string;
   // Log channel Snowflake
-  LogChannel: number;
+  LogChannel: string;
   // String of prefix for Minecraft Bot
   MCPrefix: string;
   // If server has logging enabled
@@ -60,7 +60,7 @@ export const createDefault = (
   BotUsername: string,
   BotPassword: string,
   BotAuth: string,
-  LogChannel: number,
+  LogChannel: string,
   MCPrefix: string,
   Logging: boolean
 ) => {
