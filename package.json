@@ -39,7 +39,7 @@
     "node-fetch": "^2.6.1",
     "path-parse": "^1.0.6",
     "phoenix-slothpixel": "^1.2.6",
-    "typescript": "*"
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@types/ms": "*",

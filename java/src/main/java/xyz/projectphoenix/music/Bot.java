@@ -13,7 +13,6 @@ public class Bot {
         JDABuilder.createDefault("ODEzNDI2Mzk5NjcwMzA0NzY4.YDPIXg.6EFpP5sl8wqq7tajzrduiOwZwy8",
                 GatewayIntent.GUILD_VOICE_STATES,
                 GatewayIntent.GUILD_MESSAGES)
-
                 .enableCache(CacheFlag.VOICE_STATE)
                 .addEventListeners(new Listener()).build();
     }

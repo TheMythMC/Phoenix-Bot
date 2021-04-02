@@ -40,7 +40,7 @@ export default class Bot {
       async () => {
         console.log("Database is connected. ");
         console.log("Loading mineflayer bots...");
-        
+        this.loadMineflayerBots();
       }
     );
   }
@@ -48,7 +48,7 @@ export default class Bot {
     return this.bot;
   }
 
-  async loadMineflayerbOTS() {
+  async loadMineflayerBots() {
     const data = await PremiumLinkData.find().exec();
 
     // this.MineflayerManager = new MineflayerManager(this, data)
