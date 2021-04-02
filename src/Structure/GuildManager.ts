@@ -1,6 +1,6 @@
 import Guild from "./Guild";
-import GuildData, { createDefault } from "../Schemas/GuildData";
-const PremiumLinkData = require("../Schemas/PremiumLinkData");
+import GuildData from "../Schemas/GuildData";
+import PremiumLinkData from '../Schemas/PremiumLinkData'
 
 export default class GuildManager {
   guilds: any[];
@@ -11,26 +11,16 @@ export default class GuildManager {
     this.bot = bot;
   }
 
-  async loadGuilds() {
-    const all = await GuildData.find();
-
-    for (let guild of all) {
-      let g = this.addGuild(guild);
-
-      if (await this.isPremium(guild.ServerID)) g.premium = true;
-    }
-  }
-
   unloadGuilds() {
     this.guilds = [];
   }
 
   async isPremium(guildID) {
-    return await PremiumLinkData.Model.exists({ ServerID: guildID });
+    return await PremiumLinkData.exists({ ServerID: guildID });
   }
 
-  addGuild(doc, isPremium = false) {
-    let guild = new Guild(doc, isPremium);
+  addGuild(doc) {
+    let guild = new Guild(doc);
     this.guilds.push(guild);
     return guild;
   }
@@ -41,7 +31,7 @@ export default class GuildManager {
 
     const guild = await GuildData.findOne({ ServerID: guildID });
     if (guild) {
-      this.addGuild(guild, await this.isPremium(guildID));
+      this.addGuild(guild);
       return this._getGuildFromCache(guildID);
     }
   }
@@ -56,17 +46,6 @@ export default class GuildManager {
     if (!guild) return;
 
     guild.data = guildData;
-    if (await PremiumLinkData.Model.exists({ ServerID: guild.ServerID })) {
-      guild.premium = true;
-      return;
-    }
-    guild.premium = false;
-  }
-
-  editKey(guildID, key, value) {
-    let guild = this.getGuild(guildID);
-    if (!guild) return;
-    // wtf even is this
   }
 }
 

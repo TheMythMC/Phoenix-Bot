@@ -20,7 +20,7 @@ import { MessageEmbed } from "discord.js";
         return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    export function createCustomEmbed(color: string, message: string, title: string, footer: string, ...sections: string[]) {
+    export function createCustomEmbed(color, message, title, footer, ...sections) {
         let embed = new MessageEmbed(); 
 
         embed
@@ -30,9 +30,9 @@ import { MessageEmbed } from "discord.js";
             .setFooter(`Phoenix Bot coded by Project Phoenix ${footer || ""}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
             .setTimestamp();
         if(sections !== undefined && sections.length != 0) {
-            for (let i = 0; i < sections.length; i += 2) {
-                if (!sections[i] || !sections[i+2]) continue;
-                embed.addField(sections[i], sections[i+1]);
+            for (let i = 0; i < sections.length; i++) {
+                if (!sections[i] || !sections[i].name || !sections[i].value) continue; 
+                embed.addField(sections[i].name, sections[i].value);
             }
         }
         return embed; 

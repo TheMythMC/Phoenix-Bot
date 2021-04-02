@@ -16,7 +16,7 @@ module.exports = class Kick extends Command {
     }
 
     async run(message: Message, args: string[], client: BotCore) {
-        let mcBot: Bot = Util.getMinecraftBotForGuild(message.guild.id);
+        let mcBot: Bot = Util.getMinecraftBotFromGuild(message.guild.id);
         mcBot.chat(`\/kick ${args[0]}`);
         sendSuccessMessage(message.channel, `Kicked ${args[0]}`)
     }

@@ -15,7 +15,6 @@ class Unlink extends Command {
       category: "Misc",
       usage: `%punlink`,
       requiredPerms: [],
-      requireBotOwner: false,
     });
   }
 
