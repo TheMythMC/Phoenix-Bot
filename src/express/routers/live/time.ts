@@ -1,19 +1,30 @@
-import express from 'express'
-const router = express.Router(); 
+import express from "express";
+import expressWs from "express-ws";
+const router = express.Router() as expressWs.router;
 
 router.ws("/", (ws, req) => {
-    
-    let e; 
-    ws.on('open', () => {
-        e = setInterval(() => {
-            ws.send(Date.now()); 
-        }, 1000); 
-    })
-    
+  console.log(req.cookies);
 
-    ws.on('close', () => {
-        clearInterval(e); 
-    }); 
-}); 
+  let e;
+  ws.on("open", () => {
+    console.log("Opened");
 
-module.exports = router; 
+    e = setInterval(() => {
+      console.log(Date.now());
+
+      ws.send(Date.now());
+    }, 1000);
+  });
+
+  ws.on("message", (msg) => {
+    console.log(msg);
+  });
+
+  ws.on("close", () => {
+    console.log("CLOSED");
+
+    clearInterval(e);
+  });
+});
+
+module.exports = router;

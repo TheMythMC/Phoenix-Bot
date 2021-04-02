@@ -1,12 +1,13 @@
 import express from "express";
 import Bot from "../../../Bot";
+import Util from "../../../utils/Util";
 const router = express.Router();
 
 router.ws("/", (ws, req) => {
-  ws.on("open", () => {
-    Bot.bot.EventEmmiter.addListener("botStatusChanged", changeStatus);
-    Bot.bot.EventEmmiter.addListener("botJoinFailed", error);
-  });
+  if (req.query.guildID) {
+    Bot.bot.EventEmmiter.addListener(`botStatusChanged-${req.query.guildID}`, changeStatus);
+    Bot.bot.EventEmmiter.addListener(`botJoinFailed${req.query.guildID}`, error);
+  }
 
   ws.on("close", () => {
     Bot.bot.EventEmmiter.removeListener("botStatusChanged", changeStatus);

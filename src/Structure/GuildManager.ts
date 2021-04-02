@@ -1,6 +1,6 @@
 import Guild from "./Guild";
 import GuildData, { createDefault } from "../Schemas/GuildData";
-const PremiumLinkData = require("../Schemas/PremiumLinkData");
+import PremiumLinkData from "../Schemas/PremiumLinkData";
 
 export default class GuildManager {
   guilds: any[];
@@ -26,7 +26,7 @@ export default class GuildManager {
   }
 
   async isPremium(guildID) {
-    return await PremiumLinkData.Model.exists({ ServerID: guildID });
+    return await PremiumLinkData.exists({ ServerID: guildID });
   }
 
   addGuild(doc, isPremium = false) {
@@ -56,7 +56,7 @@ export default class GuildManager {
     if (!guild) return;
 
     guild.data = guildData;
-    if (await PremiumLinkData.Model.exists({ ServerID: guild.ServerID })) {
+    if (await PremiumLinkData.exists({ ServerID: guild.ServerID })) {
       guild.premium = true;
       return;
     }

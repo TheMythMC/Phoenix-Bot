@@ -65,8 +65,8 @@ export default class MineflayerManager {
     //   this.MineCraftBots.set(guildData.ServerID, this.createBot(guildData));
     // });
 
-    // @ts-ignore
     bot.on(
+      // @ts-ignore
       "guildChat",
       (
         _globalRank: string,
