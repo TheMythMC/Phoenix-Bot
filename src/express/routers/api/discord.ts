@@ -7,9 +7,7 @@ router.use(async (req, res, next) => {
 
   if (!req.cookies.session_id) return res.status(401).end();
 
-  let d = await DiscordOAuthData.findOne({
-    SessionID: req.cookies.session_id,
-  });
+  let d = await DiscordOAuthData.findOne({ SessionID: req.cookies.session_id });
 
   // invalid session id, lock out :D
   if (!d) return res.status(401).end();
@@ -34,9 +32,7 @@ router.use(async (req, res, next) => {
 });
 
 router.get("/user", async (req, res) => {
-  let d = await DiscordOAuthData.findOne({
-    SessionID: req.cookies.session_id,
-  });
+  let d = await DiscordOAuthData.findOne({ SessionID: req.cookies.session_id });
   const response = await fetch("http://discordapp.com/api/users/@me", {
     headers: {
       Authorization: `Bearer ${d.AccessToken}`,

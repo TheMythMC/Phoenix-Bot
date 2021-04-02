@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 export default class DatabaseHandler {
     connected: boolean;
     connection: any;
-    constructor(databaseURI, parameters = {}, callback = () => {}) {
+    constructor(databaseURI: string, parameters = {}, callback = () => {}) {
         this._initConnection(databaseURI, parameters, callback);
         this.connected = false;
     }
 
-    _initConnection(databaseURI, parameters, callback) {
+    _initConnection(databaseURI: string, parameters, callback) {
         mongoose.connect(databaseURI, parameters);
 
         this.connection = mongoose.connection;

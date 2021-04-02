@@ -103,7 +103,7 @@ export default class Link extends Command {
       .catch((err) => {
         sendErrorMessage(
           message.channel,
-          "An error occurred while attempting to save the data, please try again later. "
+          "An error occurred while attempting to save the data. "
         );
       });
   }

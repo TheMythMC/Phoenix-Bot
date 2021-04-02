@@ -15,8 +15,8 @@ const Default = {
   DiscordID: "",
   MinecraftUUID: "",
 };
-export const createDefault = (DiscordID, MinecraftUUID) => {
-  let obj: any = {};
+export const createDefault = (DiscordID: string, MinecraftUUID: string) => {
+  let obj = {} as IMinecraftLink;
 
   Object.assign(obj, Default);
   obj.DiscordID = DiscordID;

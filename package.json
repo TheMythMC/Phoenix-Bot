@@ -4,9 +4,11 @@
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
   "main": ".tsbuild/src/index.js",
   "scripts": {
-    "test": "tsc && node .",
+    "testJS": "tsc && node .",
+    "testJava": "./startJava.sh",
     "start": "tsc && node . & ./startJava.sh",
-    "build": "tsc"
+    "build": "tsc && ./buildJava.sh",
+    "start_no_build": "node . & npm run testJava"
   },
   "repository": {
     "type": "git",
@@ -37,7 +39,7 @@
     "node-fetch": "^2.6.1",
     "path-parse": "^1.0.6",
     "phoenix-slothpixel": "^1.2.6",
-    "typescript": "*"
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@types/ms": "*",

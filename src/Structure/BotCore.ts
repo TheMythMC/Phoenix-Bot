@@ -3,15 +3,14 @@ import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
-import PremiumLinkData from "../Schemas/PremiumLinkData";
-import config from "../../config.json"; 
-import RoleSync from "../RoleSync/RoleSync"; 
+import config from "../../config.json";
+import RoleSync from "../RoleSync/RoleSync";
 import Bot from "../Bot";
 import Command from "./Command";
 
 export default class BotCore extends Client {
-  commands: any;
-  aliases: any;
+  commands: Map<string, Command>;
+  aliases: Map<string, string>;
   Bot: Bot;
   defaultPrefix: string;
   constructor(bot: Bot, options = {} as IBotCore) {
@@ -65,6 +64,8 @@ export default class BotCore extends Client {
         if (command.requiredPerms) {
           let isAllowed = true;
           command.requiredPerms.forEach((perm) => {
+            // Put here because it can be both PermissionResolvable but also a String
+            // @ts-ignore
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
           if (!isAllowed)
@@ -79,7 +80,7 @@ export default class BotCore extends Client {
     });
   }
 
-  validate(options: any) {
+  validate(options) {
     if (typeof options !== "object")
       throw new TypeError("Options must be type of object");
 
@@ -107,10 +108,6 @@ export default class BotCore extends Client {
     doc.save();
 
     this.Bot.GuildManager.addGuild(doc);
-
-    if (await PremiumLinkData.exists({ ServerID: guild.id })) {
-      (await this.Bot.GuildManager.getGuild(guild.id)).premium = true;
-    }
   }
 
   async parsePrefix(guildID, text) {

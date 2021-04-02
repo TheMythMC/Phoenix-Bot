@@ -1,22 +1,22 @@
 import { MessageEmbed } from "discord.js";
 
-    export function sendErrorMessage(channel, error) {
+    export function sendErrorMessage(channel, error: string) {
         return channel.send(createErrorMessage(error)); 
     }
 
-    export function sendSuccessMessage(channel, message) {
+    export function sendSuccessMessage(channel, message: string) {
         return channel.send(createSuccessMessage(message));
     }
 
-    export function createSuccessMessage(message) {
+    export function createSuccessMessage(message: string) {
         return createCustomEmbed("GREEN", message, "Success!", undefined)
     }
 
-    export function createErrorMessage(error) {
+    export function createErrorMessage(error: string) {
         return createCustomEmbed("RED", error, "Error", undefined);
     }
 
-    export function sendCustomMessage(channel, color, message, title, footer, ...sections) {
+    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string, ...sections: string[]) {
         return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
