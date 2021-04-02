@@ -32,7 +32,7 @@ export const schema = new mongoose.Schema({
   BotUsername: String,
   BotPassword: String,
   BotAuth: String,
-  LogChannel: Number,
+  LogChannel: String,
   MCPrefix: String,
   Logging: Boolean,
   isBotOnline: Boolean,
