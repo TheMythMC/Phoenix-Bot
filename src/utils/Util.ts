@@ -2,15 +2,14 @@ import path from "path";
 import glob from "glob";
 import pathParse from "path-parse";
 import { randomBytes } from "crypto";
-import Command from "../Structure/Command";
 import DiscordOAuthData from "../Schemas/DiscordOAuthData";
+import GuildData from "../Schemas/GuildData";
+import Bot from "../Bot";
 
 export default class Util {
   static isClass(input: Object) {
     return (
-      typeof input === "function" &&
-      typeof input.prototype === "object" &&
-      input.toString().substring(0, 5) === "class"
+      typeof input === "function" && typeof input.prototype === "object" && input.toString().substring(0, 5) === "class"
     );
   }
   static get directory() {
@@ -24,8 +23,7 @@ export default class Util {
         delete require.cache[commandFile];
         const { name } = pathParse(commandFile);
         const File = require(commandFile);
-        if (!this.isClass(File))
-          throw new TypeError(`The command ${name} does not export a class.`);
+        if (!this.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
         const command = new File(client, name.toLowerCase());
         client.commands.set(command.name, command);
         console.log(`Set ${command.name} as a command`);
@@ -59,9 +57,41 @@ export default class Util {
   }
 
   // this is for checking if a session is permitted to access a certain guild
-  static isSessionPermitted(sessionID: string, guildID: string) {}
+  static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
+    const accessToken = await this.getAccessToken(sessionID);
+    if (!accessToken) return false; // invalid session id
+    const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
 
-  static getAccessToken(sessionID: string) {}
+    const guild = await bot.CoreBot.guilds.fetch(guildID);
+    const guildMember = await guild.members.fetch(id);
+
+    if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
+
+    // get guild data
+    const gData = await GuildData.findOne({ ServerID: guildID }).exec();
+
+    const perms = gData?.DashboardPerms || ["ADMINISTRATOR"];
+
+    const roles = gData?.DashboardRoles || [];
+
+    return (
+      guildMember.hasPermission(perms) ||
+      ((): boolean => {
+        // PLEASE FORGIVE ME!!!
+        for (const role of roles) {
+          if (guildMember.roles.cache.has(role)) return true;
+        }
+        return false;
+      })()
+    );
+  }
+
+  static async getAccessToken(sessionID: string) {
+    const data = await DiscordOAuthData.findOne({
+      SessionID: sessionID,
+    }).exec();
+    return data?.AccessToken;
+  }
 }
 
 module.exports = Util;
