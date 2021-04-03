@@ -1,12 +1,11 @@
 import express from "express";
 import Bot from "../../../Bot";
-import Util from "../../../utils/Util";
 const router = express.Router();
 
 router.ws("/", (ws, req) => {
   if (req.query.guildID) {
-    Bot.bot.EventEmmiter.addListener(`botStatusChanged-${req.query.guildID}`, changeStatus);
-    Bot.bot.EventEmmiter.addListener(`botJoinFailed${req.query.guildID}`, error);
+    Bot.bot.EventEmmiter.addListener("botStatusChanged", changeStatus);
+    Bot.bot.EventEmmiter.addListener("botJoinFailed", error);
   }
 
   ws.on("close", () => {
@@ -14,11 +13,13 @@ router.ws("/", (ws, req) => {
     Bot.bot.EventEmmiter.removeListener("botJoinFailed", error);
   });
 
-  function changeStatus(status) {
+  function changeStatus(guildID, status) {
+    if (req.query.guildID != guildID) return;
     ws.send({ status: status });
   }
 
-  function error(err) {
+  function error(guildID, err) {
+    if (req.query.guildID != guildID) return;
     ws.send({ error: err });
   }
 });
