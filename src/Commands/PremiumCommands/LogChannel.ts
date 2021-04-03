@@ -1,10 +1,11 @@
+import { Message } from "discord.js";
 import BotCore from "../../Structure/BotCore";
 import Command from "../../Structure/Command";
 import { sendErrorMessage, sendCustomMessage, sendSuccessMessage } from "../../utils/MessageUtils";
 
 module.exports = class extends Command {
   constructor(client: BotCore) {
-    super(client, "logChannel", {
+    super(client, "logchannel", {
       category: "Premium",
       usage: "%plogChannel <channel ID>",
       requiredPerms: ["ADMINISTRATOR"],
@@ -14,7 +15,7 @@ module.exports = class extends Command {
     });
   }
 
-  async run(message, args, client) {
+  async run(message: Message, args: string[], _client: BotCore) {
     try {
       BigInt(args[0]);
     } catch {
