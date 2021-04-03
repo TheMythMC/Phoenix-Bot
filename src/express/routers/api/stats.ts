@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router();
-const Bot = require('../../../Bot');
+import Bot from '../../../Bot';
 
 router.use('/', (req, res) => {
     let bot = Bot.getBot().CoreBot;
@@ -8,7 +8,7 @@ router.use('/', (req, res) => {
     let users = bot.users.cache.size;
     let uptime = bot.uptime;
     res.json({
-            botsActive: 0,
+            botsActive: Bot.getBot().MineflayerManager.getMCBots().size,
             servers: guilds,
             users: users,
             uptime: uptime

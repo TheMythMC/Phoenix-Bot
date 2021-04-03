@@ -1,9 +1,9 @@
+import BotCore from "../../Structure/BotCore";
 import Command from "../../Structure/Command";
-const { sendErrorMessage, sendCustomMessage, sendSuccessMessage } = require("../../utils/MessageUtils");
-const { getBot } = require("../../Bot");
+import { sendErrorMessage, sendCustomMessage, sendSuccessMessage } from "../../utils/MessageUtils";
 
 module.exports = class extends Command {
-  constructor(client) {
+  constructor(client: BotCore) {
     super(client, "logChannel", {
       category: "Premium",
       usage: "%plogChannel <channel ID>",

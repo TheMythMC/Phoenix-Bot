@@ -95,9 +95,6 @@ export default class Util {
     }).exec();
     return data?.AccessToken;
   }
-  static getMinecraftBotFromGuild(guildID: string) {
-    return Bot.getBot().MineflayerManager.getMCBots().get(guildID);
-  }
 }
 
 module.exports = Util;

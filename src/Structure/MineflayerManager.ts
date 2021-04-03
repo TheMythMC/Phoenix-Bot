@@ -1,8 +1,6 @@
-import mineflayer from "mineflayer";
 import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import Bot from "../Bot";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
-import { Channel, TextChannel } from "discord.js";
 import MineflayerBot from "./MineflayerBot";
 
 const joinMessages: string[] = [
@@ -72,7 +70,7 @@ export default class MineflayerManager {
     return this.MineCraftBots;
   }
   createBot(guildData: IPremiumLinkData): MineflayerBot {
-    let bot = new MineflayerBot(this.bot, this, guildData, {
+    return new MineflayerBot(this.bot, this, guildData, {
       username: guildData.BotUsername,
       password: guildData.BotPassword,
       // @ts-ignore
@@ -81,7 +79,5 @@ export default class MineflayerManager {
       host: "buyphoenix.hypixel.net",
       port: 25565,
     });
-
-    return bot;
   }
 }

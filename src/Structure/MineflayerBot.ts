@@ -45,7 +45,7 @@ export default class MineflayerBot {
     });
 
     // bot.on("end", () => {
-    //   this.MineCraftBots.set(guildData.ServerID, this.createBot(guildData));
+    //   this.MineCraftBots.setBot(guildData.ServerID, this.createBot(guildData));
     // });
 
     this.bot.on(

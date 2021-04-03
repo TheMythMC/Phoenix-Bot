@@ -2,8 +2,9 @@ import { Message } from 'discord.js';
 import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
 import { Bot } from 'mineflayer'
-import Util from '../../../utils/Util';
 import { sendSuccessMessage } from '../../../utils/MessageUtils';
+import PremiumUtils from '../../../utils/PremiumUtils';
+import MineflayerBot from '../../../Structure/MineflayerBot';
 
 module.exports = class extends Command {
     constructor(client: BotCore) {
@@ -19,7 +20,7 @@ module.exports = class extends Command {
     }
 
     async run(message: Message, args: string[], client: BotCore): Promise<any> {
-        let mcBot: Bot = Util.getMinecraftBotFromGuild(message.guild.id);
+        let mcBot: Bot = PremiumUtils.getMinecraftBotFromGuild(message.guild.id).bot;
         if (mcBot == null) {
             return message.channel.send('There isn\'t a minecraft Bot linked with this guild. Please contact the admins of project phoenix if you think this is an issue');
         }

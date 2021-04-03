@@ -4,6 +4,7 @@ import Command from '../../../Structure/Command';
 import Util from '../../../utils/Util'
 import { Bot } from 'mineflayer';
 import { sendSuccessMessage } from '../../../utils/MessageUtils';
+import PremiumUtils from '../../../utils/PremiumUtils';
 
 module.exports = class Kick extends Command {
     constructor(client: BotCore) {
@@ -16,7 +17,7 @@ module.exports = class Kick extends Command {
     }
 
     async run(message: Message, args: string[], client: BotCore) {
-        let mcBot: Bot = Util.getMinecraftBotFromGuild(message.guild.id);
+        let mcBot: Bot = PremiumUtils.getMinecraftBotFromGuild(message.guild.id).bot;
         mcBot.chat(`\/kick ${args[0]}`);
         sendSuccessMessage(message.channel, `Kicked ${args[0]}`)
     }
