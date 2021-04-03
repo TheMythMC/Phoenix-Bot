@@ -43,6 +43,7 @@ export default class Bot {
         this.loadMineflayerBots();
       }
     );
+    this.CoreBot.start();
   }
   static getBot() {
     return this.bot;

@@ -7,12 +7,14 @@ import config from "../../config.json";
 import RoleSync from "../RoleSync/RoleSync";
 import Bot from "../Bot";
 import Command from "./Command";
+import { Manager } from "erela.js";
 
 export default class BotCore extends Client {
   commands: Map<string, Command>;
   aliases: Map<string, string>;
   Bot: Bot;
   defaultPrefix: string;
+  manager: Manager;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: "everyone",
@@ -33,7 +35,9 @@ export default class BotCore extends Client {
     this.on("guildMemberAdd", this.syncGuildMember);
 
     this.once("ready", () => {
-      console.log(`Logged in as ${this.user.username}!`);
+      console.log(`Logged in as ${this.user.tag}!`);
+      // So music works
+      this.manager.init(this.user.id)
     });
 
     this.on("message", async (message) => {
@@ -78,7 +82,41 @@ export default class BotCore extends Client {
         command.run(message, args, this);
       }
     });
+
+    // Music stuff
+
+    this.manager = new Manager({
+      
+      nodes: [
+        {
+          host: "127.0.0.1",
+          password: "#BuyPhoenix2021",
+          port: 2333
+        }
+      ],
+
+      send: (id, payload) => {
+        const guild = this.guilds.cache.get(id);
+
+        if(guild) guild.shard.send(payload);
+      }
+    });
+
+    // Emitted whenever a node connects
+    this.manager.on("nodeConnect", node => {
+    console.log(`Node "${node.options.identifier}" connected.`)
+    });
+
+    this.on("raw", d => this.manager.updateVoiceState(d));
+
+
+    // Emitted whenever a node encountered an error
+    this.manager.on("nodeError", (node, error) => {
+    console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`)
+    });
+
   }
+  // Back to Discord stuff
 
   validate(options) {
     if (typeof options !== "object")
@@ -91,6 +129,7 @@ export default class BotCore extends Client {
 
   async start(token = this.token) {
     await Util.loadCommands(this, `Commands${path.sep}CoreCommands`);
+    await Util.loadCommands(this, `Commands${path.sep}PremiumCommands`)
     await super.login(token);
   }
 
