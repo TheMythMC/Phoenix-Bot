@@ -23,6 +23,10 @@ export interface IPremiumLinkData extends mongoose.Document {
   isBotOnline: boolean;
   // To see if bot should start automatically
   botAutoRun: boolean;
+  // Role ID for staff pings (eg. when there's an invite request, etc)
+  StaffRole: string;
+  // If bot is allowed to ping staff
+  StaffPing: boolean;
 }
 
 export const schema = new mongoose.Schema({
@@ -37,6 +41,8 @@ export const schema = new mongoose.Schema({
   Logging: Boolean,
   isBotOnline: Boolean,
   botAutoRun: Boolean,
+  StaffRole: String,
+  StaffPing: Boolean
 });
 
 const model = mongoose.model<IPremiumLinkData>("PremiumLinkData", schema);
@@ -52,6 +58,8 @@ const Default = {
   Logging: false,
   isBotOnline: false,
   botAutoRun: false,
+  StaffRole: "",
+  StaffPing: true
 };
 export const createDefault = (
   DiscordID: string,
@@ -62,7 +70,9 @@ export const createDefault = (
   BotAuth: string,
   LogChannel: string,
   MCPrefix: string,
-  Logging: boolean
+  Logging: boolean,
+  StaffRole: string,
+  StaffPing: boolean
 ) => {
   let obj = {} as IPremiumLinkData;
 
@@ -76,6 +86,8 @@ export const createDefault = (
   obj.LogChannel = LogChannel;
   obj.MCPrefix = MCPrefix;
   obj.Logging = Logging;
+  obj.StaffRole = StaffRole;
+  obj.StaffPing = StaffPing;
   return new model(obj);
 };
 
