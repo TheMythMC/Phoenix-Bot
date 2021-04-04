@@ -5,7 +5,13 @@
   "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "tsc && node . & java -jar Lavalink.jar",
-    "onlyJS": "tsc && node ."
+    "onlyJS": "tsc && node .",
+    "prod": "sudo docker-compose up"
+  },
+  "scriptsComments": {
+    "start": "For testing with everything enabled",
+    "onlyJS": "When testing only the JS, aka when music is NOT needed",
+    "prod": "For use ONLY on the Ubuntu server. This runs a docker instance that is only avaliable on Linux. USE WITH CAUTION."
   },
   "repository": {
     "type": "git",
