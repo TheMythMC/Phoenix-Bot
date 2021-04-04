@@ -7,7 +7,6 @@ export default class MineflayerCommand {
   aliases: string[];
   description: string;
   usage: string;
-  requiredPerms: string[];
   minecraftBot: Bot;
   discordBot: BotCore;
   constructor(
@@ -22,7 +21,6 @@ export default class MineflayerCommand {
     this.aliases = options.aliases || [];
     this.description = options.description || "No description provided";
     this.usage = options.usage || "No usage provided";
-    this.requiredPerms = options.requiredPerms || [];
   }
 
   async run(args: string[], mcBot: MineflayerManager, discBot: BotCore, playerName: string) {
@@ -31,8 +29,7 @@ export default class MineflayerCommand {
 }
 
 interface IMineflayerCommand {
-  aliases: string[];
+  aliases?: string[];
   description: string;
   usage: string;
-  requiredPerms: string[];
 }

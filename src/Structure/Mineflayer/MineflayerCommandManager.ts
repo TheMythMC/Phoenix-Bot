@@ -26,7 +26,7 @@ export default class MineflayerCommandManager {
         }
     }
 
-    loadCommands(mcBot: MineflayerManager, dirPath: string) {
+    loadCommands(mcBot: MineflayerManager, dirPath: string, discordBot: BotCore) {
         return glob(`${this.filepath}${dirPath}/**/*.js`, 
         (err, matches) => {
             for (let match of matches) {
@@ -34,7 +34,7 @@ export default class MineflayerCommandManager {
                 const { name } = path.parse(match);
                 const File = require(match);
                 if(!Util.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
-                const command = new File(mcBot, name.toLowerCase());
+                const command = new File(discordBot, mcBot);
                 if(!(command instanceof MineflayerCommand)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
                 // LEFT HERE FOR REFRENCE
                 /*client.commands.set(command.name, command);
