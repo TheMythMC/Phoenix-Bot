@@ -6,7 +6,7 @@ module.exports = class extends Command {
     constructor (client: BotCore) {
         super (client, 'bassboost', {
             description: "Bassboosts the current track",
-            usage: "%pbassboost",
+            usage: "%pbassboost <none | low | medium | high>",
             category: "Music Commands"
         });
     }

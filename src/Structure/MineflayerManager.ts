@@ -60,7 +60,7 @@ export default class MineflayerManager {
         guild.BotUsername &&
         guild.BotPassword
       ) {
-        console.log(`Set mineflayer bot for guild ${bot.CoreBot.guilds.cache.get(guild.ServerID).name}`);
+        console.log(`Created mineflayer bot for guild ${bot.CoreBot.guilds.cache.get(guild.ServerID).name}`);
         this.MineCraftBots.set(guild.ServerID, this.createBot(guild));
       }
     });

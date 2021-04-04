@@ -19,9 +19,9 @@ export default class MineflayerCommandManager {
     runCommand(message: string, playername: string, bot: MineflayerManager, discordBot: BotCore) {
         let [cmd, ...args] = message.split(/\S+/g) || [];
         for(const [key, value] of this.commands) {
-            if(key === cmd) value.run(args, bot, discordBot, playername);
-            value.aliases.forEach(element => {
-                if(element === cmd) value.run(args, bot, discordBot, playername);
+            if(key === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+            value.aliases.forEach(alias => {
+                if(alias === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
             });
         }
     }
