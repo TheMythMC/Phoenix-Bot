@@ -4,6 +4,7 @@ import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import MineflayerManager from "./MineflayerManager";
 import { Channel, TextChannel } from "discord.js";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
+import GuildData from '../Schemas/GuildData'
 
 const joinMessages: string[] = [
   "%n just joined the server - glhf!",
@@ -98,7 +99,7 @@ export default class MineflayerBot {
           new MineflayerCommandManager().runCommand(
             message.substring(this.premiumData.MCPrefix.length, message.length),
             name,
-            this.manager,
+            this,
             Bot.getBot().CoreBot
           );
         }
@@ -136,7 +137,10 @@ export default class MineflayerBot {
           let username = message.split(/(\w+) joined the guild!/)[0];
           let channel: TextChannel = this.Client.CoreBot.channels.cache.get(this.premiumData.LogChannel) as TextChannel;
           if (channel == null) return;                                    // TEMP
-          channel.send(`<@${this.premiumData.StaffRole}>, ${username} has requested to join the guild! Type !accept ${username} to let them in!`);
+          channel.send(`<@${this.premiumData.StaffRole}>, ${username} has requested to join the guild! Type ${/* Frogive me father, for I have sinned */(await GuildData.find().exec()).forEach( guild => {
+            if(guild.id === this.premiumData.ServerID)
+              return guild.Prefix;
+          })}accept ${username} to let them in!`);
         } else if (message.match(/(\w+) left the guild!/)) {
           let username = message.split(/(\w+) joined the guild!/)[0]
           this.bot.chat(`See ya later, ${username}! We hope you enjoyed your stay! \:\)`);
