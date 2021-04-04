@@ -1,11 +1,11 @@
 version: '3'
 services:
-  core:
+  extra:
     build:
       context: .
       dockerfile: Dockerfile
     image: bupachile/node12.16.1-alpine
     entrypoint: bash docker/launch.sh
     volumes:
-      - .:/usr/src/core
-    container_name: phoenix-core
+      - .:/usr/src/extra
+    container_name: phoenix-extra

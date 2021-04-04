@@ -7,7 +7,6 @@ export default class MineflayerManager {
   bot: Bot;
   MineCraftBots: Map<string, MineflayerBot>;
   constructor(bot: Bot, guilds: IPremiumLinkData[]) {
-    new MineflayerCommandManager().loadCommands(this, "./Mineflayer/Commands/**/*.js", Bot.getBot().CoreBot);
     this.bot = bot;
     this.MineCraftBots = new Map();
     guilds.forEach(async (guild) => {
@@ -28,7 +27,7 @@ export default class MineflayerManager {
     return this.MineCraftBots;
   }
   createBot(guildData: IPremiumLinkData): MineflayerBot {
-    return new MineflayerBot(this.bot, this, guildData, {
+    let bot =  new MineflayerBot(this.bot, this, guildData, {
       username: guildData.BotUsername,
       password: guildData.BotPassword,
       // @ts-ignore
@@ -37,5 +36,7 @@ export default class MineflayerManager {
       host: "buyphoenix.hypixel.net",
       port: 25565,
     });
+    new MineflayerCommandManager().loadCommands(bot, './Mineflayer/Commands/**/*.ts', this.bot.CoreBot);
+    return bot;
   }
 }
