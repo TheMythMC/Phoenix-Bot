@@ -134,7 +134,7 @@ export default class MineflayerBot {
         if (message.match(/(\w+) joined the guild!/)){
           this.bot.chat(joinMessages[Math.floor(Math.random() * joinMessages.length)].replace('%n', message.split(/(\w+) joined the guild!/)[0]));
         } else if (message.match(/(\w+) has requested to join the Guild!/)) {
-          let username = message.split(/(\w+) joined the guild!/)[0];
+          let username = message.split(/(\w+) (.+)/)[0];
           let channel: TextChannel = this.Client.CoreBot.channels.cache.get(this.premiumData.LogChannel) as TextChannel;
           if (channel == null) return;                                    // TEMP
           channel.send(`<@${this.premiumData.StaffRole}>, ${username} has requested to join the guild! Type ${/* Frogive me father, for I have sinned */(await GuildData.find().exec()).forEach( guild => {
@@ -142,7 +142,7 @@ export default class MineflayerBot {
               return guild.Prefix;
           })}accept ${username} to let them in!`);
         } else if (message.match(/(\w+) left the guild!/)) {
-          let username = message.split(/(\w+) joined the guild!/)[0]
+          let username = message.split(/(\w+) (.+)/)[0]
           this.bot.chat(`See ya later, ${username}! We hope you enjoyed your stay! \:\)`);
         }
       }
