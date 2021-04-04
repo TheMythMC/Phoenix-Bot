@@ -9,10 +9,3 @@ services:
     volumes:
       - .:/usr/src/core
     container_name: phoenix-core
-  lavalink:
-    build:
-      context: .
-    image: fredboat/lavalink:dev
-    command: -v -p 127.0.0.1:2333:2333
-    volumes: 
-      - ./application.yml:/opt/Lavalink/application.yml
