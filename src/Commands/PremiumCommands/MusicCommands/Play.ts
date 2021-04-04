@@ -19,6 +19,7 @@ module.exports =  class extends Command {
     if (!channel) return message.reply('You need to join a voice channel.');
     if (!args.length) return message.reply('You need to give me a URL or a search term.');
 
+
     const player: Player = client.manager.create({
       guild: message.guild.id,
       voiceChannel: channel.id,
@@ -26,6 +27,8 @@ module.exports =  class extends Command {
     });
 
     if (player.state !== "CONNECTED") player.connect();
+
+    if(player.state === 'CONNECTED' && player.voiceChannel !== message.member.voice.channel.id) message.reply('You must be in the same voice channel as the bot to add music.')
 
     const search = args.join(' ');
     let res: SearchResult;
