@@ -2,13 +2,19 @@ import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import Bot from "../Bot";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
 import MineflayerBot from "./MineflayerBot";
+import MineflayerCommand from "./Mineflayer/MineflayerCommand";
 
 export default class MineflayerManager {
   bot: Bot;
   MineCraftBots: Map<string, MineflayerBot>;
+  CommandCache: Map<string, MineflayerCommand>;
+  AliasesCache: Map<string, string>;
   constructor(bot: Bot, guilds: IPremiumLinkData[]) {
     this.bot = bot;
     this.MineCraftBots = new Map();
+    let ca = MineflayerCommandManager.loadCommand("./Mineflayer/Commands/**/*.ts", this.bot.CoreBot);
+    this.CommandCache = ca.commands;
+    this.AliasesCache = ca.aliases;
     guilds.forEach(async (guild) => {
       if (
         Bot.instance.GuildManager.isPremium(guild.id) &&
@@ -28,7 +34,7 @@ export default class MineflayerManager {
   }
 
   createBot(guildData: IPremiumLinkData): MineflayerBot {
-    let bot =  new MineflayerBot(this.bot, this, guildData, {
+    let bot = new MineflayerBot(this.bot, this, guildData, {
       username: guildData.BotUsername,
       password: guildData.BotPassword,
       // @ts-ignore
@@ -37,7 +43,6 @@ export default class MineflayerManager {
       host: "buyphoenix.hypixel.net",
       port: 25565,
     });
-    new MineflayerCommandManager().loadCommands(bot, './Mineflayer/Commands/**/*.ts', this.bot.CoreBot);
     return bot;
   }
 

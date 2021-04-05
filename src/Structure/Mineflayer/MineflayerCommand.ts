@@ -10,13 +10,7 @@ export default class MineflayerCommand {
   usage: string;
   minecraftBot: MineflayerBot;
   discordBot: BotCore;
-  constructor(
-    discordBot: BotCore,
-    minecraftBot: MineflayerBot,
-    name: string,
-    options: IMineflayerCommand = {} as IMineflayerCommand
-  ) {
-    this.minecraftBot = minecraftBot;
+  constructor(discordBot: BotCore, name: string, options: IMineflayerCommand = {} as IMineflayerCommand) {
     this.discordBot = discordBot;
     this.name = name;
     this.aliases = options.aliases || [];

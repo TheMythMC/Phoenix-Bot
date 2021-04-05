@@ -54,12 +54,14 @@ export default class MineflayerBot {
   Client: Bot;
   manager: MineflayerManager;
   options: BotOptions;
+  commandManager: MineflayerCommandManager;
   constructor(bot: Bot, manager: MineflayerManager, data: IPremiumLinkData, options: BotOptions) {
     this.bot = mineflayer.createBot(options);
     this.premiumData = data;
     this.options = options;
     this.Client = bot;
     this.manager = manager;
+    this.commandManager = new MineflayerCommandManager(manager.CommandCache, manager.AliasesCache); // NOT load in every time a bot instantiates
     this.setupBot();
   }
 
@@ -102,7 +104,7 @@ export default class MineflayerBot {
       "guildChat",
       async (_globalRank: string, name: string, _guildRank: string, message: string) => {
         if (message.startsWith(this.premiumData.MCPrefix) && name.toLowerCase() === this.bot.username.toLowerCase()) {
-          new MineflayerCommandManager().runCommand(
+          this.commandManager.runCommand(
             message.substring(this.premiumData.MCPrefix.length, message.length),
             name,
             this,
