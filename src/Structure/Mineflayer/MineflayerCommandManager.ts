@@ -4,6 +4,7 @@ import path from 'path';
 import Util from '../../utils/Util';
 import MineflayerManager from '../MineflayerManager';
 import BotCore from '../BotCore';
+import MineflayerBot from '../MineflayerBot';
 
 
 export default class MineflayerCommandManager {
@@ -16,17 +17,17 @@ export default class MineflayerCommandManager {
         this.filepath = `${path.dirname(require.main.filename)}${path.sep}`;
     }
     
-    runCommand(message: string, playername: string, bot: MineflayerManager, discordBot: BotCore) {
+    runCommand(message: string, playername: string, bot: MineflayerBot, discordBot: BotCore) {
         let [cmd, ...args] = message.split(/\S+/g) || [];
         for(const [key, value] of this.commands) {
-            if(key === cmd) value.run(args, bot, discordBot, playername);
-            value.aliases.forEach(element => {
-                if(element === cmd) value.run(args, bot, discordBot, playername);
+            if(key === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+            value.aliases.forEach(alias => {
+                if(alias === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
             });
         }
     }
 
-    loadCommands(mcBot: MineflayerManager, dirPath: string) {
+    loadCommands(mcBot: MineflayerBot, dirPath: string, discordBot: BotCore) {
         return glob(`${this.filepath}${dirPath}/**/*.js`, 
         (err, matches) => {
             for (let match of matches) {
@@ -34,7 +35,7 @@ export default class MineflayerCommandManager {
                 const { name } = path.parse(match);
                 const File = require(match);
                 if(!Util.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
-                const command = new File(mcBot, name.toLowerCase());
+                const command = new File(discordBot, mcBot, name.toLowerCase());
                 if(!(command instanceof MineflayerCommand)) throw new TypeError(`The command ${name} doesn't belong in Commands.`);
                 // LEFT HERE FOR REFRENCE
                 /*client.commands.set(command.name, command);

@@ -1,18 +1,18 @@
 import BotCore from "../BotCore";
 import { Bot } from "mineflayer";
 import MineflayerManager from "../MineflayerManager";
+import MineflayerBot from "../MineflayerBot";
 
 export default class MineflayerCommand {
   name: string;
   aliases: string[];
   description: string;
   usage: string;
-  requiredPerms: string[];
-  minecraftBot: Bot;
+  minecraftBot: MineflayerBot;
   discordBot: BotCore;
   constructor(
     discordBot: BotCore,
-    minecraftBot: Bot,
+    minecraftBot: MineflayerBot,
     name: string,
     options: IMineflayerCommand = {} as IMineflayerCommand
   ) {
@@ -22,17 +22,15 @@ export default class MineflayerCommand {
     this.aliases = options.aliases || [];
     this.description = options.description || "No description provided";
     this.usage = options.usage || "No usage provided";
-    this.requiredPerms = options.requiredPerms || [];
   }
 
-  async run(args: string[], mcBot: MineflayerManager, discBot: BotCore, playerName: string) {
+  async run(args: string[], mcBot: MineflayerBot, discBot: BotCore, playerName: string) {
     throw new Error("Must specify run method");
   }
 }
 
 interface IMineflayerCommand {
-  aliases: string[];
+  aliases?: string[];
   description: string;
   usage: string;
-  requiredPerms: string[];
 }

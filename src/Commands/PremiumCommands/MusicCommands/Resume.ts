@@ -4,7 +4,7 @@ import Command from '../../../Structure/Command'
 
 module.exports = class extends Command {
     constructor (client: BotCore) {
-        super (client, 'Resume', {
+        super (client, 'resume', {
             description: "Resumes the current track",
             usage: "%presume",
             category: "Music Commands"

@@ -4,7 +4,10 @@ WORKDIR /usr/src/extra
 
 COPY package*.json ./
 
-RUN apk update && apk add bash && apk add curl
+RUN echo 'http://mirror.ette.biz/alpine/v3.13/main \
+http://mirror.ette.biz/alpine/v3.13/community'
+
+RUN apk update && apk add bash && apk add curl && apk add openjdk11-jdk
 
 RUN npm install
 

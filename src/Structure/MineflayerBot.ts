@@ -4,6 +4,49 @@ import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
 import MineflayerManager from "./MineflayerManager";
 import { Channel, TextChannel } from "discord.js";
 import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
+import GuildData from "../Schemas/GuildData";
+
+const joinMessages: string[] = [
+  "%n just joined the server - glhf!",
+  "%n just joined. Everyone, look busy!",
+  "%n just joined. Can I get a heal?",
+  "%n joined your party.",
+  "%n joined. You must construct additional pylons.",
+  "Ermagherd. %n is here.",
+  "Welcome, %n. Stay awhile and listen.",
+  "Welcome, %n. We were expecting you ;)",
+  "Welcome, %n. We hope you brought pizza.",
+  "Welcome %n. Leave your weapons by the door.",
+  "A wild %n appeared.",
+  "Swoooosh. %n just landed.",
+  "Brace yourselves. %n just joined the guild.",
+  "%n just joined. Hide your bananas.",
+  "%n just arrived. Seems OP - please nerf.",
+  "%n just slid into the guild.",
+  "A %n has spawned in the server.",
+  "Big %n showed up!",
+  "Where’s %n? In the guild!",
+  "%n hopped into the server. Kangaroo!!",
+  "%n just showed up. Hold my beer.",
+  "Challenger approaching - %n has appeared!",
+  "It's a bird! It's a plane! Nevermind, it's just %n.",
+  "It's %n! Praise the sun! [T]/",
+  "Never gonna give %n up. Never gonna let %n down.",
+  "Ha! %n has joined! You activated my trap card!",
+  "Cheers, love! %n's here!",
+  "Hey! Listen! %n has joined!",
+  "We've been expecting you %n.",
+  "It's dangerous to go alone, take %n!",
+  "%n has joined the server! It's super effective!",
+  "Cheers, love! %n is here!",
+  "%n is here, as the prophecy foretold.",
+  "%n has arrived. Party's over.",
+  "Ready player %n",
+  "%n is here to kick butt and chew bubblegum. And %n is all out of gum.",
+  "Hello. Is it %n you're looking for?",
+  "%n has joined. Stay a while and listen!",
+  "Roses are red, violets are blue, %n joined this guild with you",
+];
 
 export default class MineflayerBot {
   premiumData: IPremiumLinkData;
@@ -62,7 +105,7 @@ export default class MineflayerBot {
           new MineflayerCommandManager().runCommand(
             message.substring(this.premiumData.MCPrefix.length, message.length),
             name,
-            this.manager,
+            this,
             Bot.instance.CoreBot
           );
         }
@@ -86,6 +129,35 @@ export default class MineflayerBot {
         }
       }
     );
+
+    // Invite and join checking
+    this.bot.on("chat", async (_username: string, _message: string) => {
+      let arrmessage: string[] = [_username, _message];
+      let message: string = arrmessage.join(" ");
+
+      if (message.match(/(\w+) joined the guild!/)) {
+        this.bot.chat(
+          joinMessages[Math.floor(Math.random() * joinMessages.length)].replace(
+            "%n",
+            message.split(/(\w+) joined the guild!/)[0]
+          )
+        );
+      } else if (message.match(/(\w+) has requested to join the Guild!/)) {
+        let username = message.split(/(\w+) (.+)/)[0];
+        let channel: TextChannel = this.Client.CoreBot.channels.cache.get(this.premiumData.LogChannel) as TextChannel;
+        if (channel == null) return; // TEMP
+        channel.send(
+          `<@${this.premiumData.StaffRole}>, ${username} has requested to join the guild! Type ${
+            /* Frogive me father, for I have sinned */ (await GuildData.find().exec()).forEach((guild) => {
+              if (guild.id === this.premiumData.ServerID) return guild.Prefix;
+            })
+          }accept ${username} to let them in!`
+        );
+      } else if (message.match(/(\w+) left the guild!/)) {
+        let username = message.split(/(\w+) (.+)/)[0];
+        this.bot.chat(`See ya later, ${username}! We hope you enjoyed your stay! \:\)`);
+      }
+    });
   }
 
   set status(s: boolean) {

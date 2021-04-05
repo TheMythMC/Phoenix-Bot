@@ -108,14 +108,6 @@ dist
 
 # config
 config.json
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-# java
-**/build/
-**/out
-*.class
-java/bin
-.gradle/
-**/.gradle
+# Typescript
 .tsbuild/
