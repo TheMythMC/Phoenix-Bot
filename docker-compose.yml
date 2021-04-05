@@ -1,11 +1,25 @@
-version: '3'
+version: '3.3'
 services:
   extra:
     build:
       context: .
       dockerfile: Dockerfile
-    image: bupachile/node12.16.1-alpine
     entrypoint: bash docker/launch.sh
     volumes:
       - .:/usr/src/extra
+    links: 
+      - lavalink
     container_name: phoenix-extra
+    networks:
+      - shared-network
+  lavalink: 
+    volumes:
+      - './application.yml:/opt/Lavalink/application.yml'
+    image: fredboat/lavalink:dev
+    networks:
+      - 'shared-network'
+    container_name: lavalink
+
+networks:
+  shared-network:
+    name: 'shared-network'
