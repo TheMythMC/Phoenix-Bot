@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// this is the server pack
 export interface IPremiumLinkData extends mongoose.Document {
   // Discord owner Snowflake
   DiscordID: string;
