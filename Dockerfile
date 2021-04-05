@@ -1,15 +1,11 @@
-FROM node:15-alpine
+FROM node:14-alpine
 
-WORKDIR /usr/src/extra
+WORKDIR /usr/src/core
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN apk update && apk add bash && apk add curl
-
-RUN npm install
+RUN apk update && apk add bash && apk add curl && yarn
 
 COPY . .
 
-RUN npm run start
-
-CMD ["/bin/bash"]
+ENTRYPOINT docker/launch.sh

@@ -1,1 +1,2 @@
-npm run start
+#!/bin/bash
+yarn start
