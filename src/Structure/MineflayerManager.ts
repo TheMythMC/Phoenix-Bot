@@ -54,7 +54,7 @@ export default class MineflayerManager {
     this.MineCraftBots = new Map();
     guilds.forEach(async (guild) => {
       if (
-        Bot.getBot().GuildManager.isPremium(guild.id) &&
+        Bot.instance.GuildManager.isPremium(guild.id) &&
         guild.ServerID &&
         guild.isBotOnline &&
         guild.BotUsername &&
@@ -69,6 +69,7 @@ export default class MineflayerManager {
   getMCBots() {
     return this.MineCraftBots;
   }
+
   createBot(guildData: IPremiumLinkData): MineflayerBot {
     return new MineflayerBot(this.bot, this, guildData, {
       username: guildData.BotUsername,
@@ -79,5 +80,17 @@ export default class MineflayerManager {
       host: "buyphoenix.hypixel.net",
       port: 25565,
     });
+  }
+
+  startBot(guildData: IPremiumLinkData) {
+    const botFound = this.MineCraftBots.get(guildData.ServerID);
+
+    if (botFound) {
+      if (!botFound.status) {
+        this.MineCraftBots.delete(guildData.ServerID); // let go of the bot if its not started; this probs isnt needed but JUST IN CASE
+      } else return;
+    }
+
+    this.MineCraftBots.set(guildData.ServerID, this.createBot(guildData));
   }
 }

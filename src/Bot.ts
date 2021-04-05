@@ -5,12 +5,12 @@ import LinkManager from "./Structure/LinkManager";
 import UUIDManager from "./Structure/UUIDManager";
 import Server from "./express/Server";
 import DiscordAPIUserCache from "./Structure/DiscordAPIUserCache";
-import EventEmmiter from 'events'
+import EventEmmiter from "events";
 import MineflayerManager from "./Structure/MineflayerManager";
-import PremiumLinkData from './Schemas/PremiumLinkData'
+import PremiumLinkData from "./Schemas/PremiumLinkData";
 
 export default class Bot {
-  static bot: Bot;
+  static instance: Bot;
   EventEmmiter: EventEmmiter;
   CoreBot: BotCore;
   DiscordAPIUserCache: DiscordAPIUserCache;
@@ -21,11 +21,12 @@ export default class Bot {
   DatabaseHandler: DatabaseHandler;
   MineflayerManager: MineflayerManager;
   constructor() {
-    Bot.bot = this;
+    Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
       defaultPrefix: "!",
     });
+    this.EventEmmiter = new EventEmmiter();
     this.DiscordAPIUserCache = new DiscordAPIUserCache();
     this.LinkManager = new LinkManager(/*this*/);
     this.GuildManager = new GuildManager(this);
@@ -45,15 +46,10 @@ export default class Bot {
     );
     this.CoreBot.start();
   }
-  static getBot() {
-    return this.bot;
-  }
 
   async loadMineflayerBots() {
     const data = await PremiumLinkData.find().exec();
 
-    // this.MineflayerManager = new MineflayerManager(this, data)
-
-    console.log(data);
+    this.MineflayerManager = new MineflayerManager(this, data);
   }
 }

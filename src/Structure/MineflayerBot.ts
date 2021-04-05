@@ -29,19 +29,25 @@ export default class MineflayerBot {
 
     this.bot.on("spawn", () => {
       this.bot.chat("/achat §c"); // send to limbo
+      this.status = true;
     });
 
     this.bot.on("kicked", (reason, isLoggedIn) => {
       if (!isLoggedIn) {
         // error on joining
-        this.Client.EventEmmiter.emit("botJoinFailed", [this.premiumData.ServerID, reason]);
-        this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
+        this.Client.EventEmmiter.emit("botJoinFailed", this.premiumData.ServerID, reason);
+        this._removeBot();
         return;
       }
-      this.manager.MineCraftBots.set(
-        this.premiumData.ServerID,
-        new MineflayerBot(this.Client, this.manager, this.premiumData, this.options)
-      );
+      if (this.premiumData.botAutoRun) {
+        this.manager.MineCraftBots.set(
+          this.premiumData.ServerID,
+          new MineflayerBot(this.Client, this.manager, this.premiumData, this.options)
+        );
+      } else {
+        // shut down the bot and update status
+        this._removeBot();
+      }
     });
 
     // bot.on("end", () => {
@@ -57,7 +63,7 @@ export default class MineflayerBot {
             message.substring(this.premiumData.MCPrefix.length, message.length),
             name,
             this.manager,
-            Bot.getBot().CoreBot
+            Bot.instance.CoreBot
           );
         }
         if (this.premiumData.Logging) {
@@ -83,8 +89,13 @@ export default class MineflayerBot {
   }
 
   set status(s: boolean) {
-    this.Client.EventEmmiter.emit("botStatusChanged", [this.premiumData.ServerID, s]);
+    this.Client.EventEmmiter.emit("botStatusChanged", this.premiumData.ServerID, s);
     this.premiumData.isBotOnline = s;
     this.premiumData.save();
+  }
+
+  _removeBot() {
+    this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
+    this.status = false;
   }
 }

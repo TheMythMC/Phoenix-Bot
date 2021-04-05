@@ -61,6 +61,8 @@ export default class Util {
 
   // this is for checking if a session is permitted to access a certain guild
   static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
+    if (!sessionID) return false;
+
     const accessToken = await this.getAccessToken(sessionID);
     if (!accessToken) return false; // invalid session id
     const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);

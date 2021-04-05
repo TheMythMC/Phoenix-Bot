@@ -42,7 +42,7 @@ export const schema = new mongoose.Schema({
   isBotOnline: Boolean,
   botAutoRun: Boolean,
   StaffRole: String,
-  StaffPing: Boolean
+  StaffPing: Boolean,
 });
 
 const model = mongoose.model<IPremiumLinkData>("PremiumLinkData", schema);
@@ -59,35 +59,15 @@ const Default = {
   isBotOnline: false,
   botAutoRun: false,
   StaffRole: "",
-  StaffPing: true
+  StaffPing: true,
 };
-export const createDefault = (
-  DiscordID: string,
-  ServerID: string,
-  ExpireDate: number,
-  BotUsername: string,
-  BotPassword: string,
-  BotAuth: string,
-  LogChannel: string,
-  MCPrefix: string,
-  Logging: boolean,
-  StaffRole: string,
-  StaffPing: boolean
-) => {
+export const createDefault = (DiscordID: string, ServerID: string, ExpireDate: number) => {
   let obj = {} as IPremiumLinkData;
 
   Object.assign(obj, Default);
   obj.DiscordID = DiscordID;
   obj.ServerID = ServerID;
   obj.ExpireDate = ExpireDate;
-  obj.BotUsername = BotUsername;
-  obj.BotPassword = BotPassword;
-  obj.BotAuth = BotAuth;
-  obj.LogChannel = LogChannel;
-  obj.MCPrefix = MCPrefix;
-  obj.Logging = Logging;
-  obj.StaffRole = StaffRole;
-  obj.StaffPing = StaffPing;
   return new model(obj);
 };
 

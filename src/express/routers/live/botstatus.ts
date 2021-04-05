@@ -1,26 +1,37 @@
 import express from "express";
 import Bot from "../../../Bot";
+import PremiumUtils from "../../../utils/PremiumUtils";
+import Util from "../../../utils/Util";
 const router = express.Router();
 
-router.ws("/", (ws, req) => {
-  if (req.query.guildID) {
-    Bot.bot.EventEmmiter.addListener("botStatusChanged", changeStatus);
-    Bot.bot.EventEmmiter.addListener("botJoinFailed", error);
+router.ws("/", async (ws, req) => {
+  if (req.query.guildID && (await Util.isSessionPermitted(req.cookies.session_id, req.query.guildID, Bot.instance))) {
+    ws.send(
+      JSON.stringify({
+        status: PremiumUtils.getMinecraftBotFromGuild(req.query.guildID)?.status || false,
+      })
+    );
+    Bot.instance.EventEmmiter.addListener("botStatusChanged", changeStatus);
+    Bot.instance.EventEmmiter.addListener("botJoinFailed", error);
+  } else {
+    ws.close();
   }
 
   ws.on("close", () => {
-    Bot.bot.EventEmmiter.removeListener("botStatusChanged", changeStatus);
-    Bot.bot.EventEmmiter.removeListener("botJoinFailed", error);
+    Bot.instance.EventEmmiter.removeListener("botStatusChanged", changeStatus);
+    Bot.instance.EventEmmiter.removeListener("botJoinFailed", error);
   });
 
   function changeStatus(guildID, status) {
     if (req.query.guildID != guildID) return;
-    ws.send({ status: status });
+    ws.send(JSON.stringify({ status: status }));
   }
 
   function error(guildID, err) {
+    console.log(guildID);
+
     if (req.query.guildID != guildID) return;
-    ws.send({ error: err });
+    ws.send(JSON.stringify({ error: err }));
   }
 });
 

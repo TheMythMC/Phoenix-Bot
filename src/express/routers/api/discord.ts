@@ -21,9 +21,7 @@ router.use(async (req, res, next) => {
 
   if (response.status === 401) {
     let e = await fetch(
-      `${req.protocol}://${req.get("host")}/api/oauth/refresh?token=${
-        d.RefreshToken
-      }&session_id=${d.SessionID}`
+      `${req.protocol}://${req.get("host")}/api/oauth/refresh?token=${d.RefreshToken}&session_id=${d.SessionID}`
     );
     if (e.status === 400) return res.status(440).end();
   }
@@ -42,5 +40,7 @@ router.get("/user", async (req, res) => {
   res.status(response.status);
   res.send(await response.json());
 });
+
+router.use("/bot", require("./discord/bot"));
 
 module.exports = router;

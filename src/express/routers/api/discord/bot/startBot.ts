@@ -1,0 +1,20 @@
+import express from "express";
+import Bot from "../../../../../Bot";
+import PremiumLinkData from "../../../../../Schemas/PremiumLinkData";
+import Util from "../../../../../utils/Util";
+const router = express.Router();
+
+router.post("/", async (req, res) => {
+  // check if permitted
+  if (!req.query.guildID || !(await Util.isSessionPermitted(req.cookies.sessionID, req.query.guildID, Bot.instance)))
+    return res.status(401).end();
+
+  // NOTE: this endpoint will NOT gurantee that the bot will successfully start, rather it will make the bot attempt to start
+  const guildPData = await PremiumLinkData.findOne({ ServerID: req.query.guildID }).exec();
+
+  if (!guildPData) return res.status(404).end();
+
+  Bot.instance.MineflayerManager.startBot(guildPData);
+});
+
+module.exports = router;
