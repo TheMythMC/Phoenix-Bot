@@ -111,3 +111,6 @@ config.json
 
 # Typescript
 .tsbuild/
+
+# yarn
+yarn.lock

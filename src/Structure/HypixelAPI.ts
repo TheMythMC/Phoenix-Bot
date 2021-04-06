@@ -1,4 +1,4 @@
-const Hypixel = require('phoenix-slothpixel');
+import Hypixel from 'phoenix-slothpixel';
 const slothpixelURL = process.env.SLOTHPIXEL_URL;
 const backupSlothpixelURL = 'https:///api.slothpixel.me/api'
 
