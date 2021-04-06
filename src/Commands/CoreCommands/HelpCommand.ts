@@ -37,6 +37,7 @@ module.exports = class extends Command {
         let cmdText = ""; 
 
         for(let [k, command] of client.commands) {
+            if (command.requireBotOwner) continue;
             cmdText = cmdText + `\n${command.name}`; 
         }
 
