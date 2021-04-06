@@ -1,4 +1,4 @@
-import { Client, Collection } from "discord.js";
+import { Client, Collection, PermissionResolvable } from "discord.js";
 import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
@@ -44,35 +44,18 @@ export default class BotCore extends Client {
       if (!message.content.startsWith(prefix)) return;
 
       //eslint-disable-next-line no-unused-vars
-      const [cmd, ...args] = message.content
-        .slice(prefix.length)
-        .trim()
-        .split(/ +/g);
-      const command =
-        this.commands.get(cmd.toLowerCase()) ||
-        this.commands.get(this.aliases.get(cmd.toLowerCase()));
+      const [cmd, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);
+      const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
 
       if (command) {
-        if (
-          command.requireBotOwner &&
-          !config.BotOwners.includes(message.member.id)
-        )
-          return sendErrorMessage(
-            message.channel,
-            "Only the bot owners can execute this command!"
-          );
+        if (command.requireBotOwner && !config.BotOwners.includes(message.member.id))
+          return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
         if (command.requiredPerms) {
           let isAllowed = true;
-          command.requiredPerms.forEach((perm) => {
-            // Put here because it can be both PermissionResolvable but also a String
-            // @ts-ignore
+          command.requiredPerms.forEach((perm: PermissionResolvable) => {
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
-          if (!isAllowed)
-            return sendErrorMessage(
-              message.channel,
-              "You are not a high enough role to use this."
-            );
+          if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
         }
         // noinspection ES6MissingAwait
         command.run(message, args, this);
@@ -81,11 +64,9 @@ export default class BotCore extends Client {
   }
 
   validate(options) {
-    if (typeof options !== "object")
-      throw new TypeError("Options must be type of object");
+    if (typeof options !== "object") throw new TypeError("Options must be type of object");
 
-    if (!options.token)
-      throw new Error("You must provide a token for the client");
+    if (!options.token) throw new Error("You must provide a token for the client");
     this.token = options.token;
   }
 
@@ -117,11 +98,7 @@ export default class BotCore extends Client {
   async syncGuildMember(member) {
     const d = await this.Bot.LinkManager.getDataByDiscord(member.id);
     if (d) {
-      RoleSync(
-        member,
-        d.MinecraftUUID,
-        (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks
-      );
+      RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
     }
   }
 }
