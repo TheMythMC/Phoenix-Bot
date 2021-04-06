@@ -5,6 +5,9 @@ import { randomBytes } from "crypto";
 import DiscordOAuthData from "../Schemas/DiscordOAuthData";
 import GuildData from "../Schemas/GuildData";
 import Bot from "../Bot";
+import { GuildMember } from "discord.js";
+import Command from "../Structure/Command";
+import config from "../../config.json";
 
 export default class Util {
   static isClass(input: Object) {
@@ -91,6 +94,14 @@ export default class Util {
       SessionID: sessionID,
     }).exec();
     return data?.AccessToken;
+  }
+
+  static isCommandAllowed(member: GuildMember, command: Command): boolean {
+    if (command.requireBotOwner && !config.BotOwners.includes(member.id)) return false;
+    for (const perm of command.requiredPerms) {
+      if (!member.hasPermission(perm)) return false;
+    }
+    return true;
   }
 }
 
