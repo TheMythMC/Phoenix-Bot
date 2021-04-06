@@ -73,7 +73,7 @@ export default class BotCore extends Client {
     this.manager = new Manager({
       nodes: [
         {
-          host: "127.0.0.1",
+          host: "lavalink",
           password: "#BuyPhoenix2021",
           port: 2333,
         },

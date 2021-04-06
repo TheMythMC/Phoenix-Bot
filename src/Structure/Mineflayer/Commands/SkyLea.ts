@@ -6,7 +6,7 @@ import MineflayerBot from '../../MineflayerBot';
 
 module.exports = class extends MineflayerCommand {
     constructor(discordBot: BotCore, minecraftBot: MineflayerBot) {
-        super(discordBot, minecraftBot, 'skylea', {
+        super(discordBot, 'skylea', {
             description: 'Fetches a skylea profile in game',
             usage: '%pskylea <player name>'
         });

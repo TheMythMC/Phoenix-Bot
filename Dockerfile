@@ -1,18 +1,11 @@
-FROM node:15-alpine
+FROM node:14-alpine
 
 WORKDIR /usr/src/extra
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN echo 'http://mirror.ette.biz/alpine/v3.13/main \
-http://mirror.ette.biz/alpine/v3.13/community'
-
-RUN apk update && apk add bash && apk add curl && apk add openjdk11-jdk
-
-RUN npm install
+RUN apk update && apk upgrade && apk add curl && yarn
 
 COPY . .
 
-RUN npm run start
-
-CMD ["/bin/bash"]
+ENTRYPOINT docker/launch.sh
