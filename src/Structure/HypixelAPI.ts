@@ -1,6 +1,6 @@
-const Hypixel = require("phoenix-slothpixel");
+import Hypixel from "phoenix-slothpixel";
 const slothpixelURL = process.env.SLOTHPIXEL_URL;
-const backupSlothpixelURL = "https:///api.slothpixel.me/api";
+const backupSlothpixelURL = "https://api.slothpixel.me/api";
 
 export async function getPlayerData(playerName) {
   return await Hypixel(`players/${playerName}`, slothpixelURL || backupSlothpixelURL);
