@@ -2,12 +2,13 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import expressWs from "express-ws";
+import Bot from "../Bot";
 
 export default class Server {
-  app: any;
-  port: any;
-  Bot: any;
-  constructor(bot, port) {
+  app: express.Application;
+  port: number;
+  Bot: Bot;
+  constructor(bot: Bot, port: number) {
     this.app = express();
     expressWs(this.app);
     this.port = port;
