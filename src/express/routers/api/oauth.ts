@@ -86,11 +86,13 @@ router.get("/refresh", async (req, res) => {
 
   if (response.status !== 200) return;
 
+  const SESSION_ID = typeof req.query.session_id === "string" ? req.query.session_id : undefined;
+
   DiscordOAuthData.deleteMany({
-    SessionID: req.query.session_id,
+    SessionID: SESSION_ID,
   });
 
-  let d = createDefault(req.query.session_id, json.access_token, json.refresh_token, json.expires_in);
+  let d = createDefault(SESSION_ID, json.access_token, json.refresh_token, json.expires_in);
 
   await d.save();
 });

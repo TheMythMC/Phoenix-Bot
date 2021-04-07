@@ -1,5 +1,6 @@
 import express from "express";
-const router = express.Router();
+import expressWs from "express-ws";
+const router = express.Router() as expressWs.router;
 
 router.ws("/", (ws, req) => {
   let e = setInterval(() => {
