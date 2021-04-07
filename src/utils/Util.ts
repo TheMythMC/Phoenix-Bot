@@ -64,34 +64,39 @@ export default class Util {
 
   // this is for checking if a session is permitted to access a certain guild
   static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
-    if (!sessionID) return false;
+    try {
+      if (!sessionID) return false;
 
-    const accessToken = await this.getAccessToken(sessionID);
-    if (!accessToken) return false; // invalid session id
-    const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
+      const accessToken = await this.getAccessToken(sessionID);
+      if (!accessToken) return false; // invalid session id
+      const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
 
-    const guild = await bot.CoreBot.guilds.fetch(guildID);
-    const guildMember = await guild.members.fetch(id);
+      const guild = await bot.CoreBot.guilds.fetch(guildID);
 
-    if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
+      const guildMember = await guild.members.fetch(id);
 
-    // get guild data
-    const gData = await GuildData.findOne({ ServerID: guildID }).exec();
+      if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
 
-    const perms = gData?.DashboardPerms || ["ADMINISTRATOR"];
+      // get guild data
+      const gData = await GuildData.findOne({ ServerID: guildID }).exec();
 
-    const roles = gData?.DashboardRoles || [];
+      const perms = gData?.DashboardPerms || ["ADMINISTRATOR"];
 
-    return (
-      guildMember.hasPermission(perms) ||
-      ((): boolean => {
-        // PLEASE FORGIVE ME!!!
-        for (const role of roles) {
-          if (guildMember.roles.cache.has(role)) return true;
-        }
-        return false;
-      })()
-    );
+      const roles = gData?.DashboardRoles || [];
+
+      return (
+        guildMember.hasPermission(perms) ||
+        ((): boolean => {
+          // PLEASE FORGIVE ME!!!
+          for (const role of roles) {
+            if (guildMember.roles.cache.has(role)) return true;
+          }
+          return false;
+        })()
+      );
+    } catch (err) {
+      return false;
+    }
   }
 
   static async getAccessToken(sessionID: string) {
