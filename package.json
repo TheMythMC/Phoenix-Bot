@@ -5,7 +5,8 @@
   "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "tsc && node .",
-    "build": "tsc"
+    "build": "tsc",
+    "prod": "sudo docker-compose up"
   },
   "repository": {
     "type": "git",
