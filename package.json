@@ -5,11 +5,13 @@
   "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "tsc && node .",
-    "prod": "sudo docker-compose up"
+    "prod": "sudo docker-compose up --build extra lavalink",
+    "build": "tsc"
   },
   "scriptsComments": {
     "start": "For testing, no music",
-    "prod": "For use ONLY on the Ubuntu server (or when testing music). This runs a docker instance that is only(kinda) avaliable on Linux. USE WITH CAUTION."
+    "prod": "For use ONLY on the Ubuntu server (or when testing music). This runs a docker instance that is only(kinda) avaliable on Linux. USE WITH CAUTION.",
+    "build": "Compiles, doesnt run"
   },
   "repository": {
     "type": "git",
@@ -42,7 +44,8 @@
     "path-parse": "^1.0.6",
     "phoenix-slothpixel": "^1.2.6",
     "typescript": "^4.2.3",
-    "undici": "^3.3.3"
+    "undici": "^3.3.3",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@types/ms": "*",

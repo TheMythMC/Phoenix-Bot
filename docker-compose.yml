@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: bash docker/launch.sh
     volumes:
       - .:/usr/src/extra
     links: 

@@ -109,8 +109,5 @@ dist
 # config
 config.json
 
-# Typescript
+# typescript
 .tsbuild/
-
-# yarn
-yarn.lock

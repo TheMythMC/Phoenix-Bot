@@ -13,7 +13,7 @@ class CheckGexp extends Command {
       description: "Checks the Gexp of the guild",
       category: "Misc",
       usage: `%pcheckgexp [all|passed|failed] [days]`,
-      requiredPerms: [],
+      requiredPerms: ["ADMINISTRATOR"],
     });
   }
 

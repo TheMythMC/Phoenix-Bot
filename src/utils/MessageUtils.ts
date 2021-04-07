@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, TextChannel } from "discord.js";
 
     export function sendErrorMessage(channel, error: string) {
         return channel.send(createErrorMessage(error)); 
@@ -16,7 +16,7 @@ import { MessageEmbed } from "discord.js";
         return createCustomEmbed("RED", error, "Error", undefined);
     }
 
-    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string, ...sections: string[]) {
+    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string, ...sections: any) {
         return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 

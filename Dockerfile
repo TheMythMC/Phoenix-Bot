@@ -1,10 +1,10 @@
-FROM node:14-alpine
+FROM node:14-alpine3.13
 
-WORKDIR /usr/src/extra
+WORKDIR /usr/src/core
 
 COPY package.json ./
 
-RUN apk update && apk upgrade && apk add curl && yarn
+RUN apk update && apk upgrade && apk add curl && apk add bash && yarn
 
 COPY . .
 
