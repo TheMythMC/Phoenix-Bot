@@ -4,7 +4,7 @@ WORKDIR /usr/src/core
 
 COPY package.json ./
 
-RUN apk update && apk upgrade && apk add curl && yarn
+RUN apk update && apk upgrade && apk add curl && apk add bash && yarn
 
 COPY . .
 
