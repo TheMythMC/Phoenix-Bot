@@ -1,6 +1,8 @@
 import express from "express";
+import Bot from "../../../Bot";
 const router = express.Router();
 import DiscordOAuthData from "../../../Schemas/DiscordOAuthData";
+import Util from "../../../utils/Util";
 
 router.use(async (req, res, next) => {
   // this will be where api keys will be tested if they're expired, and if so, refresh
@@ -27,6 +29,23 @@ router.use(async (req, res, next) => {
   }
 
   next();
+});
+
+router.get("/guilds", async (req, res) => {
+  let token = await Util.getAccessToken(req.cookies.session_id);
+  const response = await fetch("http://discordapp.com/api/users/@me/guilds", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  let d = await response.json();
+
+  for (let guild of d) {
+    guild.isBotInGuild = Bot.instance.CoreBot.guilds.cache.has(guild.id);
+  }
+
+  res.status(response.status).send(d);
 });
 
 router.get("/user", async (req, res) => {

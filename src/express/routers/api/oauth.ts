@@ -4,9 +4,7 @@ const jwt = require("jsonwebtoken");
 const { genRandomKey } = require("../../../utils/Util");
 const fetch = require("node-fetch");
 const qs = require("querystring");
-import DiscordOAuthData, {
-  createDefault,
-} from "../../../Schemas/DiscordOAuthData";
+import DiscordOAuthData, { createDefault } from "../../../Schemas/DiscordOAuthData";
 
 const url = encodeURIComponent(`http://localhost:4000/api/oauth/auth`);
 
@@ -17,6 +15,7 @@ router.get("/getlink", (req, res) => {
     {
       redirect_uri: req.query.redirect_uri,
       session_id: sessionId,
+      reject_uri: req.query.reject_uri,
     },
     process.env.CLIENT_SECRET
   );
@@ -32,9 +31,7 @@ router.get("/getlink", (req, res) => {
 });
 
 router.get("/auth", async (req, res) => {
-  let decrypted = jwt.verify(req.query.state, process.env.CLIENT_SECRET) || {
-    session_id: req.query.session_id,
-  };
+  let decrypted = jwt.verify(req.query.state, process.env.CLIENT_SECRET);
 
   const response = await fetch(`https://discordapp.com/api/oauth2/token`, {
     method: "POST",
@@ -56,12 +53,12 @@ router.get("/auth", async (req, res) => {
     SessionID: decrypted.session_id,
   });
 
-  let d = createDefault(
-    decrypted.session_id,
-    json.access_token,
-    json.refresh_token,
-    json.expires_in
-  );
+  if (response.status !== 200) {
+    res.redirect(decrypted.reject_uri);
+    return;
+  }
+
+  let d = createDefault(decrypted.session_id, json.access_token, json.refresh_token, json.expires_in);
   await d.save();
 
   res.redirect(decrypted.redirect_uri);
@@ -93,12 +90,8 @@ router.get("/refresh", async (req, res) => {
     SessionID: req.query.session_id,
   });
 
-  let d = createDefault(
-    req.query.session_id,
-    json.access_token,
-    json.refresh_token,
-    json.expires_in
-  );
+  let d = createDefault(req.query.session_id, json.access_token, json.refresh_token, json.expires_in);
+
   await d.save();
 });
 
