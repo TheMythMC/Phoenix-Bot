@@ -1,4 +1,4 @@
-import { Client, Collection } from "discord.js";
+import { Client, Collection, PermissionResolvable } from "discord.js";
 import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
@@ -56,9 +56,7 @@ export default class BotCore extends Client {
           return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
         if (command.requiredPerms) {
           let isAllowed = true;
-          command.requiredPerms.forEach((perm) => {
-            // Put here because it can be both PermissionResolvable but also a String
-            // @ts-ignore
+          command.requiredPerms.forEach((perm: PermissionResolvable) => {
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
           if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");

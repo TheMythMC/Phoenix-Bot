@@ -3,21 +3,22 @@ import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
 
 module.exports = class extends Command {
-    constructor (client: BotCore) {
+    constructor(client: BotCore)  {
         super (client, 'shutdown', {
-            category: '',
-            requireBotOwner: true,
-            usage: '',
-            description: 'Completely shuts off the bot',
+            description: 'Completely shuts down the bot',
+            usage: '%pshutdown',
+            category: 'Util'
         });
     }
 
-    async run(message: Message, args, client: BotCore) {
+    async run(message: Message, _args: string[], client: BotCore) {
         try {
-            await message.channel.send("Bot is shutting down...");
-            process.exit(0);
+            message.channel.send("Bot is shuttting down...").then( () => {
+                client.destroy();
+                process.exit(0);
+            });
         } catch (e) {
-            message.channel.send(`Errored: ${e.message}`)
+            console.log(e.message)
         }
     }
 }
