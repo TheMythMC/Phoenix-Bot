@@ -7,7 +7,7 @@ import Server from "./express/Server";
 import DiscordAPIUserCache from "./Structure/DiscordAPIUserCache";
 
 export default class Bot {
-  static bot: Bot;
+  static instance: Bot;
   CoreBot: BotCore;
   DiscordAPIUserCache: DiscordAPIUserCache;
   LinkManager: LinkManager;
@@ -16,7 +16,7 @@ export default class Bot {
   WebServer: Server;
   DatabaseHandler: DatabaseHandler;
   constructor() {
-    Bot.bot = this;
+    Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
       defaultPrefix: "!",
@@ -37,8 +37,5 @@ export default class Bot {
       }
     );
     this.CoreBot.start();
-  }
-  static getBot() {
-    return this.bot;
   }
 }
