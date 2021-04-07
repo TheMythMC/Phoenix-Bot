@@ -41,8 +41,6 @@ router.get("/guilds", async (req, res) => {
 
   let d = await response.json();
 
-  console.log(d);
-
   for (let guild of d) {
     guild.isBotInGuild = Bot.instance.CoreBot.guilds.cache.has(guild.id);
   }
