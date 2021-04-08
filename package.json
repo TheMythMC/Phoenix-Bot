@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/PhoenixBotMC/core#readme",
   "dependencies": {
+    "@types/express": "^4.17.11",
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "cookie-parser": "^1.4.5",

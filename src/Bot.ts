@@ -11,7 +11,6 @@ import PremiumLinkData from "./Schemas/PremiumLinkData";
 
 export default class Bot {
   static instance: Bot;
-  EventEmmiter: EventEmmiter;
   CoreBot: BotCore;
   DiscordAPIUserCache: DiscordAPIUserCache;
   LinkManager: LinkManager;
@@ -20,6 +19,7 @@ export default class Bot {
   WebServer: Server;
   DatabaseHandler: DatabaseHandler;
   MineflayerManager: MineflayerManager;
+  EventEmmiter: EventEmmiter;
   constructor() {
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
