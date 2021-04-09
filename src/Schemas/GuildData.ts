@@ -48,6 +48,8 @@ export const schema = new mongoose.Schema({
   Prefix: String,
   DashboardRoles: [String],
   DashboardPerms: [String],
+  EnforceCustomPrefix: Boolean,
+  ServerPrefixType: String,
 });
 
 const model = mongoose.model<IGuildData>("GuildData", schema);
@@ -63,6 +65,8 @@ const Default = {
   Prefix: "!",
   DashboardRoles: [],
   DashboardPerms: [],
+  EnforceCustomPrefix: false,
+  ServerPrefixType: "",
 };
 
 export const createDefault = (ServerID: string, prefix = "!") => {
