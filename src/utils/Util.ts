@@ -58,6 +58,9 @@ export default class Util {
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString("hex");
   }
+  static wait(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  }
 
   // this is for checking if a session is permitted to access a certain guild
   static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
@@ -68,11 +71,19 @@ export default class Util {
       if (!accessToken) return false; // invalid session id
       const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
 
+      return this.userPermittedGuild(id, guildID, bot);
+    } catch (err) {
+      return false;
+    }
+  }
+
+  static async userPermittedGuild(userID: string, guildID: string, bot: Bot) {
+    try {
       const guild = await bot.CoreBot.guilds.fetch(guildID);
 
-      const guildMember = await guild.members.fetch(id);
+      const guildMember = await guild.members.fetch(userID);
 
-      if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
+      if (!guildMember) return false;
 
       // get guild data
       const gData = await GuildData.findOne({ ServerID: guildID }).exec();
