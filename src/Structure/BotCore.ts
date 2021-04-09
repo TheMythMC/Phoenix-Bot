@@ -3,7 +3,7 @@ import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
-import config from "../../config.json";
+import tempConfig from "../../config.json";
 import RoleSync from "../RoleSync/RoleSync";
 import Bot from "../Bot";
 import Command from "./Command";
@@ -15,6 +15,7 @@ export default class BotCore extends Client {
   Bot: Bot;
   defaultPrefix: string;
   manager: Manager;
+  config: Config;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: "everyone",
@@ -24,6 +25,8 @@ export default class BotCore extends Client {
 
     this.commands = new Collection();
 
+    this.config = tempConfig as Config;
+    
     this.aliases = new Collection();
 
     this.Bot = bot;
@@ -52,7 +55,7 @@ export default class BotCore extends Client {
       const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
 
       if (command) {
-        if (command.requireBotOwner && !config.BotOwners.includes(message.member.id))
+        if (command.requireBotOwner && !this.config.BotOwners.includes(message.member.id))
           return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
         if (command.requiredPerms) {
           let isAllowed = true;
@@ -110,7 +113,7 @@ export default class BotCore extends Client {
     await Util.loadCommands(this, `Commands${path.sep}PremiumCommands`);
     await super.login(token);
   }
-
+  
   async getPrefix(guild) {
     return (
       (await this.Bot.GuildManager.getGuild(guild.id))?.data?.Prefix ||
@@ -142,4 +145,10 @@ export default class BotCore extends Client {
 interface IBotCore {
   token: string;
   defaultPrefix: string;
+}
+
+interface Config {
+  UUIDUsernameAPICache: boolean,
+  UUIDUsernameAPICacheTime: number,
+  BotOwners: string[]
 }
