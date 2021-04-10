@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 type PrefixType = "" | "BEDWARS_LEVEL" | "SKYWARS_LEVEL" | "BEDWARS_COINS" | "SKYWARS_COINS" | "SKYBLOCK_COINS";
 
-export interface IPrefixData extends mongoose.Document {
+export interface IUserData extends mongoose.Document {
   UserID: string;
   PrefixType: PrefixType;
 }
@@ -17,10 +17,10 @@ export const schema = new mongoose.Schema({
   PrefixType: String,
 });
 
-const model = mongoose.model<IPrefixData>("PrefixData", schema);
+const model = mongoose.model<IUserData>("UserData", schema);
 
 export function createDefault(UserID: string) {
-  let obj = {} as IPrefixData;
+  let obj = {} as IUserData;
 
   Object.assign(obj, Default);
   obj.UserID = UserID;
