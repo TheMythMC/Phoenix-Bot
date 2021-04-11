@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-type PrefixType = "" | "BEDWARS_LEVEL" | "SKYWARS_LEVEL" | "BEDWARS_COINS" | "SKYWARS_COINS" | "SKYBLOCK_COINS";
+export type PrefixType = "" | "BEDWARS_LEVEL" | "SKYWARS_LEVEL" | "BEDWARS_COINS" | "SKYWARS_COINS" | "SKYBLOCK_COINS";
 
 export interface IUserData extends mongoose.Document {
   UserID: string;
