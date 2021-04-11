@@ -4,7 +4,7 @@ import Prefix from "../Prefix";
 class BedwarsLevel extends Prefix<String> {
   constructor() {
     super({
-      DefaultName: "Bedwars Level",
+      DefaultName: "Bedwars Level: %s",
       id: "BEDWARS_LEVEL",
     });
   }

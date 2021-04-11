@@ -1,10 +1,10 @@
-import { Client, Collection, PermissionResolvable } from "discord.js";
+import { Client, Collection, GuildMember, PermissionResolvable } from "discord.js";
 import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
 import config from "../../config.json";
-import RoleSync from "../RoleSync/RoleSync";
+import RoleSync from "../modules/RoleSync/RoleSync";
 import Bot from "../Bot";
 import Command from "./Command";
 
@@ -37,7 +37,7 @@ export default class BotCore extends Client {
     });
 
     this.on("message", async (message) => {
-      let prefix = await this.getPrefix(message.guild);
+      let prefix = await this.Bot.getPrefix(message.guild);
 
       if (!message.guild || message.author.bot) return;
 
@@ -61,6 +61,8 @@ export default class BotCore extends Client {
         command.run(message, args, this);
       }
     });
+
+    this.on("guildMemberAdd", (member: GuildMember) => {});
   }
 
   validate(options) {
@@ -75,24 +77,12 @@ export default class BotCore extends Client {
     await super.login(token);
   }
 
-  async getPrefix(guild) {
-    return (
-      (await this.Bot.GuildManager.getGuild(guild.id))?.data?.Prefix ||
-      (await this.Bot.GuildManager.getGuild(guild))?.data?.Prefix ||
-      "!"
-    );
-  }
-
   async registerGuild(guild) {
     if (await GuildData.exists({ ServerID: guild.id })) return;
     let doc = createDefault(guild.id, this.defaultPrefix);
     doc.save();
 
     this.Bot.GuildManager.addGuild(doc);
-  }
-
-  async parsePrefix(guildID, text) {
-    return text.replace(/%p/g, await this.getPrefix(guildID));
   }
 
   async syncGuildMember(member) {

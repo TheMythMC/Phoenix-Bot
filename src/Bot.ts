@@ -38,4 +38,16 @@ export default class Bot {
     );
     this.CoreBot.start();
   }
+
+  async getPrefix(guild) {
+    return (
+      (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
+      (await this.GuildManager.getGuild(guild))?.data?.Prefix ||
+      "!"
+    );
+  }
+
+  async parsePrefix(guildID, text) {
+    return text.replace(/%p/g, await this.getPrefix(guildID));
+  }
 }
