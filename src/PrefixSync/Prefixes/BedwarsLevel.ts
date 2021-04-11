@@ -13,3 +13,5 @@ class BedwarsLevel extends Prefix<String> {
     return player.stats.BedWars.level || "0";
   }
 }
+
+module.exports = BedwarsLevel;

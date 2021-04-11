@@ -1,12 +1,10 @@
 import Command from "../../../Structure/Command";
 import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
-import {
-  sendErrorMessage,
-  sendSuccessMessage,
-} from "../../../utils/MessageUtils";
+import { sendErrorMessage, sendSuccessMessage } from "../../../utils/MessageUtils";
 import RoleSync from "../../../RoleSync/RoleSync";
 import { Message } from "discord.js";
 import BotCore from "../../../Structure/BotCore";
+import UserData, { createDefault } from "../../../Schemas/UserData";
 
 export default class Link extends Command {
   constructor(client) {
@@ -29,10 +27,7 @@ export default class Link extends Command {
     try {
       plr = await require("../../../Structure/HypixelAPI").getPlayerData(ign);
     } catch (err) {
-      return sendErrorMessage(
-        message.channel,
-        "Invalid Player or error contacting API. "
-      );
+      return sendErrorMessage(message.channel, "Invalid Player or error contacting API. ");
     }
 
     const discord = message.author.tag;
@@ -42,10 +37,7 @@ export default class Link extends Command {
     try {
       links = plr.links.DISCORD;
     } catch (err) {
-      return sendErrorMessage(
-        message.channel,
-        "Error: The specified player does not have discord linked!"
-      );
+      return sendErrorMessage(message.channel, "Error: The specified player does not have discord linked!");
     }
 
     if (await client.Bot.LinkManager.getDataByDiscord(message.member.id))
@@ -87,24 +79,17 @@ export default class Link extends Command {
     newData
       .save()
       .then(async () => {
-        RoleSync(
-          message.member,
-          plr.uuid,
-          (await client.Bot.GuildManager.getGuild(message.guild.id))?.data
-            .RoleLinks
-        );
+        RoleSync(message.member, plr.uuid, (await client.Bot.GuildManager.getGuild(message.guild.id))?.data.RoleLinks);
         await client.Bot.LinkManager.addCache(newData);
 
-        sendSuccessMessage(
-          message.channel,
-          `Your discord has successfully been linked with \`${plr.username}\`. `
-        );
+        const uData = createDefault(message.member.id);
+
+        uData.save().then(() => {
+          sendSuccessMessage(message.channel, `Your discord has successfully been linked with \`${plr.username}\`. `);
+        });
       })
       .catch((err) => {
-        sendErrorMessage(
-          message.channel,
-          "An error occurred while attempting to save the data. "
-        );
+        sendErrorMessage(message.channel, "An error occurred while attempting to save the data. ");
       });
   }
 }
