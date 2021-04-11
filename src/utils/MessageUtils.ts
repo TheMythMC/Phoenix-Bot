@@ -9,18 +9,18 @@ import { Message, MessageEmbed, TextChannel } from "discord.js";
     }
 
     export function createSuccessMessage(message: string) {
-        return createCustomEmbed("GREEN", message, "Success!", undefined)
+        return createCustomEmbed("GREEN", message, "Success!")
     }
 
     export function createErrorMessage(error: string) {
-        return createCustomEmbed("RED", error, "Error", undefined);
+        return createCustomEmbed("RED", error, "Error");
     }
 
-    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string, ...sections: any) {
+    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string = "", ...sections: any) {
         return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    export function createCustomEmbed(color, message, title, footer, ...sections) {
+    export function createCustomEmbed(color: string, message: string, title: string, footer = "", ...sections) {
         let embed = new MessageEmbed(); 
 
         embed

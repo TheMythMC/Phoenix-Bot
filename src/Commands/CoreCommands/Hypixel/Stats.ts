@@ -25,7 +25,8 @@ module.exports = class extends Command {
     if (!playerData) return sendErrorMessage(message.channel, "Please input a valid player name.");
 
     if (minigame != "all") {
-      await Object.keys(aliases.games).forEach(async (game) => {
+      let keys = Object.keys(aliases);
+      await keys.forEach(async (game) => {
         if (game === minigame) {
           await this.parseStats(minigame, playerData);
           return sendCustomMessage(
@@ -57,6 +58,7 @@ module.exports = class extends Command {
   async parseStats(game: string, data: any) {
     switch (game) {
       case "all": {
+        
       }
     }
   }
