@@ -26,7 +26,7 @@ export default class BotCore extends Client {
     this.commands = new Collection();
 
     this.config = tempConfig as Config;
-    
+
     this.aliases = new Collection();
 
     this.Bot = bot;
@@ -64,6 +64,8 @@ export default class BotCore extends Client {
           });
           if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
         }
+        if (command.isPremium && !(await this.Bot.GuildManager.isPremium(message.guild.id)))
+          return sendErrorMessage(message.channel, "This command is premium. ");
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
@@ -113,7 +115,7 @@ export default class BotCore extends Client {
     await Util.loadCommands(this, `Commands${path.sep}PremiumCommands`);
     await super.login(token);
   }
-  
+
   async getPrefix(guild) {
     return (
       (await this.Bot.GuildManager.getGuild(guild.id))?.data?.Prefix ||
@@ -148,7 +150,7 @@ interface IBotCore {
 }
 
 interface Config {
-  UUIDUsernameAPICache: boolean,
-  UUIDUsernameAPICacheTime: number,
-  BotOwners: string[]
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
 }
