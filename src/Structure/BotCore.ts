@@ -87,7 +87,9 @@ export default class BotCore extends Client {
   async syncGuildMember(member) {
     const d = await this.Bot.LinkManager.getDataByDiscord(member.id);
     if (d) {
-      RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+      try {
+        RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+      } catch (err) {}
     }
   }
 }

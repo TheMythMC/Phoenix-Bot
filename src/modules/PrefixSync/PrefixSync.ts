@@ -1,8 +1,8 @@
-import { GuildMember } from "discord.js";
-import Bot from "../../Bot";
-import UserData from "../../Schemas/UserData";
-import { getPlayerData } from "../../Structure/HypixelAPI";
-import PrefixesStore from "./PrefixesStore";
+import { GuildMember } from 'discord.js';
+import Bot from '../../Bot';
+import UserData from '../../Schemas/UserData';
+import { getPlayerData } from '../../Structure/HypixelAPI';
+import PrefixesStore from './PrefixesStore';
 
 export default async function SyncPrefix(guildMember: GuildMember, Client: Bot) {
   // NOTE: Please run this with try catch statements
@@ -29,8 +29,6 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot) 
   const prefixType = userData.PrefixType;
 
   if (!prefixType) return;
-
-  console.log(PrefixesStore);
 
   const prefix = PrefixesStore[prefixType];
   if (!prefix) throw new Error(`Invalid prefix. `);

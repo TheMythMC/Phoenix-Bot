@@ -1,19 +1,19 @@
-import { GuildMember, User } from "discord.js";
-import Bot from "../../Bot";
-import MinecraftLinkData from "../../Schemas/MinecraftLinkData";
-import { createDefault } from "../../Schemas/UserData";
-import RoleSync from "../RoleSync/RoleSync";
+import { GuildMember, User } from 'discord.js';
+import Bot from '../../Bot';
+import MinecraftLinkData from '../../Schemas/MinecraftLinkData';
+import { createDefault } from '../../Schemas/UserData';
+import RoleSync from '../RoleSync/RoleSync';
+import { getPlayerData } from '../../Structure/HypixelAPI';
 
 export default async function verify(member: GuildMember, ign: string, client: Bot) {
-  // TODO: test this: Create a new server with the test bot inside and link on one of the servers
-  if (!ign) throw new Error("Invalid IGN. ");
+  if (!ign) throw new Error('Invalid IGN. ');
 
   let plr;
 
   try {
-    plr = await require("../../../Structure/HypixelAPI").getPlayerData(ign);
+    plr = await getPlayerData(ign);
   } catch (err) {
-    throw new Error("Invalid Player or error contacting API. ");
+    throw new Error('Invalid Player or error contacting API. ');
   }
 
   const discord = member.user.tag;
@@ -23,7 +23,7 @@ export default async function verify(member: GuildMember, ign: string, client: B
   try {
     links = plr.links.DISCORD;
   } catch (err) {
-    throw new Error("Error: The specified player does not have discord linked!");
+    throw new Error('Error: The specified player does not have discord linked!');
   }
 
   if (await client.LinkManager.getDataByDiscord(member.id))
@@ -38,7 +38,7 @@ export default async function verify(member: GuildMember, ign: string, client: B
 
   if (existingLink) {
     if (existingLink.DiscordID !== member.id)
-      throw new Error("This minecraft account has already been linked to another discord account. ");
+      throw new Error('This minecraft account has already been linked to another discord account. ');
 
     if (existingLink.DiscordID === member.id /*same data*/)
       throw new Error(`The discord, \`${links}\` is already linked to \`${plr.username}\`. `);
@@ -51,30 +51,33 @@ export default async function verify(member: GuildMember, ign: string, client: B
     MinecraftUUID: plr.uuid,
   });
 
-  newData
-    .save()
-    .then(async () => {
-      globalUpdateUser(member.user, plr.uuid, client); // asynchronously update the user GLOBALLY
-      await client.LinkManager.addCache(newData);
+  newData.save().then(async () => {
+    // updateUser(member, plr.uuid, client);
+    globalUpdateUser(member.user, plr.uuid, client); // asynchronously update the user GLOBALLY
+    await client.LinkManager.addCache(newData);
 
-      const uData = createDefault(member.id);
+    const uData = createDefault(member.id);
 
-      uData.save().then(() => {
-        return `Your discord has successfully been linked with \`${plr.username}\`. `;
-      });
-    })
-    .catch((err) => {
+    uData.save().catch((err) => {
       throw new Error(`An error occurred while attempting to save the data: ${err.message}`);
     });
+  });
+
+  return `Your discord has successfully been linked with \`${plr.username}\`.`;
 }
 
 export async function globalUpdateUser(user: User, uuid, client: Bot) {
   client.CoreBot.guilds.cache.forEach((guild) => {
     const m = guild.member(user.id);
-    if (m) updateUser(m, uuid, client);
+
+    if (m) {
+      updateUser(m, uuid, client);
+    }
   });
 }
 
 export async function updateUser(member: GuildMember, uuid, client: Bot) {
-  RoleSync(member, uuid, (await client.GuildManager.getGuild(member.id))?.data.RoleLinks);
+  try {
+    RoleSync(member, uuid, (await client.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+  } catch (err) {}
 }
