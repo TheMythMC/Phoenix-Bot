@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { PrefixType } from "./PrefixData";
 
 // this is the server pack
 export interface IPremiumLinkData extends mongoose.Document {
@@ -28,6 +29,12 @@ export interface IPremiumLinkData extends mongoose.Document {
   StaffRole: string;
   // If bot is allowed to ping staff
   StaffPing: boolean;
+  // if server wants to enforce a custom prefix to every user
+  EnforceCustomPrefix: boolean;
+  // the custom prefix the server wants to display for each user; If it's an empty string, it'll disallow any prefixes; MUST have EnforceCustomPrefix enabled to work
+  ServerPrefixType: PrefixType;
+  // server current prefix name; If empty or undefined, will default to default prefix
+  ServerPrefixName: string;
 }
 
 export const schema = new mongoose.Schema({
@@ -44,6 +51,9 @@ export const schema = new mongoose.Schema({
   botAutoRun: Boolean,
   StaffRole: String,
   StaffPing: Boolean,
+  EnforceCustomPrefix: Boolean,
+  ServerPrefixType: String,
+  ServerPrefixName: String,
 });
 
 const model = mongoose.model<IPremiumLinkData>("PremiumLinkData", schema);
@@ -61,6 +71,9 @@ const Default = {
   botAutoRun: false,
   StaffRole: "",
   StaffPing: true,
+  EnforceCustomPrefix: false,
+  ServerPrefixType: "",
+  ServerPrefixName: "",
 };
 export const createDefault = (DiscordID: string, ServerID: string, ExpireDate: number) => {
   let obj = {} as IPremiumLinkData;

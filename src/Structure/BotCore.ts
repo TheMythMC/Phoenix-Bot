@@ -3,7 +3,7 @@ import { sendErrorMessage } from "../utils/MessageUtils";
 import Util from "../utils/Util";
 import path from "path";
 import GuildData, { createDefault } from "../Schemas/GuildData";
-import config from "../../config.json";
+import tempConfig from "../../config.json";
 import RoleSync from "../RoleSync/RoleSync";
 import Bot from "../Bot";
 import Command from "./Command";
@@ -15,6 +15,7 @@ export default class BotCore extends Client {
   Bot: Bot;
   defaultPrefix: string;
   manager: Manager;
+  config: Config;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: "everyone",
@@ -23,6 +24,8 @@ export default class BotCore extends Client {
     this.validate(options);
 
     this.commands = new Collection();
+
+    this.config = tempConfig as Config;
 
     this.aliases = new Collection();
 
@@ -52,7 +55,7 @@ export default class BotCore extends Client {
       const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
 
       if (command) {
-        if (command.requireBotOwner && !config.BotOwners.includes(message.member.id))
+        if (command.requireBotOwner && !this.config.BotOwners.includes(message.member.id))
           return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
         if (command.requiredPerms) {
           let isAllowed = true;
@@ -61,6 +64,8 @@ export default class BotCore extends Client {
           });
           if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
         }
+        if (command.isPremium && !(await this.Bot.GuildManager.isPremium(message.guild.id)))
+          return sendErrorMessage(message.channel, "This command is premium. ");
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
@@ -142,4 +147,10 @@ export default class BotCore extends Client {
 interface IBotCore {
   token: string;
   defaultPrefix: string;
+}
+
+interface Config {
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
 }

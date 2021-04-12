@@ -2,7 +2,8 @@ import express from "express";
 import Bot from "../../../Bot";
 import PremiumUtils from "../../../utils/PremiumUtils";
 import Util from "../../../utils/Util";
-const router = express.Router();
+import expressWs from "express-ws";
+const router = express.Router() as expressWs.Router;
 
 router.ws("/", async (ws, req) => {
   if (req.query.guildID && (await Util.isSessionPermitted(req.cookies.session_id, req.query.guildID, Bot.instance))) {
@@ -28,8 +29,6 @@ router.ws("/", async (ws, req) => {
   }
 
   function error(guildID, err) {
-    console.log(guildID);
-
     if (req.query.guildID != guildID) return;
     ws.send(JSON.stringify({ error: err }));
   }

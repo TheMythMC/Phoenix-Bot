@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import expressWs from "express-ws";
 import Bot from "../Bot";
 
 export default class Server {

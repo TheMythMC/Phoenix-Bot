@@ -7,7 +7,8 @@ import GuildData from "../Schemas/GuildData";
 import Bot from "../Bot";
 import { GuildMember } from "discord.js";
 import Command from "../Structure/Command";
-import config from "../../config.json";
+import tempconfig from "../../config.json";
+var config = tempconfig as Config;
 
 export default class Util {
   static isClass(input: Object) {
@@ -58,7 +59,7 @@ export default class Util {
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString("hex");
   }
-  static wait(milliseconds: number) {
+  static async wait(milliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 
@@ -71,19 +72,11 @@ export default class Util {
       if (!accessToken) return false; // invalid session id
       const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
 
-      return this.userPermittedGuild(id, guildID, bot);
-    } catch (err) {
-      return false;
-    }
-  }
-
-  static async userPermittedGuild(userID: string, guildID: string, bot: Bot) {
-    try {
       const guild = await bot.CoreBot.guilds.fetch(guildID);
 
-      const guildMember = await guild.members.fetch(userID);
+      const guildMember = await guild.members.fetch(id);
 
-      if (!guildMember) return false;
+      if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
 
       // get guild data
       const gData = await GuildData.findOne({ ServerID: guildID }).exec();
@@ -114,13 +107,20 @@ export default class Util {
     return data?.AccessToken;
   }
 
-  static isCommandAllowed(member: GuildMember, command: Command): boolean {
+  static async isCommandAllowed(member: GuildMember, command: Command): Promise<boolean> {
     if (command.requireBotOwner && !config.BotOwners.includes(member.id)) return false;
     for (const perm of command.requiredPerms) {
       if (!member.hasPermission(perm)) return false;
     }
+    if ((await Bot.instance.GuildManager.isPremium(member.guild.id)) && command.isPremium) return false;
     return true;
   }
+}
+
+interface Config {
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
 }
 
 module.exports = Util;
