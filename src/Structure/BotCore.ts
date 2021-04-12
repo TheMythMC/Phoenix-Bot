@@ -1,12 +1,12 @@
-import { Client, Collection, GuildMember, PermissionResolvable } from "discord.js";
-import { sendErrorMessage } from "../utils/MessageUtils";
-import Util from "../utils/Util";
-import path from "path";
-import GuildData, { createDefault } from "../Schemas/GuildData";
-import config from "../../config.json";
-import RoleSync from "../modules/RoleSync/RoleSync";
-import Bot from "../Bot";
-import Command from "./Command";
+import { Client, Collection, Guild, GuildMember, PermissionResolvable } from 'discord.js';
+import { sendErrorMessage } from '../utils/MessageUtils';
+import Util from '../utils/Util';
+import path from 'path';
+import GuildData, { createDefault } from '../Schemas/GuildData';
+import config from '../../config.json';
+import RoleSync from '../modules/RoleSync/RoleSync';
+import Bot from '../Bot';
+import Command from './Command';
 
 export default class BotCore extends Client {
   commands: Map<string, Command>;
@@ -15,7 +15,7 @@ export default class BotCore extends Client {
   defaultPrefix: string;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
-      disableMentions: "everyone",
+      disableMentions: 'everyone',
     });
 
     this.validate(options);
@@ -26,17 +26,17 @@ export default class BotCore extends Client {
 
     this.Bot = bot;
 
-    this.defaultPrefix = options.defaultPrefix || "!";
+    this.defaultPrefix = options.defaultPrefix || '!';
 
-    this.on("guildCreate", this.registerGuild);
+    this.on('guildCreate', this.registerGuild);
 
-    this.on("guildMemberAdd", this.syncGuildMember);
+    this.on('guildMemberAdd', this.syncGuildMember);
 
-    this.once("ready", () => {
+    this.once('ready', () => {
       console.log(`Logged in as ${this.user.username}!`);
     });
 
-    this.on("message", async (message) => {
+    this.on('message', async (message) => {
       let prefix = await this.Bot.getPrefix(message.guild);
 
       if (!message.guild || message.author.bot) return;
@@ -49,26 +49,25 @@ export default class BotCore extends Client {
 
       if (command) {
         if (command.requireBotOwner && !config.BotOwners.includes(message.member.id))
-          return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
+          return sendErrorMessage(message.channel, 'Only the bot owners can execute this command!');
         if (command.requiredPerms) {
           let isAllowed = true;
           command.requiredPerms.forEach((perm: PermissionResolvable) => {
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
-          if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
+          if (!isAllowed) return sendErrorMessage(message.channel, 'You are not a high enough role to use this.');
         }
+        this.registerGuild(message.guild);
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
     });
-
-    this.on("guildMemberAdd", (member: GuildMember) => {});
   }
 
   validate(options) {
-    if (typeof options !== "object") throw new TypeError("Options must be type of object");
+    if (typeof options !== 'object') throw new TypeError('Options must be type of object');
 
-    if (!options.token) throw new Error("You must provide a token for the client");
+    if (!options.token) throw new Error('You must provide a token for the client');
     this.token = options.token;
   }
 
@@ -77,7 +76,7 @@ export default class BotCore extends Client {
     await super.login(token);
   }
 
-  async registerGuild(guild) {
+  async registerGuild(guild: Guild) {
     if (await GuildData.exists({ ServerID: guild.id })) return;
     let doc = createDefault(guild.id, this.defaultPrefix);
     doc.save();
