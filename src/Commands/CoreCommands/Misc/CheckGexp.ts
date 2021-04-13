@@ -16,19 +16,11 @@ class CheckGexp extends Command {
     });
   }
 
-<<<<<<< HEAD
-  async run(message: Message, args: string[], client: BotCore): Promise<any> {
-    let mode = args[0];
-    let time = args[1] || 7;
-
-    const msg: Message = await sendCustomMessage(message.channel, "BLUE", "Checking gexp...", "GEXP", undefined);
-=======
   async run(message: Message, args: string[], client: BotCore) {
     let mode = args[0] || 'all';
     let time = args[1] || 7;
 
-    const msg = await sendCustomMessage(message.channel, 'BLUE', 'Checking gexp...', 'GEXP', undefined);
->>>>>>> dba0dfab2cece328d171a139302452d3a7cea545
+    const msg = await sendCustomMessage(message.channel, 'BLUE', 'Checking gexp...', 'GEXP');
 
     const guild = await client.Bot.GuildManager.getGuild(message.guild.id);
     const res = await checkGexp(client, guild, time);

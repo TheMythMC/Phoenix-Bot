@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PrefixType } from "./PrefixData";
+import { PrefixTypes } from "./UserData";
 
 // this is the server pack
 export interface IPremiumLinkData extends mongoose.Document {
@@ -32,7 +32,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   // if server wants to enforce a custom prefix to every user
   EnforceCustomPrefix: boolean;
   // the custom prefix the server wants to display for each user; If it's an empty string, it'll disallow any prefixes; MUST have EnforceCustomPrefix enabled to work
-  ServerPrefixType: PrefixType;
+  ServerPrefixType: PrefixT;
   // server current prefix name; If empty or undefined, will default to default prefix
   ServerPrefixName: string;
 }

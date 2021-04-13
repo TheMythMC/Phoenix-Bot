@@ -7,18 +7,6 @@ import Command from '../../../Structure/Command';
 import { sendErrorMessage } from '../../../utils/MessageUtils';
 
 class TestCommand extends Command {
-<<<<<<< HEAD
-    constructor(client) {
-        super(client, "testcommand", {
-            aliases: [],
-            description: "Test Command to see if bot is working",
-            category: "Misc",
-            usage: `%pTestCommand`,
-            requiredPerms: [],
-            requireBotOwner: false
-        });
-    }
-=======
   constructor(client) {
     super(client, 'testcommand', {
       aliases: [],
@@ -28,7 +16,6 @@ class TestCommand extends Command {
       requiredPerms: [],
     });
   }
->>>>>>> dba0dfab2cece328d171a139302452d3a7cea545
 
   async run(message: Message, _args: string[], _client: BotCore) {
     message.channel.send('Yes, I work :confused:');
