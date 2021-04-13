@@ -1,4 +1,4 @@
-import { Client, Collection, Guild, GuildMember, PermissionResolvable } from 'discord.js';
+import { Client, Collection, Guild, PermissionResolvable, User } from 'discord.js';
 import { sendErrorMessage } from '../utils/MessageUtils';
 import Util from '../utils/Util';
 import path from 'path';
@@ -7,6 +7,8 @@ import config from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
+
+import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
 export default class BotCore extends Client {
   commands: Map<string, Command>;
@@ -37,6 +39,7 @@ export default class BotCore extends Client {
     });
 
     this.on('message', async (message) => {
+      if (message.channel.type === 'dm') return;
       let prefix = await this.Bot.getPrefix(message.guild);
 
       if (!message.guild || message.author.bot) return;
@@ -58,6 +61,7 @@ export default class BotCore extends Client {
           if (!isAllowed) return sendErrorMessage(message.channel, 'You are not a high enough role to use this.');
         }
         this.registerGuild(message.guild);
+        this.registerUser(message.author);
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
@@ -82,6 +86,12 @@ export default class BotCore extends Client {
     doc.save();
 
     this.Bot.GuildManager.addGuild(doc);
+  }
+
+  async registerUser(user: User) {
+    if (await UserData.exists({ UserID: user.id })) return;
+    let doc = createUser(user.id);
+    doc.save();
   }
 
   async syncGuildMember(member) {

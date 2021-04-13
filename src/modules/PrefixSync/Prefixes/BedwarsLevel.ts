@@ -4,13 +4,13 @@ import Prefix from "../Prefix";
 class BedwarsLevel extends Prefix<String> {
   constructor() {
     super({
-      DefaultName: "Bedwars Level: %s",
-      id: "BEDWARS_LEVEL",
+      DefaultName: 'Bedwars Level',
+      id: 'BEDWARS_LEVEL',
     });
   }
 
-  run(player: Player) {
-    return player.stats.BedWars.level.toString() || "0";
+  run(player) {
+    return player.stats.BedWars.level || '0';
   }
 }
 

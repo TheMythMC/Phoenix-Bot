@@ -1,5 +1,5 @@
-import Guild from "./Guild";
-import GuildData from "../Schemas/GuildData";
+import Guild from './Guild';
+import GuildData from '../Schemas/GuildData';
 
 export default class GuildManager {
   guilds: any[];
@@ -20,7 +20,7 @@ export default class GuildManager {
     return guild;
   }
 
-  async getGuild(guildID) {
+  async getGuild(guildID): Promise<Guild> {
     const foundGuild = this._getGuildFromCache(guildID);
     if (foundGuild) return foundGuild;
 
