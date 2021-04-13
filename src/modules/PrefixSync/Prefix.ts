@@ -1,5 +1,4 @@
-import { User } from 'discord.js';
-import { Player } from '../SlothpixelAPITypes/Player';
+import Player from 'phoenix-slothpixel/Player';
 
 export interface IPrefixOptions {
   DefaultName?: string;
@@ -18,7 +17,7 @@ export default abstract class Prefix<T> {
     this.defaultName = options.DefaultName || 'Prefix';
   }
 
-  abstract run(player): T;
+  abstract run(player: Player): T;
 
   generatePrefix(prefixGenValue: string, guildPrefixTemplate?: string, userPrefixTemplate?: string) {
     // goes from max importance to lowest importance

@@ -1,10 +1,9 @@
-import Command from '../../../Structure/Command';
-import MinecraftLinkData from '../../../Schemas/MinecraftLinkData';
-import { sendCustomMessage, createErrorMessage, createCustomEmbed } from '../../../utils/MessageUtils';
-import { Message } from 'discord.js';
-import BotCore from '../../../Structure/BotCore';
-
-const checkGexp = require('../../../GEXPChecker/CheckGEXP');
+import Command from "../../../Structure/Command";
+import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
+import { sendCustomMessage, createErrorMessage, createCustomEmbed } from "../../../utils/MessageUtils";
+import { Message } from "discord.js";
+import BotCore from "../../../Structure/BotCore";
+import checkGexp from '../../../modules/GEXPChecker/CheckGEXP'
 
 class CheckGexp extends Command {
   constructor(client) {
@@ -30,7 +29,7 @@ class CheckGexp extends Command {
     let text = '';
 
     let i = 0;
-
+// @ts-ignore
     for (let data of res) {
       if (mode === 'failed' && guild.data.GEXPWhitelist.includes(data.Rank)) continue;
       if ((data.Passed || data.isNew) && mode === 'failed') continue;

@@ -18,21 +18,23 @@ class SetPrefix extends Command {
   }
 
   async run(message: Message, _args: string[], _client: BotCore) {
-    try {
-      let p = await SyncPrefix(message.member, _client.Bot, _args[0]);
-      let user = await UserData.findOne({ UserID: message.member.id }).exec();
-      if (!user) throw new Error('No user data defined. '); // this will happen only VERY rarely
-      if (!PrefixTypes.includes(_args[0])) throw new Error('Invalid prefix type. ');
-      user.PrefixType = _args[0];
-      user.save();
-      message.channel.send(p);
-    } catch (err) {
-      console.log('ERR');
+    // try {
+    let p = await SyncPrefix(message.member, _client.Bot, _args[0]);
+    console.log(p);
 
-      console.log(err);
+    let user = await UserData.findOne({ UserID: message.member.id }).exec();
+    if (!user) throw new Error('No user data defined. '); // this will happen only VERY rarely
+    if (!PrefixTypes.includes(_args[0])) throw new Error('Invalid prefix type. ');
+    user.PrefixType = _args[0];
+    user.save();
+    message.channel.send(p);
+    // } catch (err) {
+    //   console.log('ERR');
 
-      return sendErrorMessage(message.channel, `An error occurred when attempting to save prefix: ${err.message}`);
-    }
+    //   console.log(err);
+
+    //   return sendErrorMessage(message.channel, `An error occurred when attempting to save prefix: ${err.message}`);
+    // }
   }
 }
 6;
