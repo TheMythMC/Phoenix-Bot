@@ -1,11 +1,9 @@
-import { User } from 'discord.js';
-import { Player } from '../../SlothpixelAPITypes/Player';
 import Prefix from '../Prefix';
 
 class BedwarsLevel extends Prefix<String> {
   constructor() {
     super({
-      DefaultName: 'Bedwars Level',
+      DefaultName: 'Bw Stars',
       id: 'BEDWARS_LEVEL',
     });
   }

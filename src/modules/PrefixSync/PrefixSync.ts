@@ -9,6 +9,8 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
   // testPrefixType is for checking if a certain prefix will work with a user
   // NOTE: Please run this with try catch statements
   const { MinecraftUUID } = await Client.LinkManager.getDataByDiscord(guildMember.id);
+  console.log(MinecraftUUID);
+
   if (!MinecraftUUID)
     throw new Error(
       `You are not linked to any minecraft account. Please use \`${await Client.getPrefix(
@@ -42,7 +44,7 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
 
   console.log(generatedPrefix);
 
-  guildMember.setNickname(generatedPrefix);
+  await guildMember.setNickname(generatedPrefix);
   return res;
 }
 
@@ -55,5 +57,5 @@ export async function generatePrefix(
 ): Promise<string> {
   const guild = await client.GuildManager.getGuild(user.guild.id);
   if (!guild) return '';
-  return `[${prefix.generatePrefix(prefixGenValue)}]  ${plrData.username}`;
+  return `[${prefix.generatePrefix(prefixGenValue)}] ${plrData.username}`;
 }
