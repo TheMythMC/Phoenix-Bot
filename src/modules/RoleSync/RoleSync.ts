@@ -1,8 +1,8 @@
 // im too lazy to make registration system so im just resorting to this
 const roleMethods = {
-  GuildRank: require("./RoleTemplates/GuildRank"),
-  Rank: require("./RoleTemplates/Rank"),
-  GuildRole: require("./RoleTemplates/GuildRole"),
+  GuildRank: require('./RoleTemplates/GuildRank'),
+  Rank: require('./RoleTemplates/Rank'),
+  GuildRole: require('./RoleTemplates/GuildRole'),
 };
 
 export default async (member, uuid, roleLinks = []) => {
@@ -14,9 +14,10 @@ export default async (member, uuid, roleLinks = []) => {
 
   for (const roleLink of roleLinks) {
     let meth = roleMethods[roleLink.RoleTemplate];
+
     if (!meth) continue;
 
-    const res = await meth(uuid, guild.id, cache, roleLink.Params);
+    const res = await meth(uuid, member.guild.id, cache, roleLink.Params);
 
     roleData[roleLink.DiscordRoleID] = res;
 

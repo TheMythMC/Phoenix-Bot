@@ -7,7 +7,8 @@ module.exports = class extends Command {
         super (client, 'shutdown', {
             description: 'Completely shuts down the bot',
             usage: '%pshutdown',
-            category: 'Util'
+            category: 'Util',
+            requireBotOwner: true
         });
     }
 
@@ -18,7 +19,7 @@ module.exports = class extends Command {
                 process.exit(0);
             });
         } catch (e) {
-            console.log(e.message)
+            console.log(e.message);
         }
     }
 }
