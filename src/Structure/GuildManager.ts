@@ -25,7 +25,7 @@ export default class GuildManager {
     return guild;
   }
 
-  async getGuild(guildID) {
+  async getGuild(guildID): Promise<Guild> {
     const foundGuild = this._getGuildFromCache(guildID);
     if (foundGuild) return foundGuild;
 
@@ -42,7 +42,7 @@ export default class GuildManager {
 
   async updateGuild(guildID) {
     const guildData = await GuildData.find({ ServerID: guildID });
-    let guild = await this.getGuild(guildID);
+    let guild: any = await this.getGuild(guildID);
     if (!guild) return;
 
     guild.data = guildData;

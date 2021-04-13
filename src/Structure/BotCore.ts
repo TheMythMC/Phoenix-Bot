@@ -1,13 +1,15 @@
-import { Client, Collection, PermissionResolvable } from "discord.js";
-import { sendErrorMessage } from "../utils/MessageUtils";
-import Util from "../utils/Util";
-import path from "path";
-import GuildData, { createDefault } from "../Schemas/GuildData";
-import tempConfig from "../../config.json";
-import RoleSync from "../RoleSync/RoleSync";
-import Bot from "../Bot";
-import Command from "./Command";
-import { Manager } from "erela.js";
+import { Client, Collection, Guild, PermissionResolvable, User } from 'discord.js';
+import { sendErrorMessage } from '../utils/MessageUtils';
+import Util from '../utils/Util';
+import path from 'path';
+import GuildData, { createDefault } from '../Schemas/GuildData';
+import tempConfig from '../../config.json';
+import RoleSync from '../modules/RoleSync/RoleSync';
+import Bot from '../Bot';
+import Command from './Command';
+import { Manager } from 'erela.js'
+
+import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
 export default class BotCore extends Client {
   commands: Map<string, Command>;
@@ -18,7 +20,7 @@ export default class BotCore extends Client {
   config: Config;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
-      disableMentions: "everyone",
+      disableMentions: 'everyone',
     });
 
     this.validate(options);
@@ -26,16 +28,16 @@ export default class BotCore extends Client {
     this.commands = new Collection();
 
     this.config = tempConfig as Config;
-    
+
     this.aliases = new Collection();
 
     this.Bot = bot;
 
-    this.defaultPrefix = options.defaultPrefix || "!";
+    this.defaultPrefix = options.defaultPrefix || '!';
 
-    this.on("guildCreate", this.registerGuild);
+    this.on('guildCreate', this.registerGuild);
 
-    this.on("guildMemberAdd", this.syncGuildMember);
+    this.on('guildMemberAdd', this.syncGuildMember);
 
     this.once("ready", () => {
       console.log(`Logged in as ${this.user.tag}!`);
@@ -43,8 +45,9 @@ export default class BotCore extends Client {
       this.manager.init(this.user.id);
     });
 
-    this.on("message", async (message) => {
-      let prefix = await this.getPrefix(message.guild);
+    this.on('message', async (message) => {
+      if (message.channel.type === 'dm') return;
+      let prefix = await this.Bot.getPrefix(message.guild);
 
       if (!message.guild || message.author.bot) return;
 
@@ -56,14 +59,18 @@ export default class BotCore extends Client {
 
       if (command) {
         if (command.requireBotOwner && !this.config.BotOwners.includes(message.member.id))
-          return sendErrorMessage(message.channel, "Only the bot owners can execute this command!");
+          return sendErrorMessage(message.channel, 'Only the bot owners can execute this command!');
         if (command.requiredPerms) {
           let isAllowed = true;
           command.requiredPerms.forEach((perm: PermissionResolvable) => {
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
-          if (!isAllowed) return sendErrorMessage(message.channel, "You are not a high enough role to use this.");
+          if (!isAllowed) return sendErrorMessage(message.channel, 'You are not a high enough role to use this.');
         }
+        if (command.isPremium && !(await this.Bot.GuildManager.isPremium(message.guild.id)))
+          return sendErrorMessage(message.channel, "This command is premium. ");
+        this.registerGuild(message.guild);
+        this.registerUser(message.author);
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
@@ -102,9 +109,9 @@ export default class BotCore extends Client {
   // Back to Discord stuff
 
   validate(options) {
-    if (typeof options !== "object") throw new TypeError("Options must be type of object");
+    if (typeof options !== 'object') throw new TypeError('Options must be type of object');
 
-    if (!options.token) throw new Error("You must provide a token for the client");
+    if (!options.token) throw new Error('You must provide a token for the client');
     this.token = options.token;
   }
 
@@ -113,16 +120,8 @@ export default class BotCore extends Client {
     await Util.loadCommands(this, `Commands${path.sep}PremiumCommands`);
     await super.login(token);
   }
-  
-  async getPrefix(guild) {
-    return (
-      (await this.Bot.GuildManager.getGuild(guild.id))?.data?.Prefix ||
-      (await this.Bot.GuildManager.getGuild(guild))?.data?.Prefix ||
-      "!"
-    );
-  }
 
-  async registerGuild(guild) {
+  async registerGuild(guild: Guild) {
     if (await GuildData.exists({ ServerID: guild.id })) return;
     let doc = createDefault(guild.id, this.defaultPrefix);
     doc.save();
@@ -130,14 +129,18 @@ export default class BotCore extends Client {
     this.Bot.GuildManager.addGuild(doc);
   }
 
-  async parsePrefix(guildID, text) {
-    return text.replace(/%p/g, await this.getPrefix(guildID));
+  async registerUser(user: User) {
+    if (await UserData.exists({ UserID: user.id })) return;
+    let doc = createUser(user.id);
+    doc.save();
   }
 
   async syncGuildMember(member) {
     const d = await this.Bot.LinkManager.getDataByDiscord(member.id);
     if (d) {
-      RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+      try {
+        RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+      } catch (err) {}
     }
   }
 }
@@ -148,7 +151,7 @@ interface IBotCore {
 }
 
 interface Config {
-  UUIDUsernameAPICache: boolean,
-  UUIDUsernameAPICacheTime: number,
-  BotOwners: string[]
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
 }

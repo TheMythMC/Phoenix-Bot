@@ -4,6 +4,7 @@ import Command from "../../../Structure/Command";
 import aliases from "./gameAliases.json";
 import * as HypixelAPI from "../../../Structure/HypixelAPI";
 import { sendCustomMessage, sendErrorMessage } from "../../../utils/MessageUtils";
+import Player from "phoenix-slothpixel/Player";
 
 module.exports = class extends Command {
   msg: string;
@@ -25,7 +26,8 @@ module.exports = class extends Command {
     if (!playerData) return sendErrorMessage(message.channel, "Please input a valid player name.");
 
     if (minigame != "all") {
-      await Object.keys(aliases.games).forEach(async (game) => {
+      let keys = Object.keys(aliases);
+      await keys.forEach(async (game) => {
         if (game === minigame) {
           await this.parseStats(minigame, playerData);
           return sendCustomMessage(
@@ -36,9 +38,9 @@ module.exports = class extends Command {
             ""
           );
         }
-        aliases.games[game].forEach(async (alias) => {
+        aliases.games[game].forEach(async (alias: string) => {
           if (alias === minigame) {
-            await this.parseStats(minigame, HypixelAPI.getPlayerData(playername));
+            await this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
             return sendCustomMessage(
               message.channel,
               "BLUE",
@@ -50,11 +52,11 @@ module.exports = class extends Command {
         });
       });
     } else {
-      this.parseStats(minigame, HypixelAPI.getPlayerData(playername));
+      this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
     }
   }
 
-  async parseStats(game: string, data: any) {
+  async parseStats(game: string, data: Player) {
     switch (game) {
       case "all": {
       }

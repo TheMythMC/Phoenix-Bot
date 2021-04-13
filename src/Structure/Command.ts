@@ -11,6 +11,7 @@ export default class Command {
   usage: string;
   requiredPerms: PermissionResolvable[];
   requireBotOwner: boolean;
+  isPremium: boolean;
   constructor(client: BotCore, name: string, options = {} as ICommand) {
     this.client = client;
     this.name = name;
@@ -20,6 +21,7 @@ export default class Command {
     this.usage = options.usage || "No usage provided";
     this.requiredPerms = options.requiredPerms || [];
     this.requireBotOwner = options.requireBotOwner || false;
+    this.isPremium = options.isPremium || false;
   }
   //eslint-disable-next-line
   async run(message: Message, args: string[], client: BotCore) {
@@ -38,4 +40,5 @@ interface ICommand {
   usage: string;
   requiredPerms?: PermissionResolvable[];
   requireBotOwner?: boolean;
+  isPremium?: boolean;
 }

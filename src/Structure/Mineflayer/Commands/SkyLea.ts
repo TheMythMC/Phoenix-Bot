@@ -1,8 +1,7 @@
-import MineflayerManager from '../../MineflayerManager';
 import MineflayerCommand from '../MineflayerCommand';
 import BotCore from '../../BotCore';
-import ky from 'ky-universal'
 import MineflayerBot from '../../MineflayerBot';
+import * as MojangAPI from '../../MojangAPI'
 
 module.exports = class extends MineflayerCommand {
     constructor(discordBot: BotCore, minecraftBot: MineflayerBot) {
@@ -13,10 +12,10 @@ module.exports = class extends MineflayerCommand {
     }
     async run (args: string[], mcBot: MineflayerBot, _discBot: BotCore, playerName: string) {
         let url = `https://sky.shiiyu.moe/stats/${args[0]}/`;
-        if(await ky.get(url)) {
+        if(MojangAPI.getByName(args[0])) {
             mcBot.bot.chat(`${playerName}, ${url}`);
         } else {
-            mcBot.bot.chat(`This player either has no profiles or does not exist.`)
+            mcBot.bot.chat(`This player does not exist.`)
         }
     }
 }

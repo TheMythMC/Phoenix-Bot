@@ -10,7 +10,7 @@ export default class Server {
   Bot: Bot;
   constructor(bot: Bot, port: number) {
     this.app = express();
-    expressWs(this.app);
+    require("express-ws")(this.app);
     this.port = port;
     this.Bot = bot;
     this.addMiddleware();

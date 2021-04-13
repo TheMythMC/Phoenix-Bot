@@ -7,7 +7,7 @@ import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
 import GuildData from "../Schemas/GuildData";
 
 const joinMessages: string[] = [
-  "%n just joined the server - glhf!",
+  "%n just joined the guild - glhf!",
   "%n just joined. Everyone, look busy!",
   "%n just joined. Can I get a heal?",
   "%n joined your party.",
@@ -23,10 +23,10 @@ const joinMessages: string[] = [
   "%n just joined. Hide your bananas.",
   "%n just arrived. Seems OP - please nerf.",
   "%n just slid into the guild.",
-  "A %n has spawned in the server.",
+  "A %n has spawned in the guild.",
   "Big %n showed up!",
   "Where’s %n? In the guild!",
-  "%n hopped into the server. Kangaroo!!",
+  "%n hopped into the guild. Kangaroo!!",
   "%n just showed up. Hold my beer.",
   "Challenger approaching - %n has appeared!",
   "It's a bird! It's a plane! Nevermind, it's just %n.",
@@ -37,7 +37,7 @@ const joinMessages: string[] = [
   "Hey! Listen! %n has joined!",
   "We've been expecting you %n.",
   "It's dangerous to go alone, take %n!",
-  "%n has joined the server! It's super effective!",
+  "%n has joined the guild! It's super effective!",
   "Cheers, love! %n is here!",
   "%n is here, as the prophecy foretold.",
   "%n has arrived. Party's over.",
@@ -66,7 +66,10 @@ export default class MineflayerBot {
   }
 
   setupBot() {
-    this.bot.chatAddPattern(/(\[.+\]) (.+) \[(.+)\]: (.+)/, "guildChat");
+    this.bot.addChatPattern("guildChat", /(\[.+\]) (.+) \[(.+)\]: (.+)/, {
+      repeat: true,
+      parse: true
+    });
 
     this.bot.on("error", (err) => {
       console.log(err);

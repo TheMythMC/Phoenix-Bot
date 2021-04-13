@@ -12,6 +12,7 @@ module.exports = class extends Command {
       aliases: [],
       description: "Set the channel for your bot to use",
       requireBotOwner: false,
+      isPremium: true,
     });
   }
 

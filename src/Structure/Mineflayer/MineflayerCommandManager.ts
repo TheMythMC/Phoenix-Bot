@@ -28,7 +28,7 @@ export default class MineflayerCommandManager {
     let commands = new Map<string, MineflayerCommand>();
     let aliases = new Map<string, string>();
 
-    glob(`${this.FILE_PATH}${dirPath}/**/*.js`, (err, matches) => {
+    glob(`${this.FILE_PATH}${dirPath}/**/*.js`, (_, matches) => {
       for (let match of matches) {
         delete require.cache[match];
         const { name } = path.parse(match);

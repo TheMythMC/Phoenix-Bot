@@ -107,19 +107,20 @@ export default class Util {
     return data?.AccessToken;
   }
 
-  static isCommandAllowed(member: GuildMember, command: Command): boolean {
+  static async isCommandAllowed(member: GuildMember, command: Command): Promise<boolean> {
     if (command.requireBotOwner && !config.BotOwners.includes(member.id)) return false;
     for (const perm of command.requiredPerms) {
       if (!member.hasPermission(perm)) return false;
     }
+    if ((await Bot.instance.GuildManager.isPremium(member.guild.id)) && command.isPremium) return false;
     return true;
   }
 }
 
 interface Config {
-  UUIDUsernameAPICache: boolean,
-  UUIDUsernameAPICacheTime: number,
-  BotOwners: string[]
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
 }
 
 module.exports = Util;
