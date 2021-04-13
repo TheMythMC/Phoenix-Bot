@@ -11,8 +11,6 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
   const { MinecraftUUID } = await Client.LinkManager.getDataByDiscord(guildMember.id);
 
   if (!MinecraftUUID) {
-    console.log('1a');
-
     throw new Error(
       `You are not linked to any minecraft account. Please use \`${await Client.getPrefix(
         guildMember.guild
@@ -21,13 +19,11 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
   }
 
   const playerData = await getPlayerData(MinecraftUUID);
-  console.log('A');
 
   if (!playerData) throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
 
   // get the preferred prefix of the user
   const userData = await UserData.findOne({ UserID: guildMember.id }).exec();
-  console.log('B');
   if (!userData)
     throw new Error(
       `No user data found. Please try to relink by doing \`${await Client.getPrefix(
@@ -36,8 +32,6 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
     );
 
   const prefixType = testPrefixType || userData.PrefixType;
-
-  console.log(prefixType);
 
   if (!prefixType) return;
 
@@ -48,11 +42,7 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
   const res = prefixType === 'NONE' ? undefined : await prefix.run(playerData); // if an error occurs, itll just float up and eventually be caught
 
   const generatedPrefix = await generatePrefix(prefix, guildMember, res, playerData, Client);
-
-  console.log(generatedPrefix);
-
-  await guildMember.setNickname(generatedPrefix);
-  return res;
+  return generatedPrefix;
 }
 
 export async function generatePrefix(
