@@ -47,7 +47,7 @@ export default class Bot {
     );
   }
 
-  async parsePrefix(guildID, text) {
+  async parsePrefix(guildID, text: string) {
     return text.replace(/%p/g, await this.getPrefix(guildID));
   }
 }

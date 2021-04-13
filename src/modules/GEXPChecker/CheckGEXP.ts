@@ -1,7 +1,7 @@
-const HypixelAPI = require("../Structure/HypixelAPI"); 
-const MojangAPI = require('../Structure/MojangAPI');
+import * as HypixelAPI from "../../Structure/HypixelAPI"; 
+import * as MojangAPI from '../../Structure/MojangAPI';
 
-module.exports = async (client, g, guildCheckDays = 7) => {
+export default async (client, g, guildCheckDays: number | string = 7) => {
     if (!g || !g.data?.GuildID) return {}; 
     const data = await g.data.GEXPData; 
     

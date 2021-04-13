@@ -1,4 +1,4 @@
-import { Player } from "../../SlothpixelAPITypes/Player";
+import Player from "phoenix-slothpixel/Player";
 import Prefix from "../Prefix";
 
 class BedwarsLevel extends Prefix<String> {
@@ -10,7 +10,7 @@ class BedwarsLevel extends Prefix<String> {
   }
 
   run(player: Player) {
-    return player.stats.BedWars.level || "0";
+    return player.stats.BedWars.level.toString() || "0";
   }
 }
 

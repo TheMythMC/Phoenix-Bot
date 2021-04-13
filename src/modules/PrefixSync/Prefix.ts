@@ -1,4 +1,4 @@
-import { Player } from "../SlothpixelAPITypes/Player";
+import Player from 'phoenix-slothpixel/Player'
 
 export interface IPrefixOptions {
   DefaultName?: string;
