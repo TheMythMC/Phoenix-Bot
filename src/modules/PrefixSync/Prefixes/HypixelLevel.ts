@@ -13,3 +13,5 @@ class HypixelLevel extends Prefix<String> {
         return Math.floor(player.level).toString();
     }
 }
+
+module.exports = HypixelLevel
