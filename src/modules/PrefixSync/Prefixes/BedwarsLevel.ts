@@ -9,8 +9,8 @@ class BedwarsLevel extends Prefix<String> {
     });
   }
 
-  run(player) {
-    return player.stats.BedWars.level || '0';
+  run(player: Player): String {
+    return player.stats.BedWars.level.toString() || '0';
   }
 }
 

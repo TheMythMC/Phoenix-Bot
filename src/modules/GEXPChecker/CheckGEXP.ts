@@ -15,7 +15,10 @@ export default async (client, g, guildCheckDays: number | string = 7) => {
         let gexp: any = 0; 
         const xpHistory = Object.values(member.exp_history);
 
-        for (let i = 0; i < guildCheckDays; i++) { // standard for loop cuz of the guildCheckDays
+        let realGuildCheckDays: number = typeof guildCheckDays == 'string' ? Number.parseInt(guildCheckDays) : guildCheckDays;
+
+
+        for (let i = 0; i < realGuildCheckDays; i++) { // standard for loop cuz of the guildCheckDays
             if (xpHistory[i] === undefined) break; 
             gexp += xpHistory[i];
         }
