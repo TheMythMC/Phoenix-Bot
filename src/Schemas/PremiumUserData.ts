@@ -1,25 +1,29 @@
-import mongoose from "mongoose";
-
-type PrefixStatus = "BEDWARS_LEVEL" | "SKYWARS_LEVEL" | "BEDWARS_COINS" | "SKYWARS_COINS" | "SKYBLOCK_COINS"; // add for even more support for games
-type PrefixTypes = { [key in PrefixStatus]: string };
+import mongoose from 'mongoose';
 
 export interface IPremiumUserData extends mongoose.Document {
   DiscordID: string;
-  CustomPrefixData: PrefixTypes;
+  CustomPrefixData: [
+    {
+      PrefixType: string;
+      CustomPrefix: string;
+    }
+  ];
 }
 
 export const schema = new mongoose.Schema({
   DiscordID: String,
-  CustomPrefixData: {
-    name: String,
-    values: String,
-  },
+  CustomPrefixData: [
+    {
+      PrefixType: String,
+      CustomPrefix: String,
+    },
+  ],
 });
 
-const model = mongoose.model<IPremiumUserData>("PremiumUserData", schema);
+const model = mongoose.model<IPremiumUserData>('PremiumUserData', schema);
 const Default = {
-  DiscordID: "",
-  CustomPrefixData: {},
+  DiscordID: '',
+  CustomPrefixData: [],
 };
 export const createDefault = (DiscordID: string) => {
   let obj = {} as IPremiumUserData;

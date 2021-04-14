@@ -28,6 +28,8 @@ class SetPrefix extends Command {
       await message.member.setNickname(p);
       sendSuccessMessage(message.channel, `Set your prefix to: \`${_args[0]}\`. `);
     } catch (err) {
+      console.log(err);
+
       return sendErrorMessage(message.channel, `An error occurred when attempting to save prefix: ${err.message}`);
     }
   }

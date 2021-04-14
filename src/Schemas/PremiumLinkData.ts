@@ -33,7 +33,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   // the custom prefix the server wants to display for each user; If it's an empty string, it'll disallow any prefixes; MUST have EnforceCustomPrefix enabled to work
   ServerPrefixType: string;
   // server current prefix name; If empty or undefined, will default to default prefix
-  ServerPrefixName: string;
+  ServerPrefixTemplate: string;
 }
 
 export const schema = new mongoose.Schema({
@@ -52,7 +52,7 @@ export const schema = new mongoose.Schema({
   StaffPing: Boolean,
   EnforceCustomPrefix: Boolean,
   ServerPrefixType: String,
-  ServerPrefixName: String,
+  ServerPrefixTemplate: String,
 });
 
 const model = mongoose.model<IPremiumLinkData>('PremiumLinkData', schema);
@@ -72,7 +72,7 @@ const Default = {
   StaffPing: true,
   EnforceCustomPrefix: false,
   ServerPrefixType: '',
-  ServerPrefixName: '',
+  ServerPrefixTemplate: '',
 };
 export const createDefault = (DiscordID: string, ServerID: string, ExpireDate: number) => {
   let obj = {} as IPremiumLinkData;
