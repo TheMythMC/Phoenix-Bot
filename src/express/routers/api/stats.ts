@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import Bot from "../../../Bot";
+import Bot from '../../../Bot';
 
 router.use('/', (req, res) => {
   let bot = Bot.instance.CoreBot;

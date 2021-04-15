@@ -1,9 +1,9 @@
 /*
  * Added so that git doesnt crap itself whenever we make changes to @Utils.ts
  */
-import Bot from "../Bot";
-import PremiumLinkData from "../Schemas/PremiumLinkData";
-import PremiumUserData from "../Schemas/PremiumUserData";
+import Bot from '../Bot';
+import PremiumLinkData from '../Schemas/PremiumLinkData';
+import PremiumUserData from '../Schemas/PremiumUserData';
 
 export default class PremiumUtils {
   static getMinecraftBotFromGuild(guildID: string) {

@@ -66,7 +66,7 @@ const Default = {
   DashboardRoles: [],
   DashboardPerms: [],
   EnforceCustomPrefix: false,
-  ServerPrefixType: "",
+  ServerPrefixType: '',
 };
 
 export const createDefault = (ServerID: string, prefix = '!') => {

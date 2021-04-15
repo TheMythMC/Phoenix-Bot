@@ -1,8 +1,8 @@
-import { IPremiumLinkData } from "../Schemas/PremiumLinkData";
-import Bot from "../Bot";
-import MineflayerCommandManager from "./Mineflayer/MineflayerCommandManager";
-import MineflayerBot from "./MineflayerBot";
-import MineflayerCommand from "./Mineflayer/MineflayerCommand";
+import { IPremiumLinkData } from '../Schemas/PremiumLinkData';
+import Bot from '../Bot';
+import MineflayerCommandManager from './Mineflayer/MineflayerCommandManager';
+import MineflayerBot from './MineflayerBot';
+import MineflayerCommand from './Mineflayer/MineflayerCommand';
 
 export default class MineflayerManager {
   bot: Bot;
@@ -12,7 +12,7 @@ export default class MineflayerManager {
   constructor(bot: Bot, guilds: IPremiumLinkData[]) {
     this.bot = bot;
     this.MineCraftBots = new Map();
-    let ca = MineflayerCommandManager.loadCommand("./Mineflayer/Commands/**/*.ts", this.bot.CoreBot);
+    let ca = MineflayerCommandManager.loadCommand('./Mineflayer/Commands/**/*.ts', this.bot.CoreBot);
     this.CommandCache = ca.commands;
     this.AliasesCache = ca.aliases;
     guilds.forEach(async (guild) => {
@@ -39,8 +39,8 @@ export default class MineflayerManager {
       password: guildData.BotPassword,
       // @ts-ignore
       auth: guildData.BotAuth,
-      version: "1.8.9",
-      host: "buyphoenix.hypixel.net",
+      version: '1.8.9',
+      host: 'buyphoenix.hypixel.net',
       port: 25565,
     });
     return bot;

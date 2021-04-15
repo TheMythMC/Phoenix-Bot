@@ -7,7 +7,7 @@ import Server from './express/Server';
 import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 import MineflayerManager from './Structure/MineflayerManager';
 import EventEmmiter from 'events';
-import PremiumLinkData from './Schemas/PremiumLinkData'
+import PremiumLinkData from './Schemas/PremiumLinkData';
 
 export default class Bot {
   static instance: Bot;
@@ -39,8 +39,8 @@ export default class Bot {
         useUnifiedTopology: true,
       },
       async () => {
-        console.log("Database is connected. ");
-        console.log("Loading mineflayer bots...");
+        console.log('Database is connected. ');
+        console.log('Loading mineflayer bots...');
         this.loadMineflayerBots();
       }
     );

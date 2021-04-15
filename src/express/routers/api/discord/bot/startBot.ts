@@ -1,13 +1,13 @@
-import express from "express";
-import Bot from "../../../../../Bot";
-import PremiumLinkData from "../../../../../Schemas/PremiumLinkData";
-import Util from "../../../../../utils/Util";
+import express from 'express';
+import Bot from '../../../../../Bot';
+import PremiumLinkData from '../../../../../Schemas/PremiumLinkData';
+import Util from '../../../../../utils/Util';
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   // check if permitted
 
-  const GUILDID = typeof req.query.guildID === "string" ? req.query.guildID : undefined;
+  const GUILDID = typeof req.query.guildID === 'string' ? req.query.guildID : undefined;
 
   if (!req.query.guildID || !(await Util.isSessionPermitted(req.cookies.sessionID, GUILDID, Bot.instance)))
     return res.status(401).end();

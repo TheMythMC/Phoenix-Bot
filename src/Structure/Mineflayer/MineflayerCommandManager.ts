@@ -1,9 +1,9 @@
-import { glob } from "glob-promise";
-import MineflayerCommand from "./MineflayerCommand";
-import path from "path";
-import Util from "../../utils/Util";
-import BotCore from "../BotCore";
-import MineflayerBot from "../MineflayerBot";
+import { glob } from 'glob-promise';
+import MineflayerCommand from './MineflayerCommand';
+import path from 'path';
+import Util from '../../utils/Util';
+import BotCore from '../BotCore';
+import MineflayerBot from '../MineflayerBot';
 
 export default class MineflayerCommandManager {
   commands: Map<String, MineflayerCommand>;

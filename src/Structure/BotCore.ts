@@ -7,7 +7,7 @@ import tempConfig from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
-import { Manager } from 'erela.js'
+import { Manager } from 'erela.js';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
@@ -39,7 +39,7 @@ export default class BotCore extends Client {
 
     this.on('guildMemberAdd', this.syncGuildMember);
 
-    this.once("ready", () => {
+    this.once('ready', () => {
       console.log(`Logged in as ${this.user.tag}!`);
       // So music works
       this.manager.init(this.user.id);
@@ -68,7 +68,7 @@ export default class BotCore extends Client {
           if (!isAllowed) return sendErrorMessage(message.channel, 'You are not a high enough role to use this.');
         }
         if (command.isPremium && !(await this.Bot.GuildManager.isPremium(message.guild.id)))
-          return sendErrorMessage(message.channel, "This command is premium. ");
+          return sendErrorMessage(message.channel, 'This command is premium. ');
         this.registerGuild(message.guild);
         this.registerUser(message.author);
         // noinspection ES6MissingAwait
@@ -81,8 +81,8 @@ export default class BotCore extends Client {
     this.manager = new Manager({
       nodes: [
         {
-          host: "lavalink",
-          password: "#BuyPhoenix2021",
+          host: 'lavalink',
+          password: '#BuyPhoenix2021',
           port: 2333,
         },
       ],
@@ -95,14 +95,14 @@ export default class BotCore extends Client {
     });
 
     // Emitted whenever a node connects
-    this.manager.on("nodeConnect", (node) => {
+    this.manager.on('nodeConnect', (node) => {
       console.log(`Node "${node.options.identifier}" connected.`);
     });
 
-    this.on("raw", (d) => this.manager.updateVoiceState(d));
+    this.on('raw', (d) => this.manager.updateVoiceState(d));
 
     // Emitted whenever a node encountered an error
-    this.manager.on("nodeError", (node, error) => {
+    this.manager.on('nodeError', (node, error) => {
       console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`);
     });
   }

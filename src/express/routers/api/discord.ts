@@ -60,6 +60,6 @@ router.get('/user', async (req, res) => {
   res.send(await response.json());
 });
 
-router.use("/bot", require("./discord/bot"));
+router.use('/bot', require('./discord/bot'));
 
 module.exports = router;

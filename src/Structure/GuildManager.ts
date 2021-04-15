@@ -1,6 +1,6 @@
-import Guild from "./Guild";
-import GuildData from "../Schemas/GuildData";
-import PremiumLinkData from "../Schemas/PremiumLinkData";
+import Guild from './Guild';
+import GuildData from '../Schemas/GuildData';
+import PremiumLinkData from '../Schemas/PremiumLinkData';
 
 export default class GuildManager {
   guilds: any[];

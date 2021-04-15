@@ -16,11 +16,11 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js';
         return createCustomEmbed('RED', error, 'Error', undefined);
     }
 
-    export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string = "", ...sections: any) {
+    export function sendCustomMessage(channel, color: string, message: string, title: string, footer = '', ...sections: any) {
         return channel.send(createCustomEmbed(color, message, title, footer, ...sections));
     }
 
-    export function createCustomEmbed(color: string, message: string, title: string, footer = "", ...sections) {
+    export function createCustomEmbed(color: string, message: string, title: string, footer = '', ...sections) {
         let embed = new MessageEmbed(); 
 
         embed

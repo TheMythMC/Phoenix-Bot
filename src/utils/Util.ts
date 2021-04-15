@@ -1,14 +1,14 @@
-import path from "path";
-import glob from "glob";
-import pathParse from "path-parse";
-import { randomBytes } from "crypto";
-import DiscordOAuthData from "../Schemas/DiscordOAuthData";
-import GuildData from "../Schemas/GuildData";
-import Bot from "../Bot";
-import { GuildMember } from "discord.js";
-import Command from "../Structure/Command";
-import tempconfig from "../../config.json";
-var config = tempconfig as Config;
+import path from 'path';
+import glob from 'glob';
+import pathParse from 'path-parse';
+import { randomBytes } from 'crypto';
+import DiscordOAuthData from '../Schemas/DiscordOAuthData';
+import GuildData from '../Schemas/GuildData';
+import Bot from '../Bot';
+import { GuildMember } from 'discord.js';
+import Command from '../Structure/Command';
+import tempconfig from '../../config.json';
+let config = tempconfig as Config;
 
 export default class Util {
   static isClass(input: Object) {
