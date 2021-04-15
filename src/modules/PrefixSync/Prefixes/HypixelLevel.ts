@@ -1,12 +1,12 @@
-import Player from "phoenix-slothpixel/Player";
-import Prefix from "../Prefix";
+import Player from 'phoenix-slothpixel/Player';
+import Prefix from '../Prefix';
 
 class HypixelLevel extends Prefix<String> {
     constructor() {
         super({
             DefaultName: 'Hypixel Level',
             id: 'HYPIXEL_LEVEL'
-        })
+        });
     }
 
     run(player: Player): String {
@@ -14,4 +14,4 @@ class HypixelLevel extends Prefix<String> {
     }
 }
 
-module.exports = HypixelLevel
+module.exports = HypixelLevel;

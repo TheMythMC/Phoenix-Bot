@@ -4,9 +4,10 @@
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
   "main": ".tsbuild/src/index.js",
   "scripts": {
-    "start": "tsc && node .",
-    "build": "tsc",
-    "prod": "sudo docker-compose up"
+    "start": "yarn build && node .",
+    "build": "yarn lint && tsc",
+    "prod": "sudo docker-compose up",
+    "lint": "eslint ./src --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -37,10 +38,14 @@
     "node-fetch": "^2.6.1",
     "path-parse": "^1.0.6",
     "phoenix-slothpixel": "^1.2.6",
-    "typescript": "*"
+    "typescript": "^4.2.4"
   },
   "devDependencies": {
     "@types/ms": "*",
-    "@types/path-parse": "*"
+    "@types/path-parse": "*",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }

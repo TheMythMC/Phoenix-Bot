@@ -14,7 +14,7 @@ module.exports = class extends Command {
 
     async run(message: Message, _args: string[], client: BotCore) {
         try {
-            message.channel.send("Bot is shuttting down...").then( () => {
+            message.channel.send('Bot is shuttting down...').then( () => {
                 client.destroy();
                 process.exit(0);
             });
@@ -22,4 +22,4 @@ module.exports = class extends Command {
             console.log(e.message);
         }
     }
-}
+};

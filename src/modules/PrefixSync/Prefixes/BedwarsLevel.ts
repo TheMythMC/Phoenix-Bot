@@ -1,5 +1,5 @@
-import Player from "phoenix-slothpixel/Player";
-import Prefix from "../Prefix";
+import Player from 'phoenix-slothpixel/Player';
+import Prefix from '../Prefix';
 
 class BedwarsLevel extends Prefix<String> {
   constructor() {

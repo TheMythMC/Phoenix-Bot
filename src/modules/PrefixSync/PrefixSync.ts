@@ -17,7 +17,7 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
     );
 
   const playerData = await getPlayerData(MinecraftUUID);
-  if (!playerData) throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
+  if (!playerData) throw new Error('The player you were linked to no longer exists. '); // this will rarely happen
 
   // get the preferred prefix of the user
   const userData = await UserData.findOne({ UserID: guildMember.id }).exec();
@@ -34,7 +34,7 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
 
   const prefix = PrefixesStore[prefixType];
 
-  if (!prefix && prefixType !== 'NONE') throw new Error(`Invalid prefix. `);
+  if (!prefix && prefixType !== 'NONE') throw new Error('Invalid prefix. ');
 
   const res = prefixType === 'NONE' ? undefined : await prefix.run(playerData); // if an error occurs, itll just float up and eventually be caught
 

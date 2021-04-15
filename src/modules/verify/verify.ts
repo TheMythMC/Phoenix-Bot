@@ -30,7 +30,7 @@ export default async function verify(member: GuildMember, ign: string, client: B
     throw new Error(
       await client.parsePrefix(
         member.id,
-        `You are already linked to a minecraft account. Please \`%punlink\` to change your linked account. `
+        'You are already linked to a minecraft account. Please `%punlink` to change your linked account. '
       )
     );
 

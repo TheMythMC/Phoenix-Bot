@@ -1,5 +1,5 @@
-import { Message, PermissionResolvable } from "discord.js";
-import BotCore from "./BotCore";
+import { Message, PermissionResolvable } from 'discord.js';
+import BotCore from './BotCore';
 
 // noinspection JSUnusedLocalSymbols
 export default class Command {
@@ -15,9 +15,9 @@ export default class Command {
     this.client = client;
     this.name = name;
     this.aliases = options.aliases || [];
-    this.description = options.description || "No description provided";
-    this.category = options.category || "Misc";
-    this.usage = options.usage || "No usage provided";
+    this.description = options.description || 'No description provided';
+    this.category = options.category || 'Misc';
+    this.usage = options.usage || 'No usage provided';
     this.requiredPerms = options.requiredPerms || [];
     this.requireBotOwner = options.requireBotOwner || false;
   }

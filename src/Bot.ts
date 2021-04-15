@@ -1,10 +1,10 @@
-import BotCore from "./Structure/BotCore";
-import GuildManager from "./Structure/GuildManager";
-import DatabaseHandler from "./handlers/DatabaseHandler";
-import LinkManager from "./Structure/LinkManager";
-import UUIDManager from "./Structure/UUIDManager";
-import Server from "./express/Server";
-import DiscordAPIUserCache from "./Structure/DiscordAPIUserCache";
+import BotCore from './Structure/BotCore';
+import GuildManager from './Structure/GuildManager';
+import DatabaseHandler from './handlers/DatabaseHandler';
+import LinkManager from './Structure/LinkManager';
+import UUIDManager from './Structure/UUIDManager';
+import Server from './express/Server';
+import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 
 export default class Bot {
   static instance: Bot;
@@ -19,7 +19,7 @@ export default class Bot {
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
-      defaultPrefix: "!",
+      defaultPrefix: '!',
     });
     this.DiscordAPIUserCache = new DiscordAPIUserCache();
     this.LinkManager = new LinkManager(/*this*/);
@@ -33,7 +33,7 @@ export default class Bot {
         useUnifiedTopology: true,
       },
       async () => {
-        console.log("Database is connected. ");
+        console.log('Database is connected. ');
       }
     );
     this.CoreBot.start();
@@ -43,7 +43,7 @@ export default class Bot {
     return (
       (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
       (await this.GuildManager.getGuild(guild))?.data?.Prefix ||
-      "!"
+      '!'
     );
   }
 

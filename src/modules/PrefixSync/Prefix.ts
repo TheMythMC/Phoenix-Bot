@@ -1,5 +1,5 @@
 import { User } from 'discord.js';
-import Player from 'phoenix-slothpixel/Player'
+import Player from 'phoenix-slothpixel/Player';
 
 export interface IPrefixOptions {
   DefaultName?: string;
@@ -11,7 +11,7 @@ export default abstract class Prefix<T> {
   defaultName: string;
   id: string;
   requiredKeywords: string[];
-  static DEFAULT_TEMPLATE = `%p: %s`;
+  static DEFAULT_TEMPLATE = '%p: %s';
   constructor(options: IPrefixOptions) {
     this.id = options.id;
     this.requiredKeywords = options.RequiredKeywords || [];

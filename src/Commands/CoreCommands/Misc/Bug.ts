@@ -13,6 +13,6 @@ module.exports = class extends Command {
     }
 
     async run(message: Message, _args: string[], _client: BotCore) {
-        sendCustomMessage(message.channel, "BLUE", "Report it here: https://github.com/PhoenixBotMC/core/issues", "Found a bug?", "")
+        sendCustomMessage(message.channel, 'BLUE', 'Report it here: https://github.com/PhoenixBotMC/core/issues', 'Found a bug?', '');
     }
-}
+};
