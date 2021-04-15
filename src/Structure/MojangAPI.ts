@@ -1,3 +1,5 @@
+/** 
+@depricated
 import ky from 'ky-universal';
 
 export async function UUIDToName(uuid: string) {
@@ -37,4 +39,4 @@ interface IMojangAPI {
         }
     },
     created_at: string
-}
+} */
