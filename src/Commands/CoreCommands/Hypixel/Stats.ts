@@ -4,6 +4,8 @@ import Command from "../../../Structure/Command";
 import aliases from "./gameAliases.json";
 import * as HypixelAPI from "../../../Structure/HypixelAPI";
 import { sendCustomMessage, sendErrorMessage } from "../../../utils/MessageUtils";
+import Player from "phoenix-slothpixel/Player";
+import Phoenix_Slothpixel from 'phoenix-slothpixel'
 
 module.exports = class extends Command {
   msg: string;
@@ -25,9 +27,15 @@ module.exports = class extends Command {
     if (!playerData) return sendErrorMessage(message.channel, "Please input a valid player name.");
 
     if (minigame != "all") {
-      await Object.keys(aliases.games).forEach(async (game) => {
+      let keys = Object.keys(aliases);
+      keys.forEach(async (game) => {
         if (game === minigame) {
-          await this.parseStats(minigame, playerData);
+          try
+            {
+              await this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
+            } catch (e) {
+              return sendErrorMessage(message.channel, e.message)
+            }
           return sendCustomMessage(
             message.channel,
             "BLUE",
@@ -38,7 +46,12 @@ module.exports = class extends Command {
         }
         aliases.games[game].forEach(async (alias) => {
           if (alias === minigame) {
-            await this.parseStats(minigame, HypixelAPI.getPlayerData(playername));
+            try
+            {
+              await this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
+            } catch (e) {
+              return sendErrorMessage(message.channel, e.message)
+            }
             return sendCustomMessage(
               message.channel,
               "BLUE",
@@ -50,13 +63,18 @@ module.exports = class extends Command {
         });
       });
     } else {
-      this.parseStats(minigame, HypixelAPI.getPlayerData(playername));
+      this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
     }
   }
 
-  async parseStats(game: string, data: any) {
+  async parseStats(game: string, data: Player) {
     switch (game) {
       case "all": {
+        this.msg = `
+        **LEVEL**: ${data.level}\n
+        **TOTAL KILLS**: ${data.total_kills}\n
+        **TOTAL WINS**: ${data.total_wins}\n
+        `
       }
     }
   }
