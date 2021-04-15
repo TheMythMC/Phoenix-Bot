@@ -13,7 +13,7 @@ var config = tempconfig as Config;
 export default class Util {
   static isClass(input: Object) {
     return (
-      typeof input === "function" && typeof input.prototype === "object" && input.toString().substring(0, 5) === "class"
+      typeof input === 'function' && typeof input.prototype === 'object' && input.toString().substring(0, 5) === 'class'
     );
   }
   static get directory() {
@@ -40,24 +40,24 @@ export default class Util {
     });
   }
   static formatNumber(number: number) {
-    return number.toLocaleString("en-US", { maximumFractionDigits: 2 });
+    return number.toLocaleString('en-US', { maximumFractionDigits: 2 });
   }
   static removeDuplicates(arr: any[]) {
     return [...new Set(arr)];
   }
   static capitalize(string: string) {
-    let capitalized = string.split(" ");
-    let tempArray = new Array();
+    let capitalized = string.split(' ');
+    let tempArray = [];
     for (let word in capitalized) {
-      let temparray = word.split("");
+      let temparray = word.split('');
       tempArray[0].toUpperCase();
-      tempArray.push(temparray.join(""));
+      tempArray.push(temparray.join(''));
     }
-    return tempArray.join(" ");
+    return tempArray.join(' ');
   }
 
   static genRandomKey(bytes = 16) {
-    return randomBytes(bytes).toString("hex");
+    return randomBytes(bytes).toString('hex');
   }
   static async wait(milliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -81,7 +81,7 @@ export default class Util {
       // get guild data
       const gData = await GuildData.findOne({ ServerID: guildID }).exec();
 
-      const perms = gData?.DashboardPerms || ["ADMINISTRATOR"];
+      const perms = gData?.DashboardPerms || ['ADMINISTRATOR'];
 
       const roles = gData?.DashboardRoles || [];
 

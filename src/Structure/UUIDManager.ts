@@ -1,5 +1,5 @@
-import * as MojangAPI from "./MojangAPI";
-const conf = require("../../config.json");
+import * as MojangAPI from './MojangAPI';
+const conf = require('../../config.json');
 
 export default class UUIDManager {
   cache: any[];

@@ -1,20 +1,20 @@
-import Command from "../../../Structure/Command";
+import Command from '../../../Structure/Command';
 
 import {
   sendCustomMessage,
   createErrorMessage,
   createSuccessMessage,
-} from "../../../utils/MessageUtils";
-import { Message } from "discord.js";
-import BotCore from "../../../Structure/BotCore";
+} from '../../../utils/MessageUtils';
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
 
 class ReloadServerCache extends Command {
   constructor(client) {
-    super(client, "reloadservercache", {
+    super(client, 'reloadservercache', {
       aliases: [],
-      description: "Reloads the server cache for a server",
-      category: "Misc",
-      usage: `%preloadservercache [server id]`,
+      description: 'Reloads the server cache for a server',
+      category: 'Misc',
+      usage: '%preloadservercache [server id]',
       requiredPerms: [],
       requireBotOwner: true,
     });
@@ -25,16 +25,16 @@ class ReloadServerCache extends Command {
 
     let msg = await sendCustomMessage(
       message.channel,
-      "BLUE",
-      "reloading guild data...",
-      "Reload",
+      'BLUE',
+      'reloading guild data...',
+      'Reload',
       undefined
     );
 
     const guildData = await client.Bot.GuildManager.getGuild(id);
 
     if (!guildData)
-      return msg.edit(createErrorMessage("No guild found with id. "));
+      return msg.edit(createErrorMessage('No guild found with id. '));
 
     client.Bot.GuildManager.updateGuild(id)
       .then(async () => {

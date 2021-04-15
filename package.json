@@ -4,14 +4,10 @@
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
   "main": ".tsbuild/src/index.js",
   "scripts": {
-    "start": "tsc && node .",
-    "prod": "sudo docker-compose up --build extra lavalink",
-    "build": "tsc"
-  },
-  "scriptsComments": {
-    "start": "For testing, no music",
-    "prod": "For use ONLY on the Ubuntu server (or when testing music). This runs a docker instance that is only(kinda) avaliable on Linux. USE WITH CAUTION.",
-    "build": "Compiles, doesnt run"
+    "start": "yarn build && node .",
+    "build": "yarn lint && tsc",
+    "prod": "sudo docker-compose up",
+    "lint": "eslint ./src --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -50,6 +46,10 @@
   },
   "devDependencies": {
     "@types/ms": "*",
-    "@types/path-parse": "*"
+    "@types/path-parse": "*",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }

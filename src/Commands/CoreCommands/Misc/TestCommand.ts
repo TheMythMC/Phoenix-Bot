@@ -12,7 +12,7 @@ class TestCommand extends Command {
       aliases: [],
       description: 'Test Command to see if bot is working',
       category: 'Misc',
-      usage: `%pTestCommand`,
+      usage: '%pTestCommand',
       requiredPerms: [],
     });
   }

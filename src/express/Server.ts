@@ -10,7 +10,7 @@ export default class Server {
   Bot: Bot;
   constructor(bot: Bot, port: number) {
     this.app = express();
-    require("express-ws")(this.app);
+    expressWs(this.app);
     this.port = port;
     this.Bot = bot;
     this.addMiddleware();
@@ -23,7 +23,7 @@ export default class Server {
     this.app.use(express.urlencoded());
     this.app.use(
       cors({
-        origin: "http://localhost:3000", // CORS policy
+        origin: 'http://localhost:3000', // CORS policy
         credentials: true,
       })
     );
@@ -32,7 +32,7 @@ export default class Server {
   }
 
   addRouters() {
-    this.app.use("/live", require("./routers/live"));
-    this.app.use("/api", require("./routers/api"));
+    this.app.use('/live', require('./routers/live'));
+    this.app.use('/api', require('./routers/api'));
   }
 }

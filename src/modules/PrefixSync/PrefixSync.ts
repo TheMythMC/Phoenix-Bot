@@ -41,7 +41,7 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
 
   const prefix = PrefixesStore[prefixType];
 
-  if (!prefix && prefixType !== 'NONE') throw new Error(`Invalid prefix. `);
+  if (!prefix && prefixType !== 'NONE') throw new Error('Invalid prefix. ');
 
   const res = prefixType === 'NONE' ? undefined : await prefix.run(playerData); // if an error occurs, itll just float up and eventually be caught
 

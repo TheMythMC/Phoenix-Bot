@@ -1,4 +1,4 @@
-import * as HypixelAPI from "../../Structure/HypixelAPI"; 
+import * as HypixelAPI from '../../Structure/HypixelAPI'; 
 import * as MojangAPI from '../../Structure/MojangAPI';
 
 export default async (client, g, guildCheckDays: number | string = 7) => {
@@ -27,7 +27,7 @@ export default async (client, g, guildCheckDays: number | string = 7) => {
         if (!roleReq) roleReq = {
             RoleName: member.rank, 
             MinExp: 0
-        }
+        };
 
         res.push({
             Rank: roleReq.RoleName, 
@@ -42,4 +42,4 @@ export default async (client, g, guildCheckDays: number | string = 7) => {
     res.sort((a, b) => b.Gexp-a.Gexp); 
 
     return res; 
-}
+};

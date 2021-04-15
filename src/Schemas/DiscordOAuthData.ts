@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import ttl from "mongoose-ttl";
+import mongoose from 'mongoose';
+import ttl from 'mongoose-ttl';
 
 export interface IOAuth extends mongoose.Document {
   SessionID: string;
@@ -9,9 +9,9 @@ export interface IOAuth extends mongoose.Document {
 }
 
 const Default = {
-  SessionID: "",
-  AccessToken: "",
-  RefreshToken: "",
+  SessionID: '',
+  AccessToken: '',
+  RefreshToken: '',
   ExpireTime: 0,
 };
 
@@ -24,7 +24,7 @@ export const schema = new mongoose.Schema({
 
 schema.plugin(ttl, { ttl: 1000 * 60 * 60 * 24 * 30 });
 
-const model = mongoose.model<IOAuth>("DiscordOAuthData", schema);
+const model = mongoose.model<IOAuth>('DiscordOAuthData', schema);
 
 export function createDefault(SessionID: string, AccessToken: string, RefreshToken: string, expiresIn: number) {
   let obj = {} as IOAuth;
