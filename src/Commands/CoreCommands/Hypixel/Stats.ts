@@ -5,7 +5,6 @@ import aliases from './gameAliases.json';
 import * as HypixelAPI from '../../../Structure/HypixelAPI';
 import { sendCustomMessage, sendErrorMessage } from '../../../utils/MessageUtils';
 import Player from 'phoenix-slothpixel/Player';
-import Phoenix_Slothpixel from 'phoenix-slothpixel';
 
 module.exports = class extends Command {
   msg: string;
@@ -18,7 +17,7 @@ module.exports = class extends Command {
     this.msg;
   }
 
-  async run(message: Message, args: string[], client: BotCore) {
+  async run(message: Message, args: string[], _: BotCore) {
     let [playername, ...splitted] = args;
 
     let minigame = splitted.length > 0 ? splitted.join(' ') : 'all';

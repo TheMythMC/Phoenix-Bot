@@ -12,15 +12,15 @@ router.ws('/', async (ws, req) => {
         status: PremiumUtils.getMinecraftBotFromGuild(req.query.guildID)?.status || false,
       })
     );
-    Bot.instance.EventEmmiter.addListener('botStatusChanged', changeStatus);
-    Bot.instance.EventEmmiter.addListener('botJoinFailed', error);
+    Bot.instance.EventEmitter.addListener('botStatusChanged', changeStatus);
+    Bot.instance.EventEmitter.addListener('botJoinFailed', error);
   } else {
     ws.close();
   }
 
   ws.on('close', () => {
-    Bot.instance.EventEmmiter.removeListener('botStatusChanged', changeStatus);
-    Bot.instance.EventEmmiter.removeListener('botJoinFailed', error);
+    Bot.instance.EventEmitter.removeListener('botStatusChanged', changeStatus);
+    Bot.instance.EventEmitter.removeListener('botJoinFailed', error);
   });
 
   function changeStatus(guildID, status) {

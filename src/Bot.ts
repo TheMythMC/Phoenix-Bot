@@ -6,7 +6,7 @@ import UUIDManager from './Structure/UUIDManager';
 import Server from './express/Server';
 import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 import MineflayerManager from './Structure/MineflayerManager';
-import EventEmmiter from 'events';
+import EventEmitter from 'events';
 import PremiumLinkData from './Schemas/PremiumLinkData';
 
 export default class Bot {
@@ -19,14 +19,14 @@ export default class Bot {
   WebServer: Server;
   DatabaseHandler: DatabaseHandler;
   MineflayerManager: MineflayerManager;
-  EventEmmiter: EventEmmiter;
+  EventEmitter: EventEmitter;
   constructor() {
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
       defaultPrefix: '!',
     });
-    this.EventEmmiter = new EventEmmiter();
+    this.EventEmitter = new EventEmitter();
     this.DiscordAPIUserCache = new DiscordAPIUserCache();
     this.LinkManager = new LinkManager(/*this*/);
     this.GuildManager = new GuildManager(this);

@@ -29,7 +29,7 @@ module.exports = {
         "@typescript-eslint/no-this-alias": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/ban-ts-comment": "off",
-        "no-useless-escape": 1,
+        "no-useless-escape": 0,
         "@typescript-eslint/ban-types": "off",
         "no-case-declarations": "off",
         "prefer-const": "off",
@@ -37,6 +37,8 @@ module.exports = {
             {
               "allowTemplateLiterals": true
             },
-        ]
+        ],
+        "@typescript-eslint/no-unused-vars": 0,
+        
     }
 };
