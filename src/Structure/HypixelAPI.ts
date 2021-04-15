@@ -4,7 +4,7 @@ import Player from 'phoenix-slothpixel/Player';
 
 const slothpixelURL = process.env.SLOTHPIXEL_URL;
 
-export async function getPlayerData(playerName: string): Promise<Player>{
+export async function getPlayerData(playerName: string): Promise<Player> {
   return await Hypixel.playerStats(playerName, `${slothpixelURL}players/`);
 }
 

@@ -11,6 +11,7 @@ const PrefixesStore: {
 
 filteredFiles.forEach((file) => {
   let f = require(`./Prefixes/${file}`);
+
   if (!(f.prototype instanceof Prefix)) return;
 
   let prefixMeth;

@@ -1,4 +1,3 @@
-import { User } from 'discord.js';
 import Player from 'phoenix-slothpixel/Player';
 
 export interface IPrefixOptions {

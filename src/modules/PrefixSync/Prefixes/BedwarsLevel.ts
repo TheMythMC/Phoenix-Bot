@@ -1,10 +1,10 @@
-import Player from 'phoenix-slothpixel/Player';
 import Prefix from '../Prefix';
+import Player from 'phoenix-slothpixel/Player';
 
 class BedwarsLevel extends Prefix<String> {
   constructor() {
     super({
-      DefaultName: 'Bedwars Level',
+      DefaultName: 'Bw Stars',
       id: 'BEDWARS_LEVEL',
     });
   }

@@ -4,7 +4,7 @@ import PrefixSync from '../../../modules/PrefixSync/PrefixSync';
 import UserData, { createDefault, PrefixTypes } from '../../../Schemas/UserData';
 import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
-import { sendErrorMessage } from '../../../utils/MessageUtils';
+import { sendErrorMessage, sendSuccessMessage } from '../../../utils/MessageUtils';
 
 class SetPrefix extends Command {
   constructor(client) {
@@ -25,12 +25,9 @@ class SetPrefix extends Command {
       if (!PrefixTypes.includes(_args[0])) throw new Error('Invalid prefix type. ');
       user.PrefixType = _args[0];
       user.save();
-      message.channel.send(p);
+      await message.member.setNickname(p);
+      sendSuccessMessage(message.channel, `Set your prefix to: \`${_args[0]}\`. `);
     } catch (err) {
-      console.log('ERR');
-
-      console.log(err);
-
       return sendErrorMessage(message.channel, `An error occurred when attempting to save prefix: ${err.message}`);
     }
   }

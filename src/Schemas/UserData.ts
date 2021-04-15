@@ -7,7 +7,7 @@ export const PrefixTypes = [
   'BEDWARS_COINS',
   'SKYWARS_COINS',
   'SKYBLOCK_COINS',
-  'HYPIXEL_LEVEL'
+  'HYPIXEL_LEVEL',
 ];
 
 export interface IUserData extends mongoose.Document {
