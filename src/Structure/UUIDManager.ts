@@ -1,5 +1,5 @@
-import * as MojangAPI from './MojangAPI';
-const conf = require('../../config.json');
+import * as MojangAPI from './HypixelAPI';
+import conf from '../../config.json';
 
 export default class UUIDManager {
   cache: any[];
@@ -16,10 +16,10 @@ export default class UUIDManager {
   async getUUIDByUser(username: string) {
     if (conf.UUIDUsernameAPICache) {
       let cacheHit = this.cache.find((data) => data.name?.toLowerCase() === username?.toLowerCase());
-      if (cacheHit) return cacheHit.id;
+      if (cacheHit) return cacheHit.name;
     }
 
-    let data = await MojangAPI.getByName(username);
+    let data = await MojangAPI.getPlayerData(username);
     if (data) {
       this.saveCache(data);
       return data.uuid;
@@ -32,7 +32,7 @@ export default class UUIDManager {
       if (cacheHit) return cacheHit.name;
     }
 
-    let data = await MojangAPI.getByUUID(uuid);
+    let data = await MojangAPI.getPlayerData(uuid);
     if (data) {
       this.saveCache(data);
       return data.username;
