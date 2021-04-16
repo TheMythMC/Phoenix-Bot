@@ -9,7 +9,8 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "resolveJsonModule": true,
-    "removeComments": true
+    "removeComments": true,
+    "skipLibCheck": true
   },
   "include": ["./src/**/*"]
 }

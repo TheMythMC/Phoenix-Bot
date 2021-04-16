@@ -1,3 +1,5 @@
+import ky from 'ky-universal';
+
 export default class DiscordAPIUserCache {
   cache: Object;
   constructor() {
@@ -6,7 +8,7 @@ export default class DiscordAPIUserCache {
 
   async getDiscordData(accessToken: string) {
     if (this.cache[accessToken]) return this.cache[accessToken]; // cache has the data
-    const req = await fetch('http://discordapp.com/api/users/@me', {
+    const req = await ky.get('http://discordapp.com/api/users/@me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
