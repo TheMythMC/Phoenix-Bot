@@ -1,6 +1,6 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 
-router.use("/startBot", require("./bot/startBot"));
+router.use('/startBot', require('./bot/startBot'));
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import MinecraftLinkData from "../Schemas/MinecraftLinkData";
+import MinecraftLinkData from '../Schemas/MinecraftLinkData';
 
 export default class LinkManager {
   cache: any[];

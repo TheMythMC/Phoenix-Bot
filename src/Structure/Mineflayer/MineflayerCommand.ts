@@ -1,7 +1,7 @@
-import BotCore from "../BotCore";
-import { Bot } from "mineflayer";
-import MineflayerManager from "../MineflayerManager";
-import MineflayerBot from "../MineflayerBot";
+import BotCore from '../BotCore';
+import { Bot } from 'mineflayer';
+import MineflayerManager from '../MineflayerManager';
+import MineflayerBot from '../MineflayerBot';
 
 export default class MineflayerCommand {
   name: string;
@@ -14,12 +14,12 @@ export default class MineflayerCommand {
     this.discordBot = discordBot;
     this.name = name;
     this.aliases = options.aliases || [];
-    this.description = options.description || "No description provided";
-    this.usage = options.usage || "No usage provided";
+    this.description = options.description || 'No description provided';
+    this.usage = options.usage || 'No usage provided';
   }
 
   async run(args: string[], mcBot: MineflayerBot, discBot: BotCore, playerName: string) {
-    throw new Error("Must specify run method");
+    throw new Error('Must specify run method');
   }
 }
 

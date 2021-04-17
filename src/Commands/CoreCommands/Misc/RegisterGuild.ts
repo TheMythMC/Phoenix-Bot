@@ -1,14 +1,14 @@
-import { Message } from "discord.js";
-import BotCore from "../../../Structure/BotCore";
-import Command from "../../../Structure/Command";
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
+import Command from '../../../Structure/Command';
 
 export default class RegisterGuild extends Command {
   constructor(client) {
-    super(client, "registerguild", {
+    super(client, 'registerguild', {
       aliases: [],
-      description: "Registers guild in db",
-      category: "Misc",
-      usage: `%pregisterguild`,
+      description: 'Registers guild in db',
+      category: 'Misc',
+      usage: '%pregisterguild',
       requiredPerms: [],
       requireBotOwner: true,
     });

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import discord from "discord.js";
+import mongoose from 'mongoose';
+import discord from 'discord.js';
 
 export interface IRole {
   DiscordRoleID: String;
@@ -52,24 +52,24 @@ export const schema = new mongoose.Schema({
   ServerPrefixType: String,
 });
 
-const model = mongoose.model<IGuildData>("GuildData", schema);
+const model = mongoose.model<IGuildData>('GuildData', schema);
 const Default = {
-  ServerID: "",
+  ServerID: '',
   RoleLinks: [],
   GEXPData: [],
   GEXPWhitelist: [],
   PardonNewGEXPMembers: false,
-  GuildID: "",
-  GuildBotUUID: "",
-  GuildBotAPIKey: "",
-  Prefix: "!",
+  GuildID: '',
+  GuildBotUUID: '',
+  GuildBotAPIKey: '',
+  Prefix: '!',
   DashboardRoles: [],
   DashboardPerms: [],
   EnforceCustomPrefix: false,
-  ServerPrefixType: "",
+  ServerPrefixType: '',
 };
 
-export const createDefault = (ServerID: string, prefix = "!") => {
+export const createDefault = (ServerID: string, prefix = '!') => {
   let obj = {} as IGuildData;
 
   Object.assign(obj, Default);

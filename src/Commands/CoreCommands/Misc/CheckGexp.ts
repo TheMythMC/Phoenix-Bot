@@ -1,9 +1,9 @@
-import Command from "../../../Structure/Command";
-import MinecraftLinkData from "../../../Schemas/MinecraftLinkData";
-import { sendCustomMessage, createErrorMessage, createCustomEmbed } from "../../../utils/MessageUtils";
-import { Message } from "discord.js";
-import BotCore from "../../../Structure/BotCore";
-import checkGexp from '../../../modules/GEXPChecker/CheckGEXP'
+import Command from '../../../Structure/Command';
+import MinecraftLinkData from '../../../Schemas/MinecraftLinkData';
+import { sendCustomMessage, createErrorMessage, createCustomEmbed } from '../../../utils/MessageUtils';
+import { Message } from 'discord.js';
+import BotCore from '../../../Structure/BotCore';
+import checkGexp from '../../../modules/GEXPChecker/CheckGEXP';
 
 class CheckGexp extends Command {
   constructor(client) {
@@ -11,7 +11,7 @@ class CheckGexp extends Command {
       aliases: ['cxp'],
       description: 'Checks the Gexp of the guild',
       category: 'Misc',
-      usage: `%pcheckgexp [all|passed|failed] [days]`,
+      usage: '%pcheckgexp [all|passed|failed] [days]',
       requiredPerms: ['ADMINISTRATOR'],
     });
   }
@@ -61,7 +61,7 @@ class CheckGexp extends Command {
           : {
               name: 'Key Value',
               value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${
-                guild.data.PardonNewGEXPMembers ? `\n<:early:821022017607958546> = In guild for less than 7 days` : ''
+                guild.data.PardonNewGEXPMembers ? '\n<:early:821022017607958546> = In guild for less than 7 days' : ''
               }`,
             }
       )

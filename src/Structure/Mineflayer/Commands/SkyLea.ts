@@ -1,7 +1,7 @@
 import MineflayerCommand from '../MineflayerCommand';
 import BotCore from '../../BotCore';
 import MineflayerBot from '../../MineflayerBot';
-import * as MojangAPI from '../../MojangAPI'
+import * as MojangAPI from '../../MojangAPI';
 
 module.exports = class extends MineflayerCommand {
     constructor(discordBot: BotCore, minecraftBot: MineflayerBot) {
@@ -15,7 +15,7 @@ module.exports = class extends MineflayerCommand {
         if(MojangAPI.getByName(args[0])) {
             mcBot.bot.chat(`${playerName}, ${url}`);
         } else {
-            mcBot.bot.chat(`This player does not exist.`)
+            mcBot.bot.chat(`This player does not exist.`);
         }
     }
-}
+};

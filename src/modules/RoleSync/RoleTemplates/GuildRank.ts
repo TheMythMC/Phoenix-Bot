@@ -1,4 +1,4 @@
-import * as HypixelAPI from "../../../Structure/HypixelAPI";
+import * as HypixelAPI from '../../../Structure/HypixelAPI';
 
 const GuildRank = async (uuid, guildID, cache, params) => {
   const role = params[0];

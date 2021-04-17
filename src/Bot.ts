@@ -1,13 +1,13 @@
-import BotCore from "./Structure/BotCore";
-import GuildManager from "./Structure/GuildManager";
-import DatabaseHandler from "./handlers/DatabaseHandler";
-import LinkManager from "./Structure/LinkManager";
-import UUIDManager from "./Structure/UUIDManager";
-import Server from "./express/Server";
-import DiscordAPIUserCache from "./Structure/DiscordAPIUserCache";
-import EventEmmiter from "events";
-import MineflayerManager from "./Structure/MineflayerManager";
-import PremiumLinkData from "./Schemas/PremiumLinkData";
+import BotCore from './Structure/BotCore';
+import GuildManager from './Structure/GuildManager';
+import DatabaseHandler from './handlers/DatabaseHandler';
+import LinkManager from './Structure/LinkManager';
+import UUIDManager from './Structure/UUIDManager';
+import Server from './express/Server';
+import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
+import MineflayerManager from './Structure/MineflayerManager';
+import EventEmitter from 'events';
+import PremiumLinkData from './Schemas/PremiumLinkData';
 
 export default class Bot {
   static instance: Bot;
@@ -19,14 +19,14 @@ export default class Bot {
   WebServer: Server;
   DatabaseHandler: DatabaseHandler;
   MineflayerManager: MineflayerManager;
-  EventEmmiter: EventEmmiter;
+  EventEmitter: EventEmitter;
   constructor() {
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
-      defaultPrefix: "!",
+      defaultPrefix: '!',
     });
-    this.EventEmmiter = new EventEmmiter();
+    this.EventEmitter = new EventEmitter();
     this.DiscordAPIUserCache = new DiscordAPIUserCache();
     this.LinkManager = new LinkManager(/*this*/);
     this.GuildManager = new GuildManager(this);
@@ -39,8 +39,8 @@ export default class Bot {
         useUnifiedTopology: true,
       },
       async () => {
-        console.log("Database is connected. ");
-        console.log("Loading mineflayer bots...");
+        console.log('Database is connected. ');
+        console.log('Loading mineflayer bots...');
         this.loadMineflayerBots();
       }
     );
@@ -56,7 +56,7 @@ export default class Bot {
     return (
       (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
       (await this.GuildManager.getGuild(guild))?.data?.Prefix ||
-      "!"
+      '!'
     );
   }
 
