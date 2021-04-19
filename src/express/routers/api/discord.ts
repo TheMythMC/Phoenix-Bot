@@ -3,6 +3,7 @@ import Bot from '../../../Bot';
 const router = express.Router();
 import DiscordOAuthData from '../../../Schemas/DiscordOAuthData';
 import Util from '../../../utils/Util';
+import fetch from 'node-fetch';
 
 router.use(async (req, res, next) => {
   // this will be where api keys will be tested if they're expired, and if so, refresh

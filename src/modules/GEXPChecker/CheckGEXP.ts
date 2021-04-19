@@ -1,5 +1,4 @@
-import * as HypixelAPI from '../../Structure/HypixelAPI'; 
-import * as MojangAPI from '../../Structure/MojangAPI';
+import * as HypixelAPI from '../../Structure/HypixelAPI';
 
 export default async (client, g, guildCheckDays: number | string = 7) => {
     if (!g || !g.data?.GuildID) return {}; 

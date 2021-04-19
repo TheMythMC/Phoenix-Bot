@@ -1,19 +1,22 @@
 import readline from 'readline';
-require('dotenv').config();
-
+import dotenv from 'dotenv';
 import Bot from './Bot';
+
+//Load ENV file
+dotenv.config();
+
 
 //Initialize Needed Bots
 let bot = new Bot();
 
-let rl = readline.createInterface({
+
+// stop method
+readline.createInterface({
     input: process.stdin,
 	output: process.stdout
-});
-
-rl.question('', (data) => {
-	if (data.toLowerCase() === 'stop'){ 
-        console.log('Shutting down');
+}).question('', (data) => {
+	if (data.toLowerCase().startsWith('stop')){ 
+        console.log('Shutting down...');
         bot.CoreBot.destroy();
         process.exit(0);
     }
@@ -21,4 +24,3 @@ rl.question('', (data) => {
 
 // keep process alive for docker
 process.stdin.resume();
-

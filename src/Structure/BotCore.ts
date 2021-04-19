@@ -8,6 +8,7 @@ import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
 import { Manager } from 'erela.js';
+import Spotify from 'erela.js-spotify';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
@@ -79,6 +80,12 @@ export default class BotCore extends Client {
     // Music stuff
 
     this.manager = new Manager({
+      plugins: [
+        new Spotify({
+          clientID: process.env.SPOTIFY_ID,
+          clientSecret: process.env.SPOTIFY_SECRET
+        })
+      ],
       nodes: [
         {
           host: 'lavalink',
