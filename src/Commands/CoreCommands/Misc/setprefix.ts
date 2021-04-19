@@ -12,7 +12,7 @@ class SetPrefix extends Command {
       aliases: [],
       description: 'Sets prefix',
       category: 'Misc',
-      usage: `%psetprefix {prefix}`,
+      usage: '%psetprefix {prefix}',
       requiredPerms: [],
     });
   }

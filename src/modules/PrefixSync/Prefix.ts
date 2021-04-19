@@ -10,7 +10,7 @@ export default abstract class Prefix<T> {
   defaultName: string;
   id: string;
   requiredKeywords: string[];
-  static DEFAULT_TEMPLATE = `%p: %s`;
+  static DEFAULT_TEMPLATE = '%p: %s';
   constructor(options: IPrefixOptions) {
     this.id = options.id;
     this.requiredKeywords = options.RequiredKeywords || [];

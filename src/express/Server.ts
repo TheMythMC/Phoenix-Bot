@@ -1,7 +1,7 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import Bot from "../Bot";
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import Bot from '../Bot';
 
 export default class Server {
   app: express.Application;
@@ -9,7 +9,7 @@ export default class Server {
   Bot: Bot;
   constructor(bot: Bot, port: number) {
     this.app = express();
-    require("express-ws")(this.app);
+    require('express-ws')(this.app);
     this.port = port;
     this.Bot = bot;
     this.addMiddleware();
@@ -22,7 +22,7 @@ export default class Server {
     this.app.use(express.urlencoded());
     this.app.use(
       cors({
-        origin: "http://localhost:3000", // CORS policy
+        origin: 'http://localhost:3000', // CORS policy
         credentials: true,
       })
     );
@@ -31,7 +31,7 @@ export default class Server {
   }
 
   addRouters() {
-    this.app.use("/live", require("./routers/live"));
-    this.app.use("/api", require("./routers/api"));
+    this.app.use('/live', require('./routers/live'));
+    this.app.use('/api', require('./routers/api'));
   }
 }

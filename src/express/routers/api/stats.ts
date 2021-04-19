@@ -1,8 +1,8 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
-const Bot = require("../../../Bot");
+const Bot = require('../../../Bot');
 
-router.use("/", (req, res) => {
+router.use('/', (req, res) => {
   let bot = Bot.instance.CoreBot;
   let guilds = bot.guilds.cache.size;
   let users = bot.users.cache.size;

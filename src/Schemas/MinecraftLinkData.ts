@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface IMinecraftLink extends mongoose.Document {
   DiscordID: string;
@@ -10,10 +10,10 @@ export const schema = new mongoose.Schema({
   MinecraftUUID: String,
 });
 
-const model = mongoose.model<IMinecraftLink>("MinecraftLinkData", schema);
+const model = mongoose.model<IMinecraftLink>('MinecraftLinkData', schema);
 const Default = {
-  DiscordID: "",
-  MinecraftUUID: "",
+  DiscordID: '',
+  MinecraftUUID: '',
 };
 export const createDefault = (DiscordID: string, MinecraftUUID: string) => {
   let obj = {} as IMinecraftLink;

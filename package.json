@@ -2,11 +2,13 @@
   "name": "phoenixbot-core",
   "version": "0.1.0",
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
+  "module": "commonjs",
   "main": ".tsbuild/src/index.js",
   "scripts": {
-    "start": "tsc && node .",
-    "build": "tsc",
-    "prod": "sudo docker-compose up"
+    "start": "yarn build && node .",
+    "build": "yarn lint && tsc",
+    "prod": "sudo docker-compose up",
+    "lint": "eslint ./src --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,8 @@
     "glob-promise": "^4.0.1",
     "jslint": "^0.12.1",
     "jsonwebtoken": "^8.5.1",
+    "ky": "^0.27.0",
+    "ky-universal": "^0.9.1",
     "mongoose": "^5.11.17",
     "mongoose-ttl": "0.0.3",
     "node-fetch": "^2.6.1",
@@ -41,6 +45,10 @@
   },
   "devDependencies": {
     "@types/ms": "*",
-    "@types/path-parse": "*"
+    "@types/path-parse": "*",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }

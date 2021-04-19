@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from "discord.js";
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 
     export function sendErrorMessage(channel, error) {
         return channel.send(createErrorMessage(error)); 
@@ -9,11 +9,11 @@ import { Message, MessageEmbed, TextChannel } from "discord.js";
     }
 
     export function createSuccessMessage(message) {
-        return createCustomEmbed("GREEN", message, "Success!", undefined)
+        return createCustomEmbed('GREEN', message, 'Success!', undefined);
     }
 
     export function createErrorMessage(error) {
-        return createCustomEmbed("RED", error, "Error", undefined);
+        return createCustomEmbed('RED', error, 'Error', undefined);
     }
 
     export function sendCustomMessage(channel, color: string, message: string, title: string, footer: string, ...sections: any) {
@@ -27,7 +27,7 @@ import { Message, MessageEmbed, TextChannel } from "discord.js";
             .setColor(color)
             .setDescription(message)
             .setTitle(title)
-            .setFooter(`Phoenix Bot coded by Project Phoenix ${footer || ""}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
+            .setFooter(`Phoenix Bot coded by Project Phoenix ${footer || ''}`, 'https://i.ibb.co/m9RR0QG/Phoenix.png')
             .setTimestamp();
         if(sections !== undefined && sections.length != 0) {
             for (let i = 0; i < sections.length; i++) {

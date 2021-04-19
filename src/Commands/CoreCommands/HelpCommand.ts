@@ -10,7 +10,7 @@ module.exports = class extends Command {
       aliases: ['h'],
       description: 'Displays this message',
       category: 'Core',
-      usage: `%phelp [command]`,
+      usage: '%phelp [command]',
       requiredPerms: [],
     });
   }
