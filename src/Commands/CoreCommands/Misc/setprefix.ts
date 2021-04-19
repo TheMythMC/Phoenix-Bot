@@ -33,7 +33,7 @@ class SetPrefix extends Command {
       sendSuccessMessage(message.channel, `Set your prefix to: \`${_args[0]}\`. `);
       // spawn an async process that handles updating prefix in all the other servers
       _client.guilds.cache.forEach(async (guild) => {
-        const m = guild.member(user.id);
+        const m = guild.member(message.member.id);
 
         if (m) {
           try {
