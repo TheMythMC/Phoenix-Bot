@@ -2,6 +2,7 @@
   "name": "phoenixbot-core",
   "version": "0.1.0",
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
+  "module": "commonjs",
   "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "yarn build && node .",
