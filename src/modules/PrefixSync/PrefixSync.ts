@@ -1,6 +1,6 @@
 import { GuildMember, User } from 'discord.js';
 import Bot from '../../Bot';
-import UserData from '../../Schemas/UserData';
+import UserData, { IUserData } from '../../Schemas/UserData';
 import { getPlayerData } from '../../Structure/HypixelAPI';
 import Prefix from './Prefix';
 import PrefixesStore from './PrefixesStore';
@@ -8,7 +8,12 @@ import PremiumUtils from '../../utils/PremiumUtils';
 import PremiumLinkData from '../../Schemas/PremiumLinkData';
 import PremiumUserData from '../../Schemas/PremiumUserData';
 
-export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, testPrefixType?: string) {
+export default async function SyncPrefix(
+  guildMember: GuildMember,
+  Client: Bot,
+  userData: IUserData,
+  testPrefixType?: string
+) {
   // testPrefixType is for checking if a certain prefix will work with a user
   // NOTE: Please run this with try catch statements
   const { MinecraftUUID } = await Client.LinkManager.getDataByDiscord(guildMember.id);
@@ -25,15 +30,6 @@ export default async function SyncPrefix(guildMember: GuildMember, Client: Bot, 
   const playerData = await getPlayerData(MinecraftUUID);
 
   if (!playerData) throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
-
-  // get the preferred prefix of the user
-  const userData = await UserData.findOne({ UserID: guildMember.id }).exec();
-  if (!userData)
-    throw new Error(
-      `No user data found. Please try to relink by doing \`${await Client.getPrefix(
-        guildMember.guild
-      )}unlink\` and \`${await Client.getPrefix(guildMember.guild)}link\`. `
-    );
 
   const prefixType = testPrefixType || userData.PrefixType;
 
