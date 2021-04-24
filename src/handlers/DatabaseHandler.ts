@@ -1,23 +1,23 @@
 import mongoose from 'mongoose';
 
 export default class DatabaseHandler {
-    connected: boolean;
-    connection: any;
-    constructor(databaseURI: string, parameters = {}, callback = () => {}) {
-        this._initConnection(databaseURI, parameters, callback);
-        this.connected = false;
-    }
+  connected: boolean;
+  connection: any;
+  constructor(databaseURI: string, parameters = {}, callback = () => {}) {
+    this._initConnection(databaseURI, parameters, callback);
+    this.connected = false;
+  }
 
-    _initConnection(databaseURI: string, parameters, callback) {
-        mongoose.connect(databaseURI, parameters);
+  _initConnection(databaseURI: string, parameters, callback) {
+    mongoose.connect(databaseURI, parameters);
 
-        this.connection = mongoose.connection;
+    this.connection = mongoose.connection;
 
-        let self = this;
+    let self = this;
 
-        this.connection.once('open', () => {
-            self.connected = true;
-            callback();
-        });
-    }
+    this.connection.once('open', () => {
+      self.connected = true;
+      callback();
+    });
+  }
 }

@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const { genRandomKey } = require('../../../utils/Util');
 const fetch = require('node-fetch');
 const qs = require('querystring');
-import DiscordOAuthData, { createDefault } from '../../../Schemas/DiscordOAuthData';
+import DiscordOAuthData, {
+  createDefault,
+} from '../../../Schemas/DiscordOAuthData';
 
 const url = encodeURIComponent('http://localhost:4000/api/oauth/auth');
 
@@ -58,7 +60,12 @@ router.get('/auth', async (req, res) => {
     return;
   }
 
-  let d = createDefault(decrypted.session_id, json.access_token, json.refresh_token, json.expires_in);
+  let d = createDefault(
+    decrypted.session_id,
+    json.access_token,
+    json.refresh_token,
+    json.expires_in
+  );
   await d.save();
 
   res.redirect(decrypted.redirect_uri);
@@ -86,13 +93,19 @@ router.get('/refresh', async (req, res) => {
 
   if (response.status !== 200) return;
 
-  const SESSION_ID = typeof req.query.session_id === 'string' ? req.query.session_id : undefined;
+  const SESSION_ID =
+    typeof req.query.session_id === 'string' ? req.query.session_id : undefined;
 
   DiscordOAuthData.deleteMany({
     SessionID: SESSION_ID,
   });
 
-  let d = createDefault(SESSION_ID, json.access_token, json.refresh_token, json.expires_in);
+  let d = createDefault(
+    SESSION_ID,
+    json.access_token,
+    json.refresh_token,
+    json.expires_in
+  );
 
   await d.save();
 });

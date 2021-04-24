@@ -55,20 +55,28 @@ export default class MineflayerBot {
   manager: MineflayerManager;
   options: BotOptions;
   commandManager: MineflayerCommandManager;
-  constructor(bot: Bot, manager: MineflayerManager, data: IPremiumLinkData, options: BotOptions) {
+  constructor(
+    bot: Bot,
+    manager: MineflayerManager,
+    data: IPremiumLinkData,
+    options: BotOptions
+  ) {
     this.bot = mineflayer.createBot(options);
     this.premiumData = data;
     this.options = options;
     this.Client = bot;
     this.manager = manager;
-    this.commandManager = new MineflayerCommandManager(manager.CommandCache, manager.AliasesCache); // NOT load in every time a bot instantiates
+    this.commandManager = new MineflayerCommandManager(
+      manager.CommandCache,
+      manager.AliasesCache
+    ); // NOT load in every time a bot instantiates
     this.setupBot();
   }
 
   setupBot() {
     this.bot.addChatPattern('guildChat', /(\[.+\]) (.+) \[(.+)\]: (.+)/, {
       repeat: true,
-      parse: true
+      parse: true,
     });
 
     this.bot.on('error', (err) => {
@@ -83,14 +91,23 @@ export default class MineflayerBot {
     this.bot.on('kicked', (reason, isLoggedIn) => {
       if (!isLoggedIn) {
         // error on joining
-        this.Client.EventEmitter.emit('botJoinFailed', this.premiumData.ServerID, reason);
+        this.Client.EventEmitter.emit(
+          'botJoinFailed',
+          this.premiumData.ServerID,
+          reason
+        );
         this._removeBot();
         return;
       }
       if (this.premiumData.botAutoRun) {
         this.manager.MineCraftBots.set(
           this.premiumData.ServerID,
-          new MineflayerBot(this.Client, this.manager, this.premiumData, this.options)
+          new MineflayerBot(
+            this.Client,
+            this.manager,
+            this.premiumData,
+            this.options
+          )
         );
       } else {
         // shut down the bot and update status
@@ -105,8 +122,16 @@ export default class MineflayerBot {
     this.bot.on(
       // @ts-ignore
       'guildChat',
-      async (_globalRank: string, name: string, _guildRank: string, message: string) => {
-        if (message.startsWith(this.premiumData.MCPrefix) && name.toLowerCase() === this.bot.username.toLowerCase()) {
+      async (
+        _globalRank: string,
+        name: string,
+        _guildRank: string,
+        message: string
+      ) => {
+        if (
+          message.startsWith(this.premiumData.MCPrefix) &&
+          name.toLowerCase() === this.bot.username.toLowerCase()
+        ) {
           this.commandManager.runCommand(
             message.substring(this.premiumData.MCPrefix.length, message.length),
             name,
@@ -115,7 +140,10 @@ export default class MineflayerBot {
           );
         }
         if (this.premiumData.Logging) {
-          let tempLogChannel: Channel = (await this.Client.CoreBot.channels.fetch(this.premiumData.LogChannel)) || null;
+          let tempLogChannel: Channel =
+            (await this.Client.CoreBot.channels.fetch(
+              this.premiumData.LogChannel
+            )) || null;
 
           if (tempLogChannel === null)
             this.bot.chat(
@@ -149,24 +177,36 @@ export default class MineflayerBot {
         );
       } else if (message.match(/(\w+) has requested to join the Guild!/)) {
         let username = message.split(/(\w+) (.+)/)[0];
-        let channel: TextChannel = this.Client.CoreBot.channels.cache.get(this.premiumData.LogChannel) as TextChannel;
+        let channel: TextChannel = this.Client.CoreBot.channels.cache.get(
+          this.premiumData.LogChannel
+        ) as TextChannel;
         if (channel == null) return; // TEMP
         channel.send(
-          `<@${this.premiumData.StaffRole}>, ${username} has requested to join the guild! Type ${
-            /* Forgive me father, for I have sinned */ (await GuildData.find().exec()).forEach((guild) => {
+          `<@${
+            this.premiumData.StaffRole
+          }>, ${username} has requested to join the guild! Type ${
+            /* Forgive me father, for I have sinned */ (
+              await GuildData.find().exec()
+            ).forEach((guild) => {
               if (guild.id === this.premiumData.ServerID) return guild.Prefix;
             })
           }accept ${username} to let them in!`
         );
       } else if (message.match(/(\w+) left the guild!/)) {
         let username = message.split(/(\w+) .+/)[0];
-        this.bot.chat(`See ya later, ${username}! We hope you enjoyed your stay! \:)`);
+        this.bot.chat(
+          `See ya later, ${username}! We hope you enjoyed your stay! \:)`
+        );
       }
     });
   }
 
   set status(s: boolean) {
-    this.Client.EventEmitter.emit('botStatusChanged', this.premiumData.ServerID, s);
+    this.Client.EventEmitter.emit(
+      'botStatusChanged',
+      this.premiumData.ServerID,
+      s
+    );
     this.premiumData.isBotOnline = s;
     this.premiumData.save();
   }

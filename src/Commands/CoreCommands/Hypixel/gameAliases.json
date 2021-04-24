@@ -1,32 +1,10 @@
 {
-    "games": {
-        "Arcade": [
-            "ar",
-            "arcade"
-        ],
-        "Arena": [
-            "arena"
-        ],
-        "Warlords": [
-            "wl",
-            "warlords"
-        ],
-        "Bedwars": [
-            "bw",
-            "bedw",
-            "bwars",
-            "bed wars"
-        ],
-        "BuildBattle": [
-            "bb",
-            "buildb",
-            "bbattle",
-            "build battle"
-        ],
-        "Duels": [
-            "du",
-            "dls",
-            "duels"
-        ]
-    }
+  "games": {
+    "Arcade": ["ar", "arcade"],
+    "Arena": ["arena"],
+    "Warlords": ["wl", "warlords"],
+    "Bedwars": ["bw", "bedw", "bwars", "bed wars"],
+    "BuildBattle": ["bb", "buildb", "bbattle", "build battle"],
+    "Duels": ["du", "dls", "duels"]
+  }
 }

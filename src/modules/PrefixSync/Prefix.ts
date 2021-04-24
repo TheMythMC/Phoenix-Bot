@@ -19,13 +19,24 @@ export default abstract class Prefix<T> {
 
   abstract run(player: Player): T;
 
-  generatePrefix(prefixGenValue: string, guildPrefixTemplate?: string, userPrefixTemplate?: string) {
+  generatePrefix(
+    prefixGenValue: string,
+    guildPrefixTemplate?: string,
+    userPrefixTemplate?: string
+  ) {
     // goes from max importance to lowest importance
     if (guildPrefixTemplate)
-      return guildPrefixTemplate.replaceAll('%p', this.defaultName).replaceAll('%s', prefixGenValue);
+      return guildPrefixTemplate
+        .replaceAll('%p', this.defaultName)
+        .replaceAll('%s', prefixGenValue);
     if (userPrefixTemplate)
-      return userPrefixTemplate.replaceAll('%p', this.defaultName).replaceAll('%s', prefixGenValue);
+      return userPrefixTemplate
+        .replaceAll('%p', this.defaultName)
+        .replaceAll('%s', prefixGenValue);
 
-    return Prefix.DEFAULT_TEMPLATE.replaceAll('%p', this.defaultName).replaceAll('%s', prefixGenValue);
+    return Prefix.DEFAULT_TEMPLATE.replaceAll(
+      '%p',
+      this.defaultName
+    ).replaceAll('%s', prefixGenValue);
   }
 }

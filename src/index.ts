@@ -9,15 +9,17 @@ dotenv.config();
 let bot = new Bot();
 
 // Look for stop to shutdown Bot
-readline.createInterface({
+readline
+  .createInterface({
     input: process.stdin,
-    output: process.stdout
-}).question('', (string: string) => {
-	if (string.toLowerCase().startsWith('stop')) {
-        console.log('Shutting down...');
-        bot.CoreBot.destroy();
-        process.exit(0);
+    output: process.stdout,
+  })
+  .question('', (string: string) => {
+    if (string.toLowerCase().startsWith('stop')) {
+      console.log('Shutting down...');
+      bot.CoreBot.destroy();
+      process.exit(0);
     }
-});
+  });
 // keep process alive for docker
 process.stdin.resume();

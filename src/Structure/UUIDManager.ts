@@ -1,5 +1,6 @@
 import * as MojangAPI from './HypixelAPI';
-import conf from '../../config.json';
+import tconf from '../../config.json';
+const conf = tconf as Config;
 
 export default class UUIDManager {
   cache: any[];
@@ -15,7 +16,9 @@ export default class UUIDManager {
 
   async getUUIDByUser(username: string) {
     if (conf.UUIDUsernameAPICache) {
-      let cacheHit = this.cache.find((data) => data.name?.toLowerCase() === username?.toLowerCase());
+      let cacheHit = this.cache.find(
+        (data) => data.name?.toLowerCase() === username?.toLowerCase()
+      );
       if (cacheHit) return cacheHit.name;
     }
 
@@ -28,7 +31,9 @@ export default class UUIDManager {
 
   async getUserByUUID(uuid: string) {
     if (conf.UUIDUsernameAPICache) {
-      let cacheHit = this.cache.find((data) => data.name?.toLowerCase() === uuid?.toLowerCase());
+      let cacheHit = this.cache.find(
+        (data) => data.name?.toLowerCase() === uuid?.toLowerCase()
+      );
       if (cacheHit) return cacheHit.name;
     }
 
@@ -50,3 +55,9 @@ export default class UUIDManager {
   }
 }
 module.exports = UUIDManager;
+
+interface Config {
+  UUIDUsernameAPICache: boolean;
+  UUIDUsernameAPICacheTime: number;
+  BotOwners: string[];
+}

@@ -18,9 +18,11 @@ module.exports = class extends Command {
 
     const { channel } = message.member.voice;
     if (!channel) return message.reply('You need to join a voice channel.');
-    if (channel.id !== player.voiceChannel) return message.reply('You\'re not in the same voice channel.');
+    if (channel.id !== player.voiceChannel)
+      return message.reply('You\'re not in the same voice channel.');
 
-    if (!player.queue.current) return message.reply('There is no music playing.');
+    if (!player.queue.current)
+      return message.reply('There is no music playing.');
 
     const { title } = player.queue.current;
 

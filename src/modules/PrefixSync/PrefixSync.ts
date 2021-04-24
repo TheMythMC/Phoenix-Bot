@@ -16,7 +16,9 @@ export default async function SyncPrefix(
 ) {
   // testPrefixType is for checking if a certain prefix will work with a user
   // NOTE: Please run this with try catch statements
-  const { MinecraftUUID } = await Client.LinkManager.getDataByDiscord(guildMember.id);
+  const { MinecraftUUID } = await Client.LinkManager.getDataByDiscord(
+    guildMember.id
+  );
 
   if (!MinecraftUUID) {
     throw new Error(
@@ -29,7 +31,8 @@ export default async function SyncPrefix(
 
   const playerData = await getPlayerData(MinecraftUUID);
 
-  if (!playerData) throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
+  if (!playerData)
+    throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
 
   const prefixType = testPrefixType || userData.PrefixType;
 
@@ -41,7 +44,13 @@ export default async function SyncPrefix(
 
   const res = prefixType === 'NONE' ? undefined : await prefix.run(playerData); // if an error occurs, itll just float up and eventually be caught
 
-  const generatedPrefix = await generatePrefix(prefix, guildMember, res, playerData, Client);
+  const generatedPrefix = await generatePrefix(
+    prefix,
+    guildMember,
+    res,
+    playerData,
+    Client
+  );
   return generatedPrefix;
 }
 
@@ -58,7 +67,9 @@ export async function generatePrefix(
   let newPrefix = prefix;
   let newGenValue = prefixGenValue;
   if (PremiumUtils.isGuildPremium(user.guild.id)) {
-    const gData = await PremiumLinkData.findOne({ ServerID: user.guild.id }).exec();
+    const gData = await PremiumLinkData.findOne({
+      ServerID: user.guild.id,
+    }).exec();
     if (gData.EnforceCustomPrefix) {
       guildPrefixTemplate = gData.ServerPrefixTemplate || '%p: %s';
       console.log(guildPrefixTemplate);
@@ -74,10 +85,17 @@ export async function generatePrefix(
     userPrefixTemplate =
       uData?.PrefixType === 'NONE' || uData?.PrefixType === ''
         ? undefined
-        : pUData.CustomPrefixData.find((e) => e.PrefixType === uData?.PrefixType || e.PrefixType === newPrefix.id)
-            ?.CustomPrefix;
+        : pUData.CustomPrefixData.find(
+            (e) =>
+              e.PrefixType === uData?.PrefixType ||
+              e.PrefixType === newPrefix.id
+          )?.CustomPrefix;
   }
 
   if (!guild) return '';
-  return `[${newPrefix.generatePrefix(newGenValue, guildPrefixTemplate, userPrefixTemplate)}] ${plrData.username}`;
+  return `[${newPrefix.generatePrefix(
+    newGenValue,
+    guildPrefixTemplate,
+    userPrefixTemplate
+  )}] ${plrData.username}`;
 }

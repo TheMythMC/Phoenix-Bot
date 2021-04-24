@@ -10,7 +10,11 @@ export default class MineflayerCommand {
   usage: string;
   minecraftBot: MineflayerBot;
   discordBot: BotCore;
-  constructor(discordBot: BotCore, name: string, options: IMineflayerCommand = {} as IMineflayerCommand) {
+  constructor(
+    discordBot: BotCore,
+    name: string,
+    options: IMineflayerCommand = {} as IMineflayerCommand
+  ) {
     this.discordBot = discordBot;
     this.name = name;
     this.aliases = options.aliases || [];
@@ -18,7 +22,12 @@ export default class MineflayerCommand {
     this.usage = options.usage || 'No usage provided';
   }
 
-  async run(args: string[], mcBot: MineflayerBot, discBot: BotCore, playerName: string) {
+  async run(
+    args: string[],
+    mcBot: MineflayerBot,
+    discBot: BotCore,
+    playerName: string
+  ) {
     throw new Error('Must specify run method');
   }
 }

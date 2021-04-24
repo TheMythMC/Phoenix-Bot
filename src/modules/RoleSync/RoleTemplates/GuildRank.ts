@@ -12,7 +12,9 @@ const GuildRank = async (uuid, guildID, cache, params) => {
 
     if (!guildData) return false;
 
-    const member = guildData.members.find((m) => m.rank === role && m.uuid === uuid);
+    const member = guildData.members.find(
+      (m) => m.rank === role && m.uuid === uuid
+    );
     if (member) {
       if (!f) cache.guilds.push(guildData);
       return true;

@@ -9,11 +9,17 @@ export async function getPlayerData(playerName: string): Promise<Player> {
 }
 
 export async function getGuildDataByName(guildName: string): Promise<Guild> {
-  return await Hypixel.guildStatsByName(guildName.replace(' ', '+'), `${slothpixelURL}guilds/name/`);
+  return await Hypixel.guildStatsByName(
+    guildName.replace(' ', '+'),
+    `${slothpixelURL}guilds/name/`
+  );
 }
 
 export async function getGuildDataByPlayer(playerName: string): Promise<Guild> {
-  return await Hypixel.guildStatsByPlayer(playerName, `${slothpixelURL}guilds/`);
+  return await Hypixel.guildStatsByPlayer(
+    playerName,
+    `${slothpixelURL}guilds/`
+  );
 }
 
 export async function getGuildDataByID(id: string): Promise<Guild> {

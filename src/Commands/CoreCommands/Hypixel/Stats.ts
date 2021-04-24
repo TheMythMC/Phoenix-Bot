@@ -3,7 +3,10 @@ import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
 import aliases from './gameAliases.json';
 import * as HypixelAPI from '../../../Structure/HypixelAPI';
-import { sendCustomMessage, sendErrorMessage } from '../../../utils/MessageUtils';
+import {
+  sendCustomMessage,
+  sendErrorMessage,
+} from '../../../utils/MessageUtils';
 import Player from 'phoenix-slothpixel/Player';
 
 module.exports = class extends Command {
@@ -23,18 +26,24 @@ module.exports = class extends Command {
     let minigame = splitted.length > 0 ? splitted.join(' ') : 'all';
 
     let playerData: any = await HypixelAPI.getPlayerData(playername);
-    if (!playerData) return sendErrorMessage(message.channel, 'Please input a valid player name.');
+    if (!playerData)
+      return sendErrorMessage(
+        message.channel,
+        'Please input a valid player name.'
+      );
 
     if (minigame != 'all') {
       let keys = Object.keys(aliases);
       keys.forEach(async (game) => {
         if (game === minigame) {
-          try
-            {
-              await this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
-            } catch (e) {
-              return sendErrorMessage(message.channel, e.message);
-            }
+          try {
+            await this.parseStats(
+              minigame,
+              await HypixelAPI.getPlayerData(playername)
+            );
+          } catch (e) {
+            return sendErrorMessage(message.channel, e.message);
+          }
           return sendCustomMessage(
             message.channel,
             'BLUE',
@@ -45,9 +54,11 @@ module.exports = class extends Command {
         }
         aliases.games[game].forEach(async (alias: string) => {
           if (alias === minigame) {
-            try
-            {
-              await this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
+            try {
+              await this.parseStats(
+                minigame,
+                await HypixelAPI.getPlayerData(playername)
+              );
             } catch (e) {
               return sendErrorMessage(message.channel, e.message);
             }

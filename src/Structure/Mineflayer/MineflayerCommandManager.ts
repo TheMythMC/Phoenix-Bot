@@ -9,17 +9,27 @@ export default class MineflayerCommandManager {
   commands: Map<String, MineflayerCommand>;
   aliases: Map<String, String>;
   static FILE_PATH = `${path.dirname(require.main.filename)}${path.sep}`;
-  constructor(commands: Map<String, MineflayerCommand> = new Map(), aliases: Map<String, String> = new Map()) {
+  constructor(
+    commands: Map<String, MineflayerCommand> = new Map(),
+    aliases: Map<String, String> = new Map()
+  ) {
     this.commands = commands;
     this.aliases = aliases;
   }
 
-  runCommand(message: string, playername: string, bot: MineflayerBot, discordBot: BotCore) {
+  runCommand(
+    message: string,
+    playername: string,
+    bot: MineflayerBot,
+    discordBot: BotCore
+  ) {
     let [cmd, ...args] = message.split(/\S+/g) || [];
     for (const [key, value] of this.commands) {
-      if (key === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+      if (key === cmd)
+        /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
       value.aliases.forEach((alias) => {
-        if (alias === cmd) /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+        if (alias === cmd)
+          /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
       });
     }
   }
@@ -33,10 +43,13 @@ export default class MineflayerCommandManager {
         delete require.cache[match];
         const { name } = path.parse(match);
         const File = require(match);
-        if (!Util.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
+        if (!Util.isClass(File))
+          throw new TypeError(`The command ${name} does not export a class.`);
         const command = new File(discordBot, name.toLowerCase());
         if (!(command instanceof MineflayerCommand))
-          throw new TypeError(`The command ${name} doesn't belong in Commands.`);
+          throw new TypeError(
+            `The command ${name} doesn't belong in Commands.`
+          );
         // LEFT HERE FOR REFRENCE
         /*client.commands.set(command.name, command);
                 console.log(`Set ${command.name} as a command`);
