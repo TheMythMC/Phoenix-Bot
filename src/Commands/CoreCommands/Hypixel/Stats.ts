@@ -74,11 +74,18 @@ module.exports = class extends Command {
       });
     } else {
       this.parseStats(minigame, await HypixelAPI.getPlayerData(playername));
+      sendCustomMessage(
+        message.channel,
+        'BLUE',
+        this.msg,
+        `Overall stats for ${playerData.username}`,
+        ''
+      );
     }
   }
 
   async parseStats(game: string, data: Player) {
-    switch (game) {
+    switch (game.toLowerCase()) {
       case 'all': {
         this.msg = `
         **LEVEL**: ${data.level}\n
