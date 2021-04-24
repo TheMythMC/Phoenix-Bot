@@ -1,7 +1,11 @@
 import { Message } from 'discord.js';
 import BotCore from '../../Structure/BotCore';
 import Command from '../../Structure/Command';
-import { sendErrorMessage, sendCustomMessage, sendSuccessMessage } from '../../utils/MessageUtils';
+import {
+  sendErrorMessage,
+  sendCustomMessage,
+  sendSuccessMessage,
+} from '../../utils/MessageUtils';
 
 module.exports = class extends Command {
   constructor(client: BotCore) {
@@ -23,7 +27,10 @@ module.exports = class extends Command {
       return sendErrorMessage(message.channel, 'Must have a valid id');
     }
     if (args[0].length === 18) {
-      sendSuccessMessage(message.channel, `Successfully added log channel <#${args[0]}>`);
+      sendSuccessMessage(
+        message.channel,
+        `Successfully added log channel <#${args[0]}>`
+      );
     }
   }
 };

@@ -21,7 +21,10 @@ module.exports = class extends Command {
 
     for (let [k, command] of client.commands) {
       if (!cmd) break;
-      if (command.name.toLowerCase() === cmd.toLowerCase() || command.aliases.includes(cmd.toLowerCase())) {
+      if (
+        command.name.toLowerCase() === cmd.toLowerCase() ||
+        command.aliases.includes(cmd.toLowerCase())
+      ) {
         foundCommand = command;
         break;
       }
@@ -30,19 +33,32 @@ module.exports = class extends Command {
     if (cmd && foundCommand) {
       let toSend = `\n\t**COMMAND:**: ${foundCommand.name}\n\t**ALIASES:** ${
         foundCommand.aliases.join(', ') || 'None'
-      }\n\t**USAGE:** ${foundCommand.getUsage(await client.Bot.getPrefix(message.guild))}\n\t**DESCRIPTION:** ${
-        foundCommand.description
-      }`;
+      }\n\t**USAGE:** ${foundCommand.getUsage(
+        await client.Bot.getPrefix(message.guild)
+      )}\n\t**DESCRIPTION:** ${foundCommand.description}`;
 
-      return sendCustomMessage(message.channel, 'PURPLE', toSend, `Help: ${cmd}`, undefined);
+      return sendCustomMessage(
+        message.channel,
+        'PURPLE',
+        toSend,
+        `Help: ${cmd}`,
+        undefined
+      );
     }
 
     let cmdText = '';
 
     for (let [k, command] of client.commands) {
-      if (Util.isCommandAllowed(message.member, command)) cmdText = cmdText + `\n${command.name}`;
+      if (Util.isCommandAllowed(message.member, command))
+        cmdText = cmdText + `\n${command.name}`;
     }
 
-    return sendCustomMessage(message.channel, 'PURPLE', cmdText, 'Commands', undefined);
+    return sendCustomMessage(
+      message.channel,
+      'PURPLE',
+      cmdText,
+      'Commands',
+      undefined
+    );
   }
 };

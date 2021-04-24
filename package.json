@@ -2,11 +2,12 @@
   "name": "phoenixbot-extra",
   "version": "0.1.0",
   "description": "Free version of Phoenix Bot. Rewrite in progress.",
+  "module": "commonjs",
   "main": ".tsbuild/src/index.js",
   "scripts": {
     "start": "yarn build && node .",
     "build": "yarn lintnofix && tsc",
-    "prod": "sudo docker-compose up",
+    "prod": "sudo docker-compose up --build extra lavalink",
     "lint": "eslint ./src --ext .ts --fix",
     "lintnofix": "eslint ./src --ext .ts"
   },
@@ -29,6 +30,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "erela.js": "^2.3.3",
+    "erela.js-spotify": "^1.2.0",
     "express": "^4.17.1",
     "express-ws": "^4.0.0",
     "glob": "^7.1.6",
@@ -47,6 +49,7 @@
   },
   "devDependencies": {
     "@types/ms": "*",
+    "@types/node-fetch": "^2.5.10",
     "@types/path-parse": "*",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",

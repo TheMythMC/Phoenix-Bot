@@ -3,6 +3,7 @@ import Bot from '../../../Bot';
 const router = express.Router();
 import DiscordOAuthData from '../../../Schemas/DiscordOAuthData';
 import Util from '../../../utils/Util';
+import fetch from 'node-fetch';
 
 router.use(async (req, res, next) => {
   // this will be where api keys will be tested if they're expired, and if so, refresh
@@ -23,7 +24,9 @@ router.use(async (req, res, next) => {
 
   if (response.status === 401) {
     let e = await fetch(
-      `${req.protocol}://${req.get('host')}/api/oauth/refresh?token=${d.RefreshToken}&session_id=${d.SessionID}`
+      `${req.protocol}://${req.get('host')}/api/oauth/refresh?token=${
+        d.RefreshToken
+      }&session_id=${d.SessionID}`
     );
     if (e.status === 400) return res.status(440).end();
   }

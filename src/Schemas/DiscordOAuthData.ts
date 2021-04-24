@@ -26,7 +26,12 @@ schema.plugin(ttl, { ttl: 1000 * 60 * 60 * 24 * 30 });
 
 const model = mongoose.model<IOAuth>('DiscordOAuthData', schema);
 
-export function createDefault(SessionID: string, AccessToken: string, RefreshToken: string, expiresIn: number) {
+export function createDefault(
+  SessionID: string,
+  AccessToken: string,
+  RefreshToken: string,
+  expiresIn: number
+) {
   let obj = {} as IOAuth;
 
   Object.assign(obj, Default);

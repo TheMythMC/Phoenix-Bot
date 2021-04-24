@@ -13,7 +13,9 @@ let config = tempconfig as Config;
 export default class Util {
   static isClass(input: Object) {
     return (
-      typeof input === 'function' && typeof input.prototype === 'object' && input.toString().substring(0, 5) === 'class'
+      typeof input === 'function' &&
+      typeof input.prototype === 'object' &&
+      input.toString().substring(0, 5) === 'class'
     );
   }
   static get directory() {
@@ -27,7 +29,8 @@ export default class Util {
         delete require.cache[commandFile];
         const { name } = pathParse(commandFile);
         const File = require(commandFile);
-        if (!this.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
+        if (!this.isClass(File))
+          throw new TypeError(`The command ${name} does not export a class.`);
         const command = new File(client, name.toLowerCase());
         client.commands.set(command.name, command);
         console.log(`Set ${command.name} as a command`);
@@ -64,7 +67,11 @@ export default class Util {
   }
 
   // this is for checking if a session is permitted to access a certain guild
-  static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
+  static async isSessionPermitted(
+    sessionID: string,
+    guildID: string,
+    bot: Bot
+  ): Promise<boolean> {
     try {
       if (!sessionID) return false;
 
@@ -107,12 +114,20 @@ export default class Util {
     return data?.AccessToken;
   }
 
-  static async isCommandAllowed(member: GuildMember, command: Command): Promise<boolean> {
-    if (command.requireBotOwner && !config.BotOwners.includes(member.id)) return false;
+  static async isCommandAllowed(
+    member: GuildMember,
+    command: Command
+  ): Promise<boolean> {
+    if (command.requireBotOwner && !config.BotOwners.includes(member.id))
+      return false;
     for (const perm of command.requiredPerms) {
       if (!member.hasPermission(perm)) return false;
     }
-    if ((await Bot.instance.GuildManager.isPremium(member.guild.id)) && command.isPremium) return false;
+    if (
+      (await Bot.instance.GuildManager.isPremium(member.guild.id)) &&
+      command.isPremium
+    )
+      return false;
     return true;
   }
 }

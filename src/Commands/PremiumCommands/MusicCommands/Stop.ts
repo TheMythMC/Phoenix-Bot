@@ -19,7 +19,8 @@ module.exports = class extends Command {
     const { channel } = message.member.voice;
 
     if (!channel) return message.reply('You need to join a voice channel.');
-    if (channel.id !== player.voiceChannel) return message.reply('You\'re not in the same voice channel.');
+    if (channel.id !== player.voiceChannel)
+      return message.reply('You\'re not in the same voice channel.');
 
     player.destroy();
     return message.reply('Destroyed the player.');

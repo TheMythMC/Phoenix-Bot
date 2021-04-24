@@ -6,10 +6,19 @@ import expressWs from 'express-ws';
 const router = express.Router() as expressWs.Router;
 
 router.ws('/', async (ws, req) => {
-  if (req.query.guildID && (await Util.isSessionPermitted(req.cookies.session_id, req.query.guildID, Bot.instance))) {
+  if (
+    req.query.guildID &&
+    (await Util.isSessionPermitted(
+      req.cookies.session_id,
+      req.query.guildID,
+      Bot.instance
+    ))
+  ) {
     ws.send(
       JSON.stringify({
-        status: PremiumUtils.getMinecraftBotFromGuild(req.query.guildID)?.status || false,
+        status:
+          PremiumUtils.getMinecraftBotFromGuild(req.query.guildID)?.status ||
+          false,
       })
     );
     Bot.instance.EventEmitter.addListener('botStatusChanged', changeStatus);

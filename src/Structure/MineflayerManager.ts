@@ -12,7 +12,10 @@ export default class MineflayerManager {
   constructor(bot: Bot, guilds: IPremiumLinkData[]) {
     this.bot = bot;
     this.MineCraftBots = new Map();
-    let ca = MineflayerCommandManager.loadCommand('./Mineflayer/Commands/**/*.ts', this.bot.CoreBot);
+    let ca = MineflayerCommandManager.loadCommand(
+      './Mineflayer/Commands/**/*.ts',
+      this.bot.CoreBot
+    );
     this.CommandCache = ca.commands;
     this.AliasesCache = ca.aliases;
     guilds.forEach(async (guild) => {
@@ -23,7 +26,11 @@ export default class MineflayerManager {
         guild.BotUsername &&
         guild.BotPassword
       ) {
-        console.log(`Created mineflayer bot for guild ${bot.CoreBot.guilds.cache.get(guild.ServerID).name}`);
+        console.log(
+          `Created mineflayer bot for guild ${
+            bot.CoreBot.guilds.cache.get(guild.ServerID).name
+          }`
+        );
         this.MineCraftBots.set(guild.ServerID, this.createBot(guild));
       }
     });

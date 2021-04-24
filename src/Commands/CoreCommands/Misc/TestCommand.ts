@@ -1,7 +1,10 @@
 import { Message } from 'discord.js';
 import SyncPrefix from '../../../modules/PrefixSync/PrefixSync';
 import PrefixSync from '../../../modules/PrefixSync/PrefixSync';
-import UserData, { createDefault, PrefixTypes } from '../../../Schemas/UserData';
+import UserData, {
+  createDefault,
+  PrefixTypes,
+} from '../../../Schemas/UserData';
 import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
 import { sendErrorMessage } from '../../../utils/MessageUtils';
