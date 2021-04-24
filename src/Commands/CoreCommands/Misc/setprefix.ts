@@ -34,5 +34,4 @@ class SetPrefix extends Command {
     }
   }
 }
-6;
 module.exports = SetPrefix;
