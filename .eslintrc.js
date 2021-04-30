@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 module.exports = {
     "env": {
         "es2021": true,
@@ -33,11 +32,7 @@ module.exports = {
         "@typescript-eslint/ban-types": "off",
         "no-case-declarations": "off",
         "prefer-const": "off",
-        "quotes": [2,"single",
-            {
-              "allowTemplateLiterals": true
-            },
-        ],
+        "quotes": [2,"single"],
         "@typescript-eslint/no-unused-vars": 0,
         
     }

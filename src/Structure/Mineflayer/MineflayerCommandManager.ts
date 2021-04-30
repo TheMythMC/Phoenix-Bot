@@ -35,17 +35,18 @@ export default class MineflayerCommandManager {
   }
 
   static loadCommand(dirPath: string, discordBot: BotCore) {
+    console.log('Loading Mineflayer Commands');
     let commands = new Map<string, MineflayerCommand>();
     let aliases = new Map<string, string>();
 
-    glob(`${this.FILE_PATH}${dirPath}/**/*.js`, (_, matches) => {
+    glob(`${this.FILE_PATH}${dirPath.replace('.', 'Structure')}/**/*.js`, (_, matches) => {
       for (let match of matches) {
         delete require.cache[match];
         const { name } = path.parse(match);
         const File = require(match);
         if (!Util.isClass(File))
           throw new TypeError(`The command ${name} does not export a class.`);
-        const command = new File(discordBot, name.toLowerCase());
+        const command: MineflayerCommand = new File(discordBot, name.toLowerCase());
         if (!(command instanceof MineflayerCommand))
           throw new TypeError(
             `The command ${name} doesn't belong in Commands.`
@@ -58,9 +59,11 @@ export default class MineflayerCommandManager {
                         client.aliases.set(alias, command.name);
                     }
                 } */
-        commands.set(File.name, File);
-        if (File.aliases.length) {
-          for (const alias of File.aliases) {
+        commands.set(command.name, command);
+        console.log(`Set ${command.name} as a mineflayer command`);
+
+        if (command.aliases.length) {
+          for (const alias of command.aliases) {
             aliases.set(alias, command.name);
           }
         }

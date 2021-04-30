@@ -8,6 +8,9 @@ module.exports = class extends Command {
     super(discordBot, '8ball', {
       description: 'Let the fates decide',
       usage: '%p8ball <Your question>',
+      aliases: [
+        '8ball'
+      ]
     });
 
     this.responses = [
@@ -19,7 +22,7 @@ module.exports = class extends Command {
       'As I see it, yes.',
       'Most likely.',
       'Yes.',
-      'outlook good.',
+      'Outlook good.',
       'Signs point to yes',
       'Reply hazy try again.',
       'Better not tell you now.',

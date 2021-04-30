@@ -1,6 +1,7 @@
 /*
  * Added so that git doesnt crap itself whenever we make changes to @Utils.ts
  */
+import Util from './Util';
 import Bot from '../Bot';
 import PremiumLinkData from '../Schemas/PremiumLinkData';
 import PremiumUserData from '../Schemas/PremiumUserData';
@@ -16,5 +17,19 @@ export default class PremiumUtils {
 
   static async isGuildPremium(guildID: string) {
     return await PremiumLinkData.exists({ DiscordID: guildID });
+  }
+
+  static async removeAllMCBots() {
+    await Bot.instance.MineflayerManager.MineCraftBots.forEach( async (bot) => {
+      console.log(`Removed ${bot.bot.username}`);
+      await bot._removeBot();
+    });
+  }
+
+  static async shutDown() {
+    this.removeAllMCBots();
+    await Util.wait(5000);
+    Bot.instance.CoreBot.destroy();
+    process.exit(0);
   }
 }

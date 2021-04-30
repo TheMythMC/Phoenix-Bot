@@ -1,6 +1,4 @@
 import BotCore from '../BotCore';
-import { Bot } from 'mineflayer';
-import MineflayerManager from '../MineflayerManager';
 import MineflayerBot from '../MineflayerBot';
 
 export default class MineflayerCommand {

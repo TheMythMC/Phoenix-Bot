@@ -36,7 +36,7 @@ module.exports = class extends Command {
     } catch (err) {
       sendErrorMessage(
         message.channel,
-        `An error occurred while trying to invite. This may occur due to the bot not being started or invalid bot credentials. `
+        'An error occurred while trying to invite. This may occur due to the bot not being started or invalid bot credentials. '
       );
     }
   }

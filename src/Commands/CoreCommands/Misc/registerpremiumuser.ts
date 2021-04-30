@@ -37,7 +37,7 @@ module.exports = class extends Command {
       .then(() => {
         sendSuccessMessage(
           message.channel,
-          `Successfully registered you as a premium user!`
+          'Successfully registered you as a premium user!'
         );
       })
       .catch((err) => {

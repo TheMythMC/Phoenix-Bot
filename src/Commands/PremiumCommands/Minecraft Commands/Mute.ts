@@ -29,7 +29,7 @@ module.exports = class Mute extends Command {
     } catch (err) {
       sendErrorMessage(
         message.channel,
-        `An error occurred while trying to mute. This may occur due to the bot not being started or invalid bot credentials. `
+        'An error occurred while trying to mute. This may occur due to the bot not being started or invalid bot credentials. '
       );
     }
   }

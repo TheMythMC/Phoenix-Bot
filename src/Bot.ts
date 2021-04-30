@@ -49,6 +49,7 @@ export default class Bot {
 
   async loadMineflayerBots() {
     const data = await PremiumLinkData.find().exec();
+    console.log(data);
 
     this.MineflayerManager = new MineflayerManager(this, data);
   }

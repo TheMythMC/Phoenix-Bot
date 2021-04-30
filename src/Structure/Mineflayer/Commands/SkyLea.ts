@@ -8,6 +8,9 @@ module.exports = class extends MineflayerCommand {
     super(discordBot, 'skylea', {
       description: 'Fetches a skylea profile in game',
       usage: '%pskylea <player name>',
+      aliases: [
+        'skylea'
+      ]
     });
   }
   async run(args: string[], mcBot: MineflayerBot, _, playerName: string) {
@@ -15,7 +18,7 @@ module.exports = class extends MineflayerCommand {
     if (MojangAPI.getPlayerData(args[0])) {
       mcBot.bot.chat(`${playerName}, ${url}`);
     } else {
-      mcBot.bot.chat(`This player does not exist.`);
+      mcBot.bot.chat('This player does not exist.');
     }
   }
 };

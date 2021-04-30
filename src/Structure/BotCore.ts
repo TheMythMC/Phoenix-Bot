@@ -7,7 +7,7 @@ import tempConfig from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
-import { Manager } from 'erela.js';
+import { Manager, VoicePacket } from 'erela.js';
 import Spotify from 'erela.js-spotify';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
@@ -106,7 +106,7 @@ export default class BotCore extends Client {
       console.log(`Node "${node.options.identifier}" connected.`);
     });
 
-    this.on('raw', (d) => this.manager.updateVoiceState(d));
+    this.on('raw', (d: VoicePacket) => this.manager.updateVoiceState(d));
 
     // Emitted whenever a node encountered an error
     this.manager.on('nodeError', (node, error) => {

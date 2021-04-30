@@ -3,6 +3,7 @@ import Bot from '../Bot';
 import MineflayerCommandManager from './Mineflayer/MineflayerCommandManager';
 import MineflayerBot from './MineflayerBot';
 import MineflayerCommand from './Mineflayer/MineflayerCommand';
+import Util from '../utils/Util';
 
 export default class MineflayerManager {
   bot: Bot;
@@ -13,16 +14,17 @@ export default class MineflayerManager {
     this.bot = bot;
     this.MineCraftBots = new Map();
     let ca = MineflayerCommandManager.loadCommand(
-      './Mineflayer/Commands/**/*.ts',
+      './Mineflayer/Commands',
       this.bot.CoreBot
     );
     this.CommandCache = ca.commands;
     this.AliasesCache = ca.aliases;
+    
     guilds.forEach(async (guild) => {
       if (
         Bot.instance.GuildManager.isPremium(guild.id) &&
         guild.ServerID &&
-        guild.isBotOnline &&
+        !guild.isBotOnline &&
         guild.BotUsername &&
         guild.BotPassword
       ) {
@@ -41,17 +43,18 @@ export default class MineflayerManager {
   }
 
   createBot(guildData: IPremiumLinkData): MineflayerBot {
-    let bot = new MineflayerBot(this.bot, this, guildData, {
+    return new MineflayerBot(this.bot, this, guildData, {
       username: guildData.BotUsername,
       password: guildData.BotPassword,
-      // @ts-ignore
       auth: guildData.BotAuth,
-      version: '1.8.9',
-      host: 'buyphoenix.hypixel.net',
+      version: '1.12.2',
+      host: 'us.hypixel.net',
       port: 25565,
+      colorsEnabled: false,
+      keepAlive: true
     });
-    return bot;
   }
+  
 
   startBot(guildData: IPremiumLinkData) {
     const botFound = this.MineCraftBots.get(guildData.ServerID);

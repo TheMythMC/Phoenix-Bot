@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
+import PremiumUtils from '../../../utils/PremiumUtils';
 
 module.exports = class extends Command {
   constructor(client: BotCore) {
@@ -13,13 +14,7 @@ module.exports = class extends Command {
   }
 
   async run(message: Message, _args: string[], client: BotCore) {
-    try {
-      message.channel.send('Bot is shuttting down...').then(() => {
-        client.destroy();
-        process.exit(0);
-      });
-    } catch (e) {
-      console.log(e.message);
-    }
+      await message.channel.send('Bot is shuttting down...');
+      await PremiumUtils.shutDown();
   }
 };

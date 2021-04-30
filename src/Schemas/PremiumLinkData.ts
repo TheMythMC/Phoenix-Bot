@@ -13,8 +13,8 @@ export interface IPremiumLinkData extends mongoose.Document {
   // Password of MinecraftBot
   BotPassword: string;
   // Authentication of Minecraft Bot
-  BotAuth: string;
-  // Log channel Snowflake
+  BotAuth: 'microsoft' | 'mojang';
+  // Log channel Snowflake (ID)
   LogChannel: string;
   // String of prefix for Minecraft Bot
   MCPrefix: string;

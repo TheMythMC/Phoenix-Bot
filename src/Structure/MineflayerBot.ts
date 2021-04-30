@@ -74,7 +74,12 @@ export default class MineflayerBot {
   }
 
   setupBot() {
-    this.bot.addChatPattern('guildChat', /(\[.+\]) (.+) \[(.+)\]: (.+)/, {
+    this.bot.addChatPattern('guildChat', /Guild> \[.+\] (\w+) \[\w+\]: (.+)/, {
+      repeat: true,
+      parse: true,
+    });
+
+    this.bot.addChatPattern('vanillaChat', /(.+)/, {
       repeat: true,
       parse: true,
     });
@@ -122,12 +127,8 @@ export default class MineflayerBot {
     this.bot.on(
       // @ts-ignore
       'guildChat',
-      async (
-        _globalRank: string,
-        name: string,
-        _guildRank: string,
-        message: string
-      ) => {
+      async (name: string, message: string) => {
+        console.log(`${name}: ${message}`);
         if (
           message.startsWith(this.premiumData.MCPrefix) &&
           name.toLowerCase() === this.bot.username.toLowerCase()
@@ -164,41 +165,47 @@ export default class MineflayerBot {
     );
 
     // Invite and join checking
-    this.bot.on('chat', async (_username: string, _message: string) => {
-      let arrmessage: string[] = [_username, _message];
-      let message: string = arrmessage.join(' ');
-
-      if (message.match(/(\w+) joined the guild!/)) {
-        this.bot.chat(
-          joinMessages[Math.floor(Math.random() * joinMessages.length)].replace(
-            '%n',
-            message.split(/(\w+) joined the guild!/)[0]
-          )
-        );
-      } else if (message.match(/(\w+) has requested to join the Guild!/)) {
-        let username = message.split(/(\w+) (.+)/)[0];
-        let channel: TextChannel = this.Client.CoreBot.channels.cache.get(
-          this.premiumData.LogChannel
-        ) as TextChannel;
-        if (channel == null) return; // TEMP
-        channel.send(
-          `<@${
-            this.premiumData.StaffRole
-          }>, ${username} has requested to join the guild! Type ${
-            /* Forgive me father, for I have sinned */ (
-              await GuildData.find().exec()
-            ).forEach((guild) => {
-              if (guild.id === this.premiumData.ServerID) return guild.Prefix;
-            })
-          }accept ${username} to let them in!`
-        );
-      } else if (message.match(/(\w+) left the guild!/)) {
-        let username = message.split(/(\w+) .+/)[0];
-        this.bot.chat(
-          `See ya later, ${username}! We hope you enjoyed your stay! \:)`
-        );
+    this.bot.on(
+      // @ts-ignore
+      'vanillaChat',
+      async (message: string) => {
+        console.log(message);
+        if (message.match(/(\w+) joined the guild!/)) {
+          this.bot.chat(
+            joinMessages[
+              Math.floor(Math.random() * joinMessages.length)
+            ].replace('%n', message.split(/(\w+) joined the guild!/)[0])
+          );
+        } else if (message.match(/(\w+) has requested to join the Guild!/)) {
+          let username = message.split(/(\w+) (.+)/)[0];
+          if (!this.premiumData.Logging) return;
+          let channel: TextChannel = this.Client.CoreBot.channels.cache.get(
+            this.premiumData.LogChannel
+          ) as TextChannel;
+          if (channel == null) return; // TEMP
+          if (this.premiumData.StaffPing) {
+            channel.send(
+              `<@${
+                this.premiumData.StaffRole
+              }>, ${username} has requested to join the guild! Type ${Bot.instance.getPrefix(
+                channel.guild.id
+              )}accept ${username} to let them in!`
+            );
+          } else {
+            channel.send(
+              `${username} has requested to join the guild! Type ${Bot.instance.getPrefix(
+                channel.guild.id
+              )}accept ${username} to let them in!`
+            );
+          }
+        } else if (message.match(/(\w+) left the guild!/)) {
+          let username = message.split(/(\w+) .+/)[0];
+          this.bot.chat(
+            `See ya later, ${username}! We hope you enjoyed your stay! \:)`
+          );
+        }
       }
-    });
+    );
   }
 
   set status(s: boolean) {
@@ -208,11 +215,15 @@ export default class MineflayerBot {
       s
     );
     this.premiumData.isBotOnline = s;
-    this.premiumData.save();
+    try {
+      this.premiumData.save();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  _removeBot() {
-    this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
+  async _removeBot() {
+    await this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
     this.status = false;
   }
 }
