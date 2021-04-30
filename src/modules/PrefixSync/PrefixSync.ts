@@ -80,7 +80,7 @@ export async function generatePrefix(
       uData?.PrefixType === 'NONE' || uData?.PrefixType === ''
         ? undefined
         : pUData.CustomPrefixData.find((e) => e.PrefixType === uData?.PrefixType || e.PrefixType === newPrefix.id)
-          ?.CustomPrefix;
+            ?.CustomPrefix;
   }
 
   if (!guild) return '';
