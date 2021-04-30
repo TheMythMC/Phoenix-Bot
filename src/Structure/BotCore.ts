@@ -112,7 +112,7 @@ export default class BotCore extends Client {
       ],
       nodes: [
         {
-          host: 'lavalink',
+          host: '127.0.0.1',
           password: '#BuyPhoenix2021',
           port: 2333,
         },
