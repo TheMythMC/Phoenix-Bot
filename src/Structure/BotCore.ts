@@ -50,25 +50,49 @@ export default class BotCore extends Client {
       if (message.channel.type === 'dm') return;
       let prefix = await this.Bot.getPrefix(message.guild);
 
+      const mentionRegex = new RegExp(`^<@!${this.user.id}>$`);
+      if (message.content.match(mentionRegex))
+        return await message.channel.send(
+          `My prefix for ${message.guild.name} is \`${await bot.getPrefix(message.guild.id)}\`.`
+        );
+
       if (!message.guild || message.author.bot) return;
 
       if (!message.content.startsWith(prefix)) return;
 
       //eslint-disable-next-line no-unused-vars
-      const [cmd, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);
-      const command = this.commands.get(cmd.toLowerCase()) || this.commands.get(this.aliases.get(cmd.toLowerCase()));
+      const [cmd, ...args] = message.content
+        .slice(prefix.length)
+        .trim()
+        .split(/ +/g);
+      const command =
+        this.commands.get(cmd.toLowerCase()) ||
+        this.commands.get(this.aliases.get(cmd.toLowerCase()));
 
       if (command) {
-        if (command.requireBotOwner && !this.config.BotOwners.includes(message.member.id))
-          return sendErrorMessage(message.channel, 'Only the bot owners can execute this command!');
+        if (
+          command.requireBotOwner &&
+          !this.config.BotOwners.includes(message.member.id)
+        )
+          return sendErrorMessage(
+            message.channel,
+            'Only the bot owners can execute this command!'
+          );
         if (command.requiredPerms) {
           let isAllowed = true;
           command.requiredPerms.forEach((perm: PermissionResolvable) => {
             if (!message.member.hasPermission(perm)) isAllowed = false;
           });
-          if (!isAllowed) return sendErrorMessage(message.channel, 'You are not a high enough role to use this.');
+          if (!isAllowed)
+            return sendErrorMessage(
+              message.channel,
+              'You are not a high enough role to use this.'
+            );
         }
-        if (command.isPremium && !(await this.Bot.GuildManager.isPremium(message.guild.id)))
+        if (
+          command.isPremium &&
+          !(await this.Bot.GuildManager.isPremium(message.guild.id))
+        )
           return sendErrorMessage(message.channel, 'This command is premium. ');
         this.registerGuild(message.guild);
         this.registerUser(message.author);

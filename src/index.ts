@@ -1,10 +1,9 @@
 import readline from 'readline';
-import dotenv from 'dotenv';
 import Bot from './Bot';
 import PremiumUtils from './utils/PremiumUtils';
 
 // Load ENV file into `process.env`
-dotenv.config();
+require('dotenv').config();
 
 // Initialize needed Bots
 new Bot();

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "yarn build && node .",
     "build": "yarn lintnofix && tsc",
-    "prod": "sudo docker-compose up --build extra lavalink",
+    "prod": "sudo docker-compose up --build extra",
     "lint": "eslint ./src --ext .ts --fix",
     "lintnofix": "eslint ./src --ext .ts"
   },

@@ -44,7 +44,7 @@ module.exports = class extends Command {
     playerName: string
   ) {
     minecraftBot.bot.chat(
-      `${playerName}, ${
+      `/gc ${playerName}, ${
         this.responses[Math.floor(Math.random() * this.responses.length)]
       }`
     );

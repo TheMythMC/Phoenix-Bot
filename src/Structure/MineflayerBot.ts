@@ -122,16 +122,19 @@ export default class MineflayerBot {
       // @ts-ignore
       'guildChat',
       async (name: string, message: string) => {
-        // console.log(`${name}: ${message}`);
+        
+        if (name.toLowerCase() === this.bot.username.toLowerCase()) return;
         if (
           message.startsWith(this.premiumData.MCPrefix) &&
-          name.toLowerCase() === this.bot.username.toLowerCase()
+          name.toLowerCase() !== this.bot.username.toLowerCase()
         ) {
+          console.log(message.substring(this.premiumData.MCPrefix.length, message.length));
           this.commandManager.runCommand(
-            message.substring(this.premiumData.MCPrefix.length, message.length),
+            message,
             name,
             this,
-            Bot.instance.CoreBot
+            Bot.instance.CoreBot,
+            this.premiumData.MCPrefix
           );
         }
         if (this.premiumData.Logging) {

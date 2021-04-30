@@ -21,17 +21,27 @@ export default class MineflayerCommandManager {
     message: string,
     playername: string,
     bot: MineflayerBot,
-    discordBot: BotCore
+    discordBot: BotCore,
+    prefix: string
   ) {
-    let [cmd, ...args] = message.split(/\S+/g) || [];
+    let [cmd, ...args] = message.slice(prefix.length).trim().split(/ +/g);
+    
     for (const [key, value] of this.commands) {
       if (key === cmd)
-        /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+        /* EFFICENCY */ {
+        
+        return value.run(args, bot, discordBot, playername);
+      }
       value.aliases.forEach((alias) => {
         if (alias === cmd)
-          /* EFFICENCY */ return value.run(args, bot, discordBot, playername);
+          /* EFFICENCY */ {
+          
+          return value.run(args, bot, discordBot, playername);
+        }
       });
     }
+    console.log(`Cannot find command ${cmd}`);
+    bot.bot.chat(`Cannot find command ${cmd}`);
   }
 
   static loadCommand(dirPath: string, discordBot: BotCore) {

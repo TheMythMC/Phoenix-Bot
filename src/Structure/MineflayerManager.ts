@@ -20,6 +20,7 @@ export default class MineflayerManager {
     this.CommandCache = ca.commands;
     this.AliasesCache = ca.aliases;
     
+    Util.wait(500);
     guilds.forEach(async (guild) => {
       if (
         Bot.instance.GuildManager.isPremium(guild.id) &&

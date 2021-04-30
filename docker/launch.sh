@@ -1,2 +1,2 @@
 #!/bin/bash
-yarn run start
+yarn lint && yarn start
