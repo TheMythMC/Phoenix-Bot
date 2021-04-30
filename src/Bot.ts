@@ -8,6 +8,7 @@ import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 import MineflayerManager from './Structure/MineflayerManager';
 import EventEmitter from 'events';
 import PremiumLinkData from './Schemas/PremiumLinkData';
+import { initialize } from './Structure/HypixelAPI';
 
 export default class Bot {
   static instance: Bot;
@@ -21,6 +22,7 @@ export default class Bot {
   MineflayerManager: MineflayerManager;
   EventEmitter: EventEmitter;
   constructor() {
+    initialize();
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
