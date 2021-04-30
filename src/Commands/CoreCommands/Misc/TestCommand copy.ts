@@ -17,4 +17,5 @@ class TestCommand extends Command {
     message.channel.send('Yes, I work :confused:');
   }
 }
+6;
 module.exports = TestCommand;

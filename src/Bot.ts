@@ -5,6 +5,8 @@ import LinkManager from './Structure/LinkManager';
 import UUIDManager from './Structure/UUIDManager';
 import Server from './express/Server';
 import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
+import Util from './utils/Util';
+import { initialize } from './Structure/HypixelAPI';
 
 export default class Bot {
   static instance: Bot;
@@ -16,6 +18,7 @@ export default class Bot {
   WebServer: Server;
   DatabaseHandler: DatabaseHandler;
   constructor() {
+    initialize();
     Bot.instance = this;
     this.CoreBot = new BotCore(this, {
       token: process.env.BOT_TOKEN,
@@ -25,7 +28,7 @@ export default class Bot {
     this.LinkManager = new LinkManager(/*this*/);
     this.GuildManager = new GuildManager(this);
     this.UUIDManager = new UUIDManager(/*this*/);
-    this.WebServer = new Server(this, 4000);
+    this.WebServer = new Server(this, Util.normalizePort(process.env.PORT) || 4000);
     this.DatabaseHandler = new DatabaseHandler(
       process.env.DB_URI,
       {

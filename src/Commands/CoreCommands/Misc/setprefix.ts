@@ -1,7 +1,6 @@
 import { Message } from 'discord.js';
 import SyncPrefix from '../../../modules/PrefixSync/PrefixSync';
-import PrefixSync from '../../../modules/PrefixSync/PrefixSync';
-import UserData, { createDefault, PrefixTypes } from '../../../Schemas/UserData';
+import UserData from '../../../Schemas/UserData';
 import BotCore from '../../../Structure/BotCore';
 import Command from '../../../Structure/Command';
 import { sendErrorMessage, sendSuccessMessage } from '../../../utils/MessageUtils';
@@ -26,7 +25,7 @@ class SetPrefix extends Command {
             message.member.guild
           )}unlink\` and \`${await _client.Bot.getPrefix(message.member.guild)}link\`. `
         ); // this will happen only VERY rarely
-      let p = await SyncPrefix(message.member, _client.Bot, user, _args[0]);
+      let p = await SyncPrefix(message.member, _client.Bot, user, undefined, _args[0]);
       user.PrefixType = _args[0];
       user.save();
       await message.member.setNickname(p);
@@ -38,7 +37,7 @@ class SetPrefix extends Command {
         if (m) {
           try {
             // requires testing but 80% sure it works
-            let nick = await SyncPrefix(m, _client.Bot, user, _args[0]);
+            let nick = await SyncPrefix(m, _client.Bot, user, undefined, _args[0]);
 
             await m.setNickname(nick);
           } catch (err) {} // catches EVERYTHING cuz we dont care if anything happens outside the current server

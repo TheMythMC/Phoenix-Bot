@@ -7,6 +7,7 @@ import config from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
+import { start } from '../modules/PrefixSync/PrefixSyncService';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
@@ -19,6 +20,8 @@ export default class BotCore extends Client {
     super({
       disableMentions: 'everyone',
     });
+
+    start(bot);
 
     this.validate(options);
 
@@ -83,15 +86,18 @@ export default class BotCore extends Client {
   async registerGuild(guild: Guild) {
     if (await GuildData.exists({ ServerID: guild.id })) return;
     let doc = createDefault(guild.id, this.defaultPrefix);
-    doc.save();
+    await doc.save();
 
     this.Bot.GuildManager.addGuild(doc);
   }
 
   async registerUser(user: User) {
+    console.log(user.id);
+    console.log(await UserData.exists({ UserID: user.id }));
+
     if (await UserData.exists({ UserID: user.id })) return;
     let doc = createUser(user.id);
-    doc.save();
+    await doc.save();
   }
 
   async syncGuildMember(member) {

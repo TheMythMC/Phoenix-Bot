@@ -2,7 +2,11 @@ import Hypixel from 'phoenix-slothpixel';
 import Guild from 'phoenix-slothpixel/Guild';
 import Player from 'phoenix-slothpixel/Player';
 
-const slothpixelURL = process.env.SLOTHPIXEL_URL;
+let slothpixelURL = 'https://api.slothpixel.me/api/';
+
+export function initialize() {
+  slothpixelURL = process.env.SLOTHPIXEL_URL || 'https://api.slothpixel.me/api/';
+}
 
 export async function getPlayerData(playerName: string): Promise<Player> {
   return await Hypixel.playerStats(playerName, `${slothpixelURL}players/`);

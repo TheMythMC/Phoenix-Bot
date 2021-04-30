@@ -1,6 +1,6 @@
-import { GuildMember, User } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import Bot from '../../Bot';
-import UserData, { IUserData } from '../../Schemas/UserData';
+import { IUserData } from '../../Schemas/UserData';
 import { getPlayerData } from '../../Structure/HypixelAPI';
 import Prefix from './Prefix';
 import PrefixesStore from './PrefixesStore';
@@ -9,6 +9,7 @@ export default async function SyncPrefix(
   guildMember: GuildMember,
   Client: Bot,
   userData: IUserData,
+  pData?,
   testPrefixType?: string
 ) {
   // testPrefixType is for checking if a certain prefix will work with a user
@@ -23,21 +24,24 @@ export default async function SyncPrefix(
     );
   }
 
-  const playerData = await getPlayerData(MinecraftUUID);
+  const playerData = pData || (await getPlayerData(MinecraftUUID));
 
   if (!playerData) throw new Error(`The player you were linked to no longer exists. `); // this will rarely happen
 
-  const prefixType = testPrefixType || userData.PrefixType;
+  const prefixType = testPrefixType || userData.PrefixType || 'NONE';
 
   if (!prefixType) return;
 
   const prefix = PrefixesStore[prefixType];
 
-  if (!prefix && prefixType !== 'NONE') throw new Error('Invalid prefix. ');
+  if (prefixType === 'NONE') return playerData.username;
+
+  if (!prefix) throw new Error('Invalid prefix. ');
 
   const res = prefixType === 'NONE' ? undefined : await prefix.run(playerData); // if an error occurs, itll just float up and eventually be caught
 
   const generatedPrefix = await generatePrefix(prefix, guildMember, res, playerData, Client);
+
   return generatedPrefix;
 }
 
