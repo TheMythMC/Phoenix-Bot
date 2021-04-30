@@ -7,15 +7,12 @@ import GuildData from '../Schemas/GuildData';
 import Bot from '../Bot';
 import { GuildMember } from 'discord.js';
 import Command from '../Structure/Command';
-import tempconfig from '../../config.json';
-let config = tempconfig as Config;
+import config from '../../config.json';
 
 export default class Util {
   static isClass(input: Object) {
     return (
-      typeof input === 'function' &&
-      typeof input.prototype === 'object' &&
-      input.toString().substring(0, 5) === 'class'
+      typeof input === 'function' && typeof input.prototype === 'object' && input.toString().substring(0, 5) === 'class'
     );
   }
   static get directory() {
@@ -29,8 +26,7 @@ export default class Util {
         delete require.cache[commandFile];
         const { name } = pathParse(commandFile);
         const File = require(commandFile);
-        if (!this.isClass(File))
-          throw new TypeError(`The command ${name} does not export a class.`);
+        if (!this.isClass(File)) throw new TypeError(`The command ${name} does not export a class.`);
         const command = new File(client, name.toLowerCase());
         client.commands.set(command.name, command);
         console.log(`Set ${command.name} as a command`);
@@ -62,16 +58,12 @@ export default class Util {
   static genRandomKey(bytes = 16) {
     return randomBytes(bytes).toString('hex');
   }
-  static async wait(milliseconds: number) {
+  static wait(milliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 
   // this is for checking if a session is permitted to access a certain guild
-  static async isSessionPermitted(
-    sessionID: string,
-    guildID: string,
-    bot: Bot
-  ): Promise<boolean> {
+  static async isSessionPermitted(sessionID: string, guildID: string, bot: Bot): Promise<boolean> {
     try {
       if (!sessionID) return false;
 
@@ -79,11 +71,19 @@ export default class Util {
       if (!accessToken) return false; // invalid session id
       const { id } = await bot.DiscordAPIUserCache.getDiscordData(accessToken);
 
+      return this.userPermittedGuild(id, guildID, bot);
+    } catch (err) {
+      return false;
+    }
+  }
+
+  static async userPermittedGuild(userID: string, guildID: string, bot: Bot) {
+    try {
       const guild = await bot.CoreBot.guilds.fetch(guildID);
 
-      const guildMember = await guild.members.fetch(id);
+      const guildMember = await guild.members.fetch(userID);
 
-      if (!guildMember) return false; // ur not even in that server what are you doing trying to modify stuff on that server >:(
+      if (!guildMember) return false;
 
       // get guild data
       const gData = await GuildData.findOne({ ServerID: guildID }).exec();
@@ -114,28 +114,29 @@ export default class Util {
     return data?.AccessToken;
   }
 
-  static async isCommandAllowed(
-    member: GuildMember,
-    command: Command
-  ): Promise<boolean> {
-    if (command.requireBotOwner && !config.BotOwners.includes(member.id))
-      return false;
+  static isCommandAllowed(member: GuildMember, command: Command): boolean {
+    if (command.requireBotOwner && !config.BotOwners.includes(member.id)) return false;
     for (const perm of command.requiredPerms) {
       if (!member.hasPermission(perm)) return false;
     }
-    if (
-      (await Bot.instance.GuildManager.isPremium(member.guild.id)) &&
-      command.isPremium
-    )
-      return false;
     return true;
   }
-}
 
-interface Config {
-  UUIDUsernameAPICache: boolean;
-  UUIDUsernameAPICacheTime: number;
-  BotOwners: string[];
+  static normalizePort(val) {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+
+    return false;
+  }
 }
 
 module.exports = Util;
