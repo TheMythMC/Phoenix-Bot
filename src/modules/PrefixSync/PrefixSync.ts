@@ -58,7 +58,7 @@ export async function generatePrefix(
 ): Promise<string> {
   const guild = await client.GuildManager.getGuild(user.guild.id);
   let guildPrefixTemplate;
-  let userPrefixTemplate
+  let userPrefixTemplate;
   let newPrefix = prefix;
   let newGenValue = prefixGenValue;
   if (PremiumUtils.isGuildPremium(user.guild.id)) {
@@ -80,7 +80,7 @@ export async function generatePrefix(
       uData?.PrefixType === 'NONE' || uData?.PrefixType === ''
         ? undefined
         : pUData.CustomPrefixData.find((e) => e.PrefixType === uData?.PrefixType || e.PrefixType === newPrefix.id)
-          ?.CustomPrefix
+            ?.CustomPrefix;
   }
 
   if (!guild) return '';
