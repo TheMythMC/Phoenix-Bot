@@ -8,7 +8,9 @@ module.exports = class extends Command {
             description: 'Send a guild chat to your guild.',
             usage: '%pchat <Message>',
             category: 'Minecraft Commands',
-            isPremium: true
+            isPremium: true,
+            // @ts-ignore
+            requiredPerms: 'ADMINISTRATOR'
         });
     }
 

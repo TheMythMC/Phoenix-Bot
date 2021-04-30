@@ -74,15 +74,9 @@ export default class MineflayerBot {
   }
 
   setupBot() {
-    this.bot.addChatPattern('guildChat', /Guild> \[.+\] (\w+) \[\w+\]: (.+)/, {
-      repeat: true,
-      parse: true,
-    });
+    this.bot.chatAddPattern(/Guild > \[.+\] (\w+) \[\w+\]: (.+)/, 'guildChat');
 
-    this.bot.addChatPattern('vanillaChat', /(.+)/, {
-      repeat: true,
-      parse: true,
-    });
+    this.bot.chatAddPattern(/(.+)/, 'vanillaChat');
 
     this.bot.on('error', (err) => {
       console.log(err);
@@ -128,7 +122,7 @@ export default class MineflayerBot {
       // @ts-ignore
       'guildChat',
       async (name: string, message: string) => {
-        console.log(`${name}: ${message}`);
+        // console.log(`${name}: ${message}`);
         if (
           message.startsWith(this.premiumData.MCPrefix) &&
           name.toLowerCase() === this.bot.username.toLowerCase()
@@ -169,7 +163,7 @@ export default class MineflayerBot {
       // @ts-ignore
       'vanillaChat',
       async (message: string) => {
-        console.log(message);
+        // console.log(message);
         if (message.match(/(\w+) joined the guild!/)) {
           this.bot.chat(
             joinMessages[

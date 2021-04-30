@@ -28,9 +28,9 @@ export default class Bot {
     });
     this.EventEmitter = new EventEmitter();
     this.DiscordAPIUserCache = new DiscordAPIUserCache();
-    this.LinkManager = new LinkManager(/*this*/);
+    this.LinkManager = new LinkManager();
     this.GuildManager = new GuildManager(this);
-    this.UUIDManager = new UUIDManager(/*this*/);
+    this.UUIDManager = new UUIDManager();
     this.WebServer = new Server(this, 4000);
     this.DatabaseHandler = new DatabaseHandler(
       process.env.DB_URI,
@@ -49,7 +49,6 @@ export default class Bot {
 
   async loadMineflayerBots() {
     const data = await PremiumLinkData.find().exec();
-    console.log(data);
 
     this.MineflayerManager = new MineflayerManager(this, data);
   }

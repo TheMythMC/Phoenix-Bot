@@ -28,7 +28,7 @@ export default class PremiumUtils {
 
   static async shutDown() {
     this.removeAllMCBots();
-    await Util.wait(5000);
+    await Util.wait(2500);
     Bot.instance.CoreBot.destroy();
     process.exit(0);
   }

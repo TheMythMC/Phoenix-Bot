@@ -47,7 +47,7 @@ export default class MineflayerManager {
       username: guildData.BotUsername,
       password: guildData.BotPassword,
       auth: guildData.BotAuth,
-      version: '1.12.2',
+      version: '1.8.9',
       host: 'us.hypixel.net',
       port: 25565,
       colorsEnabled: false,
