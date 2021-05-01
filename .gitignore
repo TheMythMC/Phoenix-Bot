@@ -117,3 +117,7 @@ package-lock.json
 
 # lavalink
 Lavalink.jar
+
+# Runtime
+nohup.out
+.fuse_hidden*

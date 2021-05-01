@@ -40,7 +40,6 @@ export default class MineflayerCommandManager {
         }
       });
     }
-    console.log(`Cannot find command ${cmd}`);
     bot.bot.chat(`Cannot find command ${cmd}`);
   }
 

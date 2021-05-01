@@ -7,9 +7,10 @@
   "scripts": {
     "start": "yarn build && node .",
     "build": "yarn lintnofix && tsc",
-    "prod": "java -jar ./Lavalink.jar & yarn lint && yarn start",
+    "full": "java -jar ./Lavalink.jar & yarn lint && yarn start",
     "lint": "eslint ./src --ext .ts --fix",
-    "lintnofix": "eslint ./src --ext .ts"
+    "lintnofix": "eslint ./src --ext .ts",
+    "prod": "nohup yarn full < /dev/null"
   },
   "repository": {
     "type": "git",

@@ -117,18 +117,17 @@ export default class MineflayerBot {
     // bot.on("end", () => {
     //   this.MineCraftBots.setBot(guildData.ServerID, this.createBot(guildData));
     // });
-
+    let alreadyErrored = false;
     this.bot.on(
       // @ts-ignore
       'guildChat',
       async (name: string, message: string) => {
         
-        if (name.toLowerCase() === this.bot.username.toLowerCase()) return;
         if (
+          name.toLowerCase() === this.bot.username.toLowerCase() && 
           message.startsWith(this.premiumData.MCPrefix) &&
           name.toLowerCase() !== this.bot.username.toLowerCase()
         ) {
-          console.log(message.substring(this.premiumData.MCPrefix.length, message.length));
           this.commandManager.runCommand(
             message,
             name,
@@ -143,19 +142,23 @@ export default class MineflayerBot {
               this.premiumData.LogChannel
             )) || null;
 
-          if (tempLogChannel === null)
-            this.bot.chat(
-              'The log channel has an invalid ID. Please contact guild administrators if this issue isn\'t resolved'
+          if (tempLogChannel === null && !alreadyErrored) {
+            alreadyErrored = true;
+            return this.bot.chat(
+              'The log channel has an invalid ID. Please contact guild administrators if this issue isn\'t intentional'
             );
-
+          }
           // Checks if its text (should always be, will throw error)
           if (tempLogChannel.isText()) {
             let logChannel: TextChannel = tempLogChannel as TextChannel;
             logChannel.send(`\`${name}: ${message}\``);
           } else {
-            this.bot.chat(
+            if (!alreadyErrored) {
+              alreadyErrored = true;
+              return this.bot.chat(
               'The log channel has an invalid ID or is a Voice Channel. Please contact guild staff/the guild master.'
-            );
+              );
+            }
           }
         }
       }
@@ -174,7 +177,9 @@ export default class MineflayerBot {
             ].replace('%n', message.split(/(\w+) joined the guild!/)[0])
           );
         } else if (message.match(/(\w+) has requested to join the Guild!/)) {
-          let username = message.split(/(\w+) (.+)/)[0];
+          let username = message.split(
+            /(\w+) has requested to join the Guild!/
+          )[0];
           if (!this.premiumData.Logging) return;
           let channel: TextChannel = this.Client.CoreBot.channels.cache.get(
             this.premiumData.LogChannel
@@ -196,7 +201,7 @@ export default class MineflayerBot {
             );
           }
         } else if (message.match(/(\w+) left the guild!/)) {
-          let username = message.split(/(\w+) .+/)[0];
+          let username = message.split(/(\w+) left the guild!/)[0];
           this.bot.chat(
             `See ya later, ${username}! We hope you enjoyed your stay! \:)`
           );
@@ -220,7 +225,7 @@ export default class MineflayerBot {
   }
 
   async _removeBot() {
-    await this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
+    this.manager.MineCraftBots.delete(this.premiumData.ServerID); // remove the bot
     this.status = false;
   }
 }

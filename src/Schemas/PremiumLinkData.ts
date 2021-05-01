@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { isObjectBindingPattern } from 'typescript';
 
 // this is the server pack
 export interface IPremiumLinkData extends mongoose.Document {
@@ -25,7 +24,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   isBotOnline: boolean;
   // To see if bot should start automatically
   botAutoRun: boolean;
-  // Role ID for staff pings (eg. when there's an invite request, etc)
+  // Role Snowflake (ID) for staff pings (eg. when there's an invite request, etc)
   StaffRole: string;
   // If bot is allowed to ping staff
   StaffPing: boolean;

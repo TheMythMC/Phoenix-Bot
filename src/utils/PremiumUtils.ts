@@ -5,6 +5,7 @@ import Util from './Util';
 import Bot from '../Bot';
 import PremiumLinkData from '../Schemas/PremiumLinkData';
 import PremiumUserData from '../Schemas/PremiumUserData';
+import childProcess from 'child_process';
 
 export default class PremiumUtils {
   static getMinecraftBotFromGuild(guildID: string) {
@@ -30,6 +31,11 @@ export default class PremiumUtils {
     this.removeAllMCBots();
     await Util.wait(2500);
     Bot.instance.CoreBot.destroy();
+    if (process.platform === 'win32') {
+      childProcess.exec('taskkill /f /im java.exe');
+    } else {
+      childProcess.exec('killall java');
+    }
     process.exit(0);
   }
 }

@@ -9,7 +9,8 @@ module.exports = class extends MineflayerCommand {
       description: 'Fetches a skylea profile in game',
       usage: '%pskylea <player name>',
       aliases: [
-        'skylea'
+        'skylea',
+        'sl'
       ]
     });
   }
