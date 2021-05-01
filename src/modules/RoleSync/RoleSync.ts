@@ -1,3 +1,6 @@
+import { GuildMember } from 'discord.js';
+import { IRole } from '../../Schemas/GuildData';
+
 // im too lazy to make registration system so im just resorting to this
 const roleMethods = {
   GuildRank: require('./RoleTemplates/GuildRank'),
@@ -5,7 +8,7 @@ const roleMethods = {
   GuildRole: require('./RoleTemplates/GuildRole'),
 };
 
-export default async (member, uuid, roleLinks = []) => {
+export default async (member: GuildMember, uuid: string, roleLinks: Array<IRole> = []) => {
   const guild = member.guild;
 
   const cache = {}; // will be rewritten every run to avoid old data

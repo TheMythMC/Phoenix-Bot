@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import discord from 'discord.js';
 
 export interface IRole {
-  DiscordRoleID: String;
+  DiscordRoleID: string;
   RoleTemplate: string;
   Params: Array<string>;
 }
