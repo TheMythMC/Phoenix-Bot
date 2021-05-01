@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { isObjectBindingPattern } from 'typescript';
 
 // this is the server pack
 export interface IPremiumLinkData extends mongoose.Document {
@@ -74,13 +75,41 @@ const Default = {
   ServerPrefixType: '',
   ServerPrefixTemplate: '',
 };
-export const createDefault = (DiscordID: string, ServerID: string, ExpireDate: number) => {
+export const createDefault = (
+  DiscordID: string,
+  ServerID: string,
+  ExpireDate: number,
+  BotUsername: string,
+  BotPassword: string,
+  BotAuth: 'microsoft' | 'mojang',
+  LogChannel: string,
+  MCPrefix: string,
+  Logging: boolean,
+  isBotOnline: boolean,
+  StaffRole: string,
+  StaffPing: boolean,
+  EnforceCustomPrefix: false,
+  ServerPrefixTemplate: string,
+  ServerPrefixType: string
+) => {
   let obj = {} as IPremiumLinkData;
 
   Object.assign(obj, Default);
   obj.DiscordID = DiscordID;
   obj.ServerID = ServerID;
   obj.ExpireDate = ExpireDate;
+  obj.BotUsername = BotUsername;
+  obj.BotPassword = BotPassword;
+  obj.BotAuth = BotAuth;
+  obj.LogChannel = LogChannel;
+  obj.MCPrefix = MCPrefix;
+  obj.Logging = Logging;
+  obj.isBotOnline = isBotOnline;
+  obj.StaffRole = StaffRole;
+  obj.StaffPing = StaffPing;
+  obj.EnforceCustomPrefix = EnforceCustomPrefix;
+  obj.ServerPrefixTemplate = ServerPrefixTemplate;
+  obj.ServerPrefixType = ServerPrefixType;
   return new model(obj);
 };
 

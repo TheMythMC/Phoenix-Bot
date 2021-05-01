@@ -30,7 +30,7 @@ export default async function SyncPrefix(
 
   const playerData = pData || (await getPlayerData(MinecraftUUID));
 
-  if (!playerData) throw new Error('The player you were linked to no longer exists. '); // this will rarely happen
+  if (!playerData) throw new Error('The player you were linked to no longer exists. '); // this will rarely (if ever) happen
 
   const prefixType = testPrefixType || userData.PrefixType || 'NONE';
 
@@ -57,8 +57,8 @@ export async function generatePrefix(
   client: Bot
 ): Promise<string> {
   const guild = await client.GuildManager.getGuild(user.guild.id);
-  let guildPrefixTemplate;
-  let userPrefixTemplate;
+  let guildPrefixTemplate: string;
+  let userPrefixTemplate: string;
   let newPrefix = prefix;
   let newGenValue = prefixGenValue;
   if (PremiumUtils.isGuildPremium(user.guild.id)) {
