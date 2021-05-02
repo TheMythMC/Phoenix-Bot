@@ -36,6 +36,10 @@ export async function run(client: Bot) {
         gCache[guild.id] = gData;
       }
 
+      console.log('GDATA');
+      console.log(gData);
+      console.log(gCache);
+
       if (member) {
         try {
           await RoleSync(member, user.MinecraftUUID, gData.RoleLinks);

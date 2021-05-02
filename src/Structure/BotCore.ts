@@ -7,7 +7,8 @@ import config from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
-import { start } from '../modules/PrefixSync/PrefixSyncService';
+import { start as PrefixStart } from '../modules/PrefixSync/PrefixSyncService';
+import { start as RoleStart } from '../modules/RoleSync/RoleSyncService';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
@@ -21,7 +22,8 @@ export default class BotCore extends Client {
       disableMentions: 'everyone',
     });
 
-    start(bot);
+    PrefixStart(bot);
+    RoleStart(bot);
 
     this.validate(options);
 
