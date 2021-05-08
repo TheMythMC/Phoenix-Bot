@@ -9,8 +9,7 @@
     "build": "yarn lintnofix && tsc",
     "full": "java -jar ./Lavalink.jar & yarn lint && yarn start",
     "lint": "eslint ./src --ext .ts --fix",
-    "lintnofix": "eslint ./src --ext .ts",
-    "prod": "nohup yarn full < /dev/null"
+    "lintnofix": "eslint ./src --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -36,7 +35,6 @@
     "express-ws": "^4.0.0",
     "glob": "^7.1.6",
     "glob-promise": "^4.0.1",
-    "jslint": "^0.12.1",
     "jsonwebtoken": "^8.5.1",
     "mineflayer": "^2.37.1",
     "mongoose": "^5.11.17",
@@ -55,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
-    "eslint-plugin-react": "^7.23.2"
+    "eslint-plugin-react": "^7.23.2",
+    "jslint": "^0.12.1"
   }
 }

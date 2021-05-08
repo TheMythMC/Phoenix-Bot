@@ -52,10 +52,10 @@ export default class MineflayerCommandManager {
       for (let match of matches) {
         delete require.cache[match];
         const { name } = path.parse(match);
-        const File = require(match);
+        const File = require(match) as typeof MineflayerCommand;
         if (!Util.isClass(File))
           throw new TypeError(`The command ${name} does not export a class.`);
-        const command: MineflayerCommand = new File(discordBot, name.toLowerCase());
+        const command = new File(discordBot, name.toLowerCase());
         if (!(command instanceof MineflayerCommand))
           throw new TypeError(
             `The command ${name} doesn't belong in Commands.`
