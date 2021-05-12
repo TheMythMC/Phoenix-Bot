@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import discord from 'discord.js';
 
 export interface IRole {
-  DiscordRoleID: String;
+  DiscordRoleID: string;
   RoleTemplate: string;
   Params: Array<string>;
 }
@@ -33,7 +33,7 @@ export interface IGuildData extends mongoose.Document {
   Prefix: string;
   BotUsername: string;
   BotPassword: string;
-  BotAuth: string;
+  BotAuth: 'microsoft' | 'mojang';
   DashboardRoles: Array<string>;
   DashboardPerms: Array<discord.PermissionResolvable>;
 }

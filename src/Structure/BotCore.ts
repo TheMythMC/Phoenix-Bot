@@ -1,14 +1,20 @@
-import { Client, Collection, Guild, PermissionResolvable, User } from 'discord.js';
+import {
+  Client,
+  Collection,
+  Guild,
+  PermissionResolvable,
+  User,
+} from 'discord.js';
 import { sendErrorMessage } from '../utils/MessageUtils';
 import Util from '../utils/Util';
 import path from 'path';
 import GuildData, { createDefault } from '../Schemas/GuildData';
-import tempConfig from '../../config.json';
+import config from '../../config.json';
 import RoleSync from '../modules/RoleSync/RoleSync';
 import Bot from '../Bot';
 import Command from './Command';
-import { Manager, VoicePacket } from 'erela.js';
-import Spotify from 'erela.js-spotify';
+import { start as PrefixStart } from '../modules/PrefixSync/PrefixSyncService';
+import { start as RoleStart } from '../modules/RoleSync/RoleSyncService';
 
 import UserData, { createDefault as createUser } from '../Schemas/UserData';
 
@@ -17,18 +23,17 @@ export default class BotCore extends Client {
   aliases: Map<string, string>;
   Bot: Bot;
   defaultPrefix: string;
-  manager: Manager;
-  config: Config;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: 'everyone',
     });
 
+    PrefixStart(bot);
+    RoleStart(bot);
+
     this.validate(options);
 
     this.commands = new Collection();
-
-    this.config = tempConfig as Config;
 
     this.aliases = new Collection();
 
@@ -41,19 +46,19 @@ export default class BotCore extends Client {
     this.on('guildMemberAdd', this.syncGuildMember);
 
     this.once('ready', () => {
-      console.log(`Logged in as ${this.user.tag}!`);
-      // So music works
-      this.manager.init(this.user.id);
+      console.log(`Logged in as ${this.user.username}!`);
     });
 
     this.on('message', async (message) => {
       if (message.channel.type === 'dm') return;
       let prefix = await this.Bot.getPrefix(message.guild);
 
-      const mentionRegex = new RegExp(`^<@!${this.user.id}>$`);
+      const mentionRegex = new RegExp(`^<@!${this.user.id}> (.)`);
       if (message.content.match(mentionRegex))
         return await message.channel.send(
-          `My prefix for ${message.guild.name} is \`${await bot.getPrefix(message.guild.id)}\`.`
+          `My prefix for ${message.guild.name} is \`${await bot.getPrefix(
+            message.guild.id
+          )}\`.`
         );
 
       if (!message.guild || message.author.bot) return;
@@ -72,7 +77,7 @@ export default class BotCore extends Client {
       if (command) {
         if (
           command.requireBotOwner &&
-          !this.config.BotOwners.includes(message.member.id)
+          !config.BotOwners.includes(message.member.id)
         )
           return sendErrorMessage(
             message.channel,
@@ -89,88 +94,55 @@ export default class BotCore extends Client {
               'You are not a high enough role to use this.'
             );
         }
-        if (
-          command.isPremium &&
-          !(await this.Bot.GuildManager.isPremium(message.guild.id))
-        )
-          return sendErrorMessage(message.channel, 'This command is premium. ');
         this.registerGuild(message.guild);
         this.registerUser(message.author);
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
     });
-
-    // Music stuff
-
-    this.manager = new Manager({
-      plugins: [
-        new Spotify({
-          clientID: process.env.SPOTIFY_ID,
-          clientSecret: process.env.SPOTIFY_SECRET,
-        }),
-      ],
-      nodes: [
-        {
-          host: '127.0.0.1',
-          password: '#BuyPhoenix2021',
-          port: 2333,
-        },
-      ],
-
-      send: (id, payload) => {
-        const guild = this.guilds.cache.get(id);
-
-        if (guild) guild.shard.send(payload);
-      },
-    });
-
-    // Emitted whenever a node connects
-    this.manager.on('nodeConnect', (node) => {
-      console.log(`Node "${node.options.identifier}" connected.`);
-    });
-
-    this.on('raw', (d: VoicePacket) => this.manager.updateVoiceState(d));
-
-    // Emitted whenever a node encountered an error
-    this.manager.on('nodeError', (node, error) => {
-      console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`);
-    });
   }
-  // Back to Discord stuff
 
   validate(options) {
-    if (typeof options !== 'object') throw new TypeError('Options must be type of object');
+    if (typeof options !== 'object')
+      throw new TypeError('Options must be type of object');
 
-    if (!options.token) throw new Error('You must provide a token for the client');
+    if (!options.token)
+      throw new Error('You must provide a token for the client');
     this.token = options.token;
   }
 
   async start(token = this.token) {
     await Util.loadCommands(this, `Commands${path.sep}CoreCommands`);
-    await Util.loadCommands(this, `Commands${path.sep}PremiumCommands`);
     await super.login(token);
   }
 
   async registerGuild(guild: Guild) {
     if (await GuildData.exists({ ServerID: guild.id })) return;
     let doc = createDefault(guild.id, this.defaultPrefix);
-    doc.save();
+    await doc.save();
 
     this.Bot.GuildManager.addGuild(doc);
   }
 
   async registerUser(user: User) {
+    console.log(user.id);
+    console.log(await UserData.exists({ UserID: user.id }));
+
     if (await UserData.exists({ UserID: user.id })) return;
     let doc = createUser(user.id);
-    doc.save();
+    await doc.save();
   }
 
   async syncGuildMember(member) {
     const d = await this.Bot.LinkManager.getDataByDiscord(member.id);
     if (d) {
       try {
-        RoleSync(member, d.MinecraftUUID, (await this.Bot.GuildManager.getGuild(member.guild.id))?.data.RoleLinks);
+        RoleSync(
+          member,
+          d.MinecraftUUID,
+          (await this.Bot.GuildManager.getGuild(member.guild.id))?.data
+            .RoleLinks
+        );
       } catch (err) {}
     }
   }
@@ -179,10 +151,4 @@ export default class BotCore extends Client {
 interface IBotCore {
   token: string;
   defaultPrefix: string;
-}
-
-interface Config {
-  UUIDUsernameAPICache: boolean;
-  UUIDUsernameAPICacheTime: number;
-  BotOwners: string[];
 }

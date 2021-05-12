@@ -17,7 +17,7 @@ export interface IUserData extends mongoose.Document {
 
 const Default = {
   UserID: '',
-  PrefixType: '',
+  PrefixType: 'NONE',
 };
 
 export const schema = new mongoose.Schema({

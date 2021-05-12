@@ -114,6 +114,7 @@ config.json
 
 # yarn
 package-lock.json
+yarn.lock
 
 # lavalink
 Lavalink.jar
