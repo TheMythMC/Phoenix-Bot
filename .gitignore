@@ -110,5 +110,5 @@ config.json
 .tsbuild/
 
 # package managers
-yarn.lock
-package-lock.json
+*.lock
+*-lock.json
