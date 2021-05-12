@@ -42,7 +42,7 @@ export default class Bot {
     this.CoreBot.start();
   }
 
-  async getPrefix(guild) {
+  async getPrefix(guild): Promise<string> {
     return (
       (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
       (await this.GuildManager.getGuild(guild))?.data?.Prefix ||

@@ -108,3 +108,7 @@ config.json
 
 # typescript
 .tsbuild/
+
+# package managers
+yarn.lock
+package-lock.json

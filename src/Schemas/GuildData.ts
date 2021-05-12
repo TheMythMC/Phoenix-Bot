@@ -33,7 +33,7 @@ export interface IGuildData extends mongoose.Document {
   Prefix: string;
   BotUsername: string;
   BotPassword: string;
-  BotAuth: string;
+  BotAuth: 'microsoft' | 'mojang';
   DashboardRoles: Array<string>;
   DashboardPerms: Array<discord.PermissionResolvable>;
 }
