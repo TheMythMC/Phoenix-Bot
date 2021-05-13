@@ -1,6 +1,6 @@
 import express from 'express';
 import Bot from '../../../../../Bot';
-import PremiumLinkData from '../../../../../Schemas/PremiumLinkData';
+import GuildData from '../../../../../Schemas/GuildData';
 import Util from '../../../../../utils/Util';
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     return res.status(401).end();
 
   // NOTE: this endpoint will NOT gurantee that the bot will successfully start, rather it will make the bot attempt to start
-  const guildPData = await PremiumLinkData.findOne({
+  const guildPData = await GuildData.findOne({
     ServerID: GUILDID,
   }).exec();
 

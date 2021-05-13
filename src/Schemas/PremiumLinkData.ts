@@ -23,7 +23,7 @@ export interface IPremiumLinkData extends mongoose.Document {
   // Boolean to see if the bot is online
   isBotOnline: boolean;
   // To see if bot should start automatically
-  botAutoRun: boolean;
+  botAutoRun: boolean; 
   // Role Snowflake (ID) for staff pings (eg. when there's an invite request, etc)
   StaffRole: string;
   // If bot is allowed to ping staff
@@ -40,56 +40,19 @@ export const schema = new mongoose.Schema({
   DiscordID: String,
   ServerID: String,
   ExpireDate: Number,
-  BotUsername: String,
-  BotPassword: String,
-  BotAuth: String,
-  LogChannel: String,
-  MCPrefix: String,
-  Logging: Boolean,
-  isBotOnline: Boolean,
-  botAutoRun: Boolean,
-  StaffRole: String,
-  StaffPing: Boolean,
-  EnforceCustomPrefix: Boolean,
-  ServerPrefixType: String,
-  ServerPrefixTemplate: String,
+  
 });
 
 const model = mongoose.model<IPremiumLinkData>('PremiumLinkData', schema);
 const Default = {
   DiscordID: '',
   ServerID: '',
-  ExpireDate: 0,
-  BotUsername: '',
-  BotPassword: '',
-  BotAuth: 'mojang',
-  LogChannel: '',
-  MCPrefix: '!',
-  Logging: false,
-  isBotOnline: false,
-  botAutoRun: false,
-  StaffRole: '',
-  StaffPing: true,
-  EnforceCustomPrefix: false,
-  ServerPrefixType: '',
-  ServerPrefixTemplate: '',
+  ExpireDate: 0
 };
 export const createDefault = (
   DiscordID: string,
   ServerID: string,
-  ExpireDate: number,
-  BotUsername: string,
-  BotPassword: string,
-  BotAuth: 'microsoft' | 'mojang',
-  LogChannel: string,
-  MCPrefix: string,
-  Logging: boolean,
-  isBotOnline: boolean,
-  StaffRole: string,
-  StaffPing: boolean,
-  EnforceCustomPrefix: false,
-  ServerPrefixTemplate: string,
-  ServerPrefixType: string
+  ExpireDate: number
 ) => {
   let obj = {} as IPremiumLinkData;
 
@@ -97,18 +60,6 @@ export const createDefault = (
   obj.DiscordID = DiscordID;
   obj.ServerID = ServerID;
   obj.ExpireDate = ExpireDate;
-  obj.BotUsername = BotUsername;
-  obj.BotPassword = BotPassword;
-  obj.BotAuth = BotAuth;
-  obj.LogChannel = LogChannel;
-  obj.MCPrefix = MCPrefix;
-  obj.Logging = Logging;
-  obj.isBotOnline = isBotOnline;
-  obj.StaffRole = StaffRole;
-  obj.StaffPing = StaffPing;
-  obj.EnforceCustomPrefix = EnforceCustomPrefix;
-  obj.ServerPrefixTemplate = ServerPrefixTemplate;
-  obj.ServerPrefixType = ServerPrefixType;
   return new model(obj);
 };
 

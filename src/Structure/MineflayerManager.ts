@@ -1,4 +1,4 @@
-import { IPremiumLinkData } from '../Schemas/PremiumLinkData';
+import { IGuildData } from '../Schemas/GuildData';
 import Bot from '../Bot';
 import MineflayerCommandManager from './Mineflayer/MineflayerCommandManager';
 import MineflayerBot from './MineflayerBot';
@@ -10,7 +10,7 @@ export default class MineflayerManager {
   MineCraftBots: Map<string, MineflayerBot>;
   CommandCache: Map<string, MineflayerCommand>;
   AliasesCache: Map<string, string>;
-  constructor(bot: Bot, guilds: IPremiumLinkData[]) {
+  constructor(bot: Bot, guilds: IGuildData[]) {
     this.bot = bot;
     this.MineCraftBots = new Map();
     let ca = MineflayerCommandManager.loadCommand(
@@ -23,7 +23,7 @@ export default class MineflayerManager {
     Util.wait(1000);
     guilds.forEach(async (guild) => {
       if (
-        Bot.instance.GuildManager.isPremium(guild.id) &&
+        Bot.instance.GuildManager.isPremium(guild.ServerID) &&
         guild.ServerID &&
         !guild.isBotOnline &&
         guild.BotUsername &&
@@ -43,10 +43,10 @@ export default class MineflayerManager {
     return this.MineCraftBots;
   }
 
-  createBot(guildData: IPremiumLinkData): MineflayerBot {
+  createBot(guildData: IGuildData): MineflayerBot {
     return new MineflayerBot(this.bot, this, guildData, {
-      username: guildData.BotUsername,
-      password: guildData.BotPassword,
+      username: guildData.BotUsername.toString(),
+      password: guildData.BotPassword.toString(),
       auth: guildData.BotAuth,
       version: '1.8.9',
       host: 'us.hypixel.net',
@@ -57,7 +57,7 @@ export default class MineflayerManager {
   }
   
 
-  startBot(guildData: IPremiumLinkData) {
+  startBot(guildData: IGuildData) {
     const botFound = this.MineCraftBots.get(guildData.ServerID);
 
     if (botFound) {

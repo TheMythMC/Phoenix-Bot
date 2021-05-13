@@ -31,9 +31,19 @@ export interface IGuildData extends mongoose.Document {
   PardonNewGEXPMembers: Boolean;
   GuildID: string;
   Prefix: string;
-  BotUsername: string;
-  BotPassword: string;
+  BotUsername: String;
+  BotPassword: String;
   BotAuth: 'microsoft' | 'mojang';
+  LogChannel: String;
+  MCPrefix: String;
+  Logging: Boolean;
+  isBotOnline: Boolean;
+  botAutoRun: Boolean;
+  StaffRole: String;
+  StaffPing: Boolean;
+  EnforceCustomPrefix: Boolean;
+  ServerPrefixType: String;
+  ServerPrefixTemplate: String;
   DashboardRoles: Array<string>;
   DashboardPerms: Array<discord.PermissionResolvable>;
 }
@@ -50,6 +60,16 @@ export const schema = new mongoose.Schema({
   DashboardPerms: [String],
   EnforceCustomPrefix: Boolean,
   ServerPrefixType: String,
+  BotUsername: String,
+  BotPassword: String,
+  BotAuth: String,
+  LogChannel: String,
+  MCPrefix: String,
+  Logging: Boolean,
+  isBotOnline: Boolean,
+  botAutoRun: Boolean,
+  StaffRole: String,
+  StaffPing: Boolean,
 });
 
 const model = mongoose.model<IGuildData>('GuildData', schema);
@@ -67,14 +87,48 @@ const Default = {
   DashboardPerms: [],
   EnforceCustomPrefix: false,
   ServerPrefixType: '',
+  BotUsername: '',
+  BotPassword: '',
+  BotAuth: 'mojang',
+  LogChannel: '',
+  MCPrefix: '!',
+  Logging: false,
+  isBotOnline: false,
+  botAutoRun: true,
+  StaffRole: '',
+  StaffPing: true
 };
 
-export const createDefault = (ServerID: string, prefix = '!') => {
+export const createDefault = (
+  ServerID: string,
+  prefix = '!',
+  // Left here for future refrence
+  BotUsername: String = '',
+  BotPassword: String = '',
+  BotAuth: 'microsoft' | 'mojang' = 'microsoft',
+  LogChannel: String = '',
+  MCPrefix: String = '!',
+  Logging: Boolean = true,
+  isBotOnline: Boolean = false,
+  botAutoRun: Boolean = true,
+  StaffRole: String = '',
+  StaffPing: Boolean = true
+) => {
   let obj = {} as IGuildData;
 
   Object.assign(obj, Default);
   obj.ServerID = ServerID;
   obj.Prefix = prefix;
+  obj.BotUsername = BotUsername;
+  obj.BotAuth = BotAuth;
+  obj.BotPassword = BotPassword;
+  obj.LogChannel = LogChannel;
+  obj.MCPrefix = MCPrefix;
+  obj.Logging = Logging;
+  obj.isBotOnline = isBotOnline;
+  obj.botAutoRun = botAutoRun;
+  obj.StaffRole = StaffRole;
+  obj.StaffPing = StaffPing;
   return new model(obj);
 };
 

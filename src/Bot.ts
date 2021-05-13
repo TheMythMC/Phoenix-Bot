@@ -7,7 +7,7 @@ import Server from './express/Server';
 import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 import MineflayerManager from './Structure/MineflayerManager';
 import EventEmitter from 'events';
-import PremiumLinkData from './Schemas/PremiumLinkData';
+import GuildData from './Schemas/GuildData';
 import { initialize } from './Structure/HypixelAPI';
 import Util from './utils/Util';
 
@@ -51,7 +51,7 @@ export default class Bot {
   }
 
   async loadMineflayerBots() {
-    const data = await PremiumLinkData.find().exec();
+    const data = await GuildData.find().exec();
 
     this.MineflayerManager = new MineflayerManager(this, data);
   }

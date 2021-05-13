@@ -80,52 +80,8 @@ module.exports = class extends Command {
           await guild.save();
         }
         break;
-      case 'botusername':
-        {
-          message.channel.send(
-            'You have chosen to edit your bot\'s minecraft username (This will only have an effect for premium users). It is a string, and entering exit will quit this process.'
-          );
-          let selection = await message.channel.awaitMessages(filter, {
-            max: 1,
-          });
-          if (selection.first().content === 'exit') return;
-          guild.BotUsername = selection.first().content.split(' ')[0];
-          await guild.save();
-        }
-        break;
-      case 'botpassword':
-        {
-          message.channel.send(
-            'You have chosen to edit your bot\'s minecraft password (This will only have an effect for premium users). It is a string, and entering exit will quit this process.'
-          );
-          let selection = await message.channel.awaitMessages(filter, {
-            max: 1,
-          });
-          if (selection.first().content === 'exit') return;
-          guild.BotPassword = selection.first().content;
-          await guild.save();
-        }
-        break;
-      case 'botauth':
-        {
-          message.channel.send(
-            'You have chosen to edit your bot\'s minecraft auth (This will only have an effect for premium users). It is either \`mojang\` or \`microsoft\`, and entering exit will quit this process.'
-          );
-          let selection = await message.channel.awaitMessages(filter, {
-            max: 1,
-          });
-          if (selection.first().content === 'exit') return;
-          if (selection.first().content === 'mojang' ||
-              selection.first().content === 'microsoft') {
-            guild.BotAuth = selection.first().content /* So typescript doesn't get mad at me */as 'mojang' | 'microsoft';
-            await guild.save();
-          } else {
-            return message.channel.send('Please enter a correct value');
-          }
-        }
-        break;
       default: {
-        message.channel.send('You did not select a correct key. You can choose from: PardonNewGEXPMembers \nGuildID\nPrefix\nBotUsername (Premium Only) \nBotPassword (Premium Only) \nBotAuth \n');
+        message.channel.send('You did not select a correct key. You can choose from: PardonNewGEXPMembers \nGuildID\nPrefix\n');
       }
     }
   }

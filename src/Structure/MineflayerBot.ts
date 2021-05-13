@@ -4,7 +4,7 @@ import { IPremiumLinkData } from '../Schemas/PremiumLinkData';
 import MineflayerManager from './MineflayerManager';
 import { Channel, TextChannel } from 'discord.js';
 import MineflayerCommandManager from './Mineflayer/MineflayerCommandManager';
-import GuildData from '../Schemas/GuildData';
+import GuildData, { IGuildData } from '../Schemas/GuildData';
 
 const joinMessages: string[] = [
   '%n just joined the guild - glhf!',
@@ -49,7 +49,7 @@ const joinMessages: string[] = [
 ];
 
 export default class MineflayerBot {
-  premiumData: IPremiumLinkData;
+  premiumData: IGuildData;
   bot: mineflayer.Bot;
   Client: Bot;
   manager: MineflayerManager;
@@ -58,7 +58,7 @@ export default class MineflayerBot {
   constructor(
     bot: Bot,
     manager: MineflayerManager,
-    data: IPremiumLinkData,
+    data: IGuildData,
     options: BotOptions
   ) {
     this.bot = mineflayer.createBot(options);
@@ -125,7 +125,7 @@ export default class MineflayerBot {
         
         if (
           name.toLowerCase() === this.bot.username.toLowerCase() && 
-          message.startsWith(this.premiumData.MCPrefix) &&
+          message.startsWith(this.premiumData.MCPrefix.toString()) &&
           name.toLowerCase() !== this.bot.username.toLowerCase()
         ) {
           this.commandManager.runCommand(
@@ -133,13 +133,13 @@ export default class MineflayerBot {
             name,
             this,
             Bot.instance.CoreBot,
-            this.premiumData.MCPrefix
+            this.premiumData.MCPrefix.toString()
           );
         }
         if (this.premiumData.Logging) {
           let tempLogChannel: Channel =
             (await this.Client.CoreBot.channels.fetch(
-              this.premiumData.LogChannel
+              this.premiumData.LogChannel.toString()
             )) || null;
 
           if (tempLogChannel === null && !alreadyErrored) {
@@ -182,7 +182,7 @@ export default class MineflayerBot {
           )[0];
           if (!this.premiumData.Logging) return;
           let channel: TextChannel = this.Client.CoreBot.channels.cache.get(
-            this.premiumData.LogChannel
+            this.premiumData.LogChannel.toString()
           ) as TextChannel;
           if (channel == null) return; // TEMP
           if (this.premiumData.StaffPing) {

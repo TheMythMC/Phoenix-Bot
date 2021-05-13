@@ -5,6 +5,8 @@ import {
   PermissionResolvable,
   User,
 } from 'discord.js';
+import { Manager, VoicePacket } from 'erela.js';
+import Spotify from 'erela.js-spotify';
 import { sendErrorMessage } from '../utils/MessageUtils';
 import Util from '../utils/Util';
 import path from 'path';
@@ -23,6 +25,7 @@ export default class BotCore extends Client {
   aliases: Map<string, string>;
   Bot: Bot;
   defaultPrefix: string;
+  manager: Manager;
   constructor(bot: Bot, options = {} as IBotCore) {
     super({
       disableMentions: 'everyone',
@@ -99,6 +102,41 @@ export default class BotCore extends Client {
         // noinspection ES6MissingAwait
         command.run(message, args, this);
       }
+    });
+     // Music stuff
+
+    this.manager = new Manager({
+      plugins: [
+        new Spotify({
+          clientID: process.env.SPOTIFY_ID,
+          clientSecret: process.env.SPOTIFY_SECRET,
+        }),
+      ],
+      nodes: [
+        {
+          host: '127.0.0.1',
+          password: '#BuyPhoenix2021',
+          port: 2333,
+        },
+      ],
+
+      send: (id, payload) => {
+        const guild = this.guilds.cache.get(id);
+
+        if (guild) guild.shard.send(payload);
+      },
+    });
+
+    // Emitted whenever a node connects
+    this.manager.on('nodeConnect', (node) => {
+      console.log(`Node "${node.options.identifier}" connected.`);
+    });
+
+    this.on('raw', (d: VoicePacket) => this.manager.updateVoiceState(d));
+
+    // Emitted whenever a node encountered an error
+    this.manager.on('nodeError', (node, error) => {
+      console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`);
     });
   }
 

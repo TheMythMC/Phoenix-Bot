@@ -15,6 +15,11 @@ export default class GuildManager {
     this.guilds = [];
   }
 
+  /**
+   * Check if certain guild is premium
+   * @param guildID Guild ID
+   * @returns if it exists or not
+   */
   async isPremium(guildID) {
     return await PremiumLinkData.exists({ ServerID: guildID });
   }
