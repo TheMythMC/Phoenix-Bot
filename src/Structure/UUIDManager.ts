@@ -36,12 +36,14 @@ export default class UUIDManager {
       );
       if (cacheHit) return cacheHit.name;
     }
-
+  
     let data = await MojangAPI.getPlayerData(uuid);
     if (data) {
+     
       this.saveCache(data);
       return data.username;
     }
+    
   }
 
   saveCache(data) {

@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import express from 'express';
 const router = express.Router();
 const jwt = require('jsonwebtoken');

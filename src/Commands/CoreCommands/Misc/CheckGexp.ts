@@ -9,7 +9,7 @@ import { Message } from 'discord.js';
 import BotCore from '../../../Structure/BotCore';
 import checkGexp from '../../../modules/GEXPChecker/CheckGEXP';
 
-class CheckGexp extends Command {
+module.exports = class CheckGexp extends Command {
   constructor(client) {
     super(client, 'checkgexp', {
       aliases: ['cxp'],
@@ -33,6 +33,7 @@ class CheckGexp extends Command {
 
     const guild = await client.Bot.GuildManager.getGuild(message.guild.id);
     const res = await checkGexp(client, guild, time);
+    
     if (!res || Object.keys(res).length === 0)
       return msg.edit(createErrorMessage('Guild not linked!'));
 
@@ -51,17 +52,15 @@ class CheckGexp extends Command {
         !data.isNew
       )
         continue;
-      text += `\n\t${i + 1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${
-        mode === 'passed' || mode === 'failed'
+      text += `\n\t${i + 1}. \`${data.Name}\` (${data.Rank}) - ${data.Gexp}${mode === 'passed' || mode === 'failed'
           ? ''
-          : ` - ${
-              data.Passed
-                ? '<:approve:813433528964481045>'
-                : data.isNew
-                ? '<:early:821022017607958546>'
-                : '<:Deny:813433562052165653>'
-            }`
-      }`;
+          : ` - ${data.Passed
+            ? '<:approve:813433528964481045>'
+            : data.isNew
+              ? '<:early:821022017607958546>'
+              : '<:Deny:813433562052165653>'
+          }`
+        }`;
       i++;
     }
 
@@ -76,16 +75,13 @@ class CheckGexp extends Command {
         mode === 'failed' || mode === 'passed'
           ? {}
           : {
-              name: 'Key Value',
-              value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${
-                guild.data.PardonNewGEXPMembers
-                  ? '\n<:early:821022017607958546> = In guild for less than 7 days'
-                  : ''
+            name: 'Key Value',
+            value: `<:approve:813433528964481045> = Enough Gexp\n<:Deny:813433562052165653> = Not Enough Gexp${guild.data.PardonNewGEXPMembers
+                ? '\n<:early:821022017607958546> = In guild for less than 7 days'
+                : ''
               }`,
-            }
+          }
       )
     );
   }
-}
-
-module.exports = CheckGexp;
+};

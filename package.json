@@ -9,7 +9,8 @@
     "build": "yarn lintnofix && tsc",
     "full": "java -jar ./Lavalink.jar & yarn lint && yarn start",
     "lint": "eslint ./src --ext .ts --fix",
-    "lintnofix": "eslint ./src --ext .ts"
+    "lintnofix": "eslint ./src --ext .ts",
+    "dev": "yarn lint && yarn start"
   },
   "repository": {
     "type": "git",

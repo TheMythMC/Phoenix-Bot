@@ -163,8 +163,6 @@ export default class BotCore extends Client {
   }
 
   async registerUser(user: User) {
-    console.log(user.id);
-    console.log(await UserData.exists({ UserID: user.id }));
 
     if (await UserData.exists({ UserID: user.id })) return;
     let doc = createUser(user.id);

@@ -6,22 +6,23 @@ export default async (
   client: BotCore,
   g: Guild,
   guildCheckDays: number | string = 7
-) => {
-  if (!g || !g.data?.GuildID) return {};
+): Promise<_res[]> => {
+  if (!g || !g.data?.GuildID) return {} as _res[];
   const data = await g.data.GEXPData;
 
   // get data for guild
   const guildData = await HypixelAPI.getGuildDataByName(g.data.GuildID); // TODO: replace with getGuildDataByID, pretend g.data.GuildID is guild name for now
+  console.log(guildData);
 
   let res: _res[] = [];
 
   // please optimize this looks so ugly i hate it but idk how to optimize  - Banana
   for (let member of guildData.members) {
-    let gexp: any = 0;
-    const xpHistory = Object.values(member.exp_history);
+    let gexp = 0;
+    const xpHistory = Object.values(member.exp_history) as number[];
 
     let realGuildCheckDays: number =
-      typeof guildCheckDays == 'string'
+      typeof guildCheckDays != 'number'
         ? Number.parseInt(guildCheckDays)
         : guildCheckDays;
 
@@ -29,15 +30,17 @@ export default async (
       // standard for loop cuz of the guildCheckDays
       if (xpHistory[i] === undefined) break;
       gexp += xpHistory[i];
+      // console.log('looped2');
     }
-
+    // console.log('hi1');
     let roleReq = data.find((d) => d.RoleName === member.rank);
-    if (!roleReq)
+    if (!roleReq) {
       roleReq = {
         RoleName: member.rank,
         MinExp: 0,
       };
-
+    }
+    // console.log('pushing');
     res.push({
       Rank: roleReq.RoleName,
       Gexp: gexp,
@@ -48,6 +51,7 @@ export default async (
       Name: await client.Bot.UUIDManager.getUserByUUID(member.uuid),
       UUID: member.uuid,
     });
+    // console.log('looped1');
   }
 
   res.sort((a, b) => b.Gexp - a.Gexp);
