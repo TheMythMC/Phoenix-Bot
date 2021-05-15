@@ -42,7 +42,7 @@
     "mongoose-ttl": "0.0.3",
     "node-fetch": "^2.6.1",
     "path-parse": "^1.0.6",
-    "phoenix-slothpixel": "^1.3.8",
+    "phoenix-slothpixel": "^1.3.9",
     "typescript": "^4.2.3",
     "undici": "^3.3.3",
     "yarn": "^1.22.10"
