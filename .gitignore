@@ -116,8 +116,6 @@ config.json
 package-lock.json
 yarn.lock
 
-# lavalink
-Lavalink.jar
 
 # Runtime
 nohup.out
