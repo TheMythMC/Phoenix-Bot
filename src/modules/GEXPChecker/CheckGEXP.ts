@@ -12,7 +12,7 @@ export default async (
 
   // get data for guild
   const guildData = await HypixelAPI.getGuildDataByName(g.data.GuildID); // TODO: replace with getGuildDataByID, pretend g.data.GuildID is guild name for now
-  console.log(guildData);
+  // console.log(guildData);
 
   let res: _res[] = [];
 
