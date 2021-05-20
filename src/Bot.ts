@@ -7,7 +7,7 @@ import Server from './express/Server';
 import DiscordAPIUserCache from './Structure/DiscordAPIUserCache';
 import MineflayerManager from './Structure/MineflayerManager';
 import EventEmitter from 'events';
-import GuildData from './Schemas/GuildData';
+import GuildData, { createDefault } from './Schemas/GuildData';
 import { initialize } from './Structure/HypixelAPI';
 import Util from './utils/Util';
 
@@ -34,7 +34,10 @@ export default class Bot {
     this.LinkManager = new LinkManager();
     this.GuildManager = new GuildManager(this);
     this.UUIDManager = new UUIDManager();
-    this.WebServer = new Server(this, Util.normalizePort(process.env.PORT) || 4000);
+    this.WebServer = new Server(
+      this,
+      Util.normalizePort(process.env.PORT) || 4000
+    );
     this.DatabaseHandler = new DatabaseHandler(
       process.env.DB_URI,
       {
@@ -42,7 +45,6 @@ export default class Bot {
         useUnifiedTopology: true,
       },
       async () => {
-        console.log('Database is connected. ');
         console.log('Loading mineflayer bots...');
         this.loadMineflayerBots();
       }

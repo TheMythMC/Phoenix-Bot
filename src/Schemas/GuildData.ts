@@ -9,7 +9,7 @@ export interface IRole {
 
 interface IGEXP {
   RoleName: string;
-  MinExp: string;
+  MinExp: number;
 }
 
 const RoleSchema = new mongoose.Schema({
@@ -31,9 +31,9 @@ export interface IGuildData extends mongoose.Document {
   PardonNewGEXPMembers: Boolean;
   GuildID: string;
   Prefix: string;
-  BotUsername: String;
-  BotPassword: String;
-  BotAuth: 'microsoft' | 'mojang';
+  GuildBotUUID: String;
+  GuildBotPassword: String;
+  GuildBotAuth: 'microsoft' | 'mojang';
   LogChannel: String;
   MCPrefix: String;
   Logging: Boolean;
@@ -56,13 +56,13 @@ export const schema = new mongoose.Schema({
   PardonNewGEXPMembers: Boolean,
   GuildID: String,
   Prefix: String,
+  GuildBotUUID: String,
+  GuildBotPassword: String,
+  GuildBotAuth: String,
   DashboardRoles: [String],
   DashboardPerms: [String],
   EnforceCustomPrefix: Boolean,
   ServerPrefixType: String,
-  BotUsername: String,
-  BotPassword: String,
-  BotAuth: String,
   LogChannel: String,
   MCPrefix: String,
   Logging: Boolean,
@@ -81,30 +81,28 @@ const Default = {
   PardonNewGEXPMembers: false,
   GuildID: '',
   GuildBotUUID: '',
+  GuildBotPassword: '',
   GuildBotAPIKey: '',
+  GuildBotAuth: 'mojang',
   Prefix: '!',
   DashboardRoles: [],
   DashboardPerms: [],
   EnforceCustomPrefix: false,
   ServerPrefixType: '',
-  BotUsername: '',
-  BotPassword: '',
-  BotAuth: 'mojang',
   LogChannel: '',
   MCPrefix: '!',
   Logging: false,
   isBotOnline: false,
   botAutoRun: true,
   StaffRole: '',
-  StaffPing: true
+  StaffPing: true,
 };
 
 export const createDefault = (
   ServerID: string,
   prefix = '!',
-  // Left here for future refrence
-  BotUsername: String = '',
-  BotPassword: String = '',
+  GuildBotUUID: String = '',
+  GuildBotPassword: String = '',
   BotAuth: 'microsoft' | 'mojang' = 'microsoft',
   LogChannel: String = '',
   MCPrefix: String = '!',
@@ -119,9 +117,9 @@ export const createDefault = (
   Object.assign(obj, Default);
   obj.ServerID = ServerID;
   obj.Prefix = prefix;
-  obj.BotUsername = BotUsername;
-  obj.BotAuth = BotAuth;
-  obj.BotPassword = BotPassword;
+  obj.GuildBotUUID = GuildBotUUID;
+  obj.GuildBotAuth = BotAuth;
+  obj.GuildBotPassword = GuildBotPassword;
   obj.LogChannel = LogChannel;
   obj.MCPrefix = MCPrefix;
   obj.Logging = Logging;

@@ -10,7 +10,8 @@
     "full": "java -jar ./Lavalink.jar & yarn lint && yarn start",
     "lint": "eslint ./src --ext .ts --fix",
     "lintnofix": "eslint ./src --ext .ts",
-    "dev": "yarn lint && yarn start"
+    "dev": "yarn lint && yarn start",
+    "lazyProd": "nohup yarn full &"
   },
   "repository": {
     "type": "git",

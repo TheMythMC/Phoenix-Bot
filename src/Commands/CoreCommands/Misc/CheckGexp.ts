@@ -33,7 +33,7 @@ module.exports = class CheckGexp extends Command {
 
     const guild = await client.Bot.GuildManager.getGuild(message.guild.id);
     const res = await checkGexp(client, guild, time);
-    
+
     if (!res || Object.keys(res).length === 0)
       return msg.edit(createErrorMessage('Guild not linked!'));
 

@@ -20,8 +20,8 @@ export default class PremiumUtils {
     return await PremiumLinkData.exists({ DiscordID: guildID });
   }
 
-  static async removeAllMCBots() {
-    await Bot.instance.MineflayerManager.MineCraftBots.forEach( async (bot) => {
+  static removeAllMCBots() {
+     Bot.instance.MineflayerManager.MineCraftBots.forEach( async (bot) => {
       console.log(`Removed ${bot.bot.username}`);
       await bot._removeBot();
     });

@@ -8,7 +8,7 @@ export default class DatabaseHandler {
     this.connected = false;
   }
 
-  _initConnection(databaseURI: string, parameters, callback) {
+  _initConnection(databaseURI: string, parameters, callback: Function) {
     mongoose.connect(databaseURI, parameters);
 
     this.connection = mongoose.connection;

@@ -1,5 +1,5 @@
 import Guild from './Guild';
-import GuildData from '../Schemas/GuildData';
+import GuildData, { IGuildData } from '../Schemas/GuildData';
 import PremiumLinkData from '../Schemas/PremiumLinkData';
 
 export default class GuildManager {
@@ -24,7 +24,7 @@ export default class GuildManager {
     return await PremiumLinkData.exists({ ServerID: guildID });
   }
 
-  addGuild(doc) {
+  addGuild(doc: IGuildData) {
     let guild = new Guild(doc);
     this.guilds.push(guild);
     return guild;
@@ -34,7 +34,7 @@ export default class GuildManager {
     const foundGuild = this._getGuildFromCache(guildID);
     if (foundGuild) return foundGuild;
 
-    const guild = await GuildData.findOne({ ServerID: guildID });
+    const guild = await  GuildData.findOne({ ServerID: guildID }).exec();
     if (guild) {
       this.addGuild(guild);
       return this._getGuildFromCache(guildID);

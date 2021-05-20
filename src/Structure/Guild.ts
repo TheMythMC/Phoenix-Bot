@@ -1,6 +1,8 @@
+import { IGuildData } from '../Schemas/GuildData';
+
 export default class Guild {
-  data: any;
-  constructor(data) {
+  data: IGuildData;
+  constructor(data: IGuildData) {
     this.data = data;
   }
 
