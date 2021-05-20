@@ -26,8 +26,8 @@ export default class MineflayerManager {
         Bot.instance.GuildManager.isPremium(guild.ServerID) &&
         guild.ServerID &&
         !guild.isBotOnline &&
-        guild.BotUsername &&
-        guild.BotPassword
+        guild.GuildBotUUID &&
+        guild.GuildBotPassword
       ) {
         console.log(
           `Created mineflayer bot for guild ${
@@ -45,9 +45,9 @@ export default class MineflayerManager {
 
   createBot(guildData: IGuildData): MineflayerBot {
     return new MineflayerBot(this.bot, this, guildData, {
-      username: guildData.BotUsername.toString(),
-      password: guildData.BotPassword.toString(),
-      auth: guildData.BotAuth,
+      username: guildData.GuildBotUUID.toString(),
+      password: guildData.GuildBotPassword.toString(),
+      auth: guildData.GuildBotAuth,
       version: '1.8.9',
       host: 'us.hypixel.net',
       port: 25565,

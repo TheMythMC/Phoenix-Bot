@@ -11,7 +11,7 @@ export default async (
   const data = await g.data.GEXPData;
 
   // get data for guild
-  const guildData = await HypixelAPI.getGuildDataByName(g.data.GuildID); // TODO: replace with getGuildDataByID, pretend g.data.GuildID is guild name for now
+  const guildData = await HypixelAPI.getGuildDataByID(g.data.GuildID); // Replaced with GuildID
   // console.log(guildData);
 
   let res: _res[] = [];
@@ -46,8 +46,8 @@ export default async (
       Gexp: gexp,
       Passed: gexp >= roleReq.MinExp,
       isNew:
-        member.joined >= new Date().getTime() - 7 * 24 * 60 * 60 * 1000 &&
-        g.data.PardonNewGEXPMembers,
+        (member.joined >= new Date().getTime() - 7 * 24 * 60 * 60 * 1000 &&
+        g.data.PardonNewGEXPMembers).valueOf(),
       Name: await client.Bot.UUIDManager.getUserByUUID(member.uuid),
       UUID: member.uuid,
     });
