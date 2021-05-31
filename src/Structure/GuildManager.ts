@@ -3,7 +3,7 @@ import GuildData, { IGuildData } from '../Schemas/GuildData';
 import PremiumLinkData from '../Schemas/PremiumLinkData';
 
 export default class GuildManager {
-  guilds: any[];
+  guilds: Guild[];
   bot: any;
   constructor(bot) {
     // holds guild data for guilds
@@ -20,7 +20,7 @@ export default class GuildManager {
    * @param guildID Guild ID
    * @returns if it exists or not
    */
-  async isPremium(guildID) {
+  async isPremium(guildID: string) {
     return await PremiumLinkData.exists({ ServerID: guildID });
   }
 
@@ -30,7 +30,7 @@ export default class GuildManager {
     return guild;
   }
 
-  async getGuild(guildID): Promise<Guild> {
+  async getGuild(guildID: string): Promise<Guild> {
     const foundGuild = this._getGuildFromCache(guildID);
     if (foundGuild) return foundGuild;
 
@@ -41,11 +41,11 @@ export default class GuildManager {
     }
   }
 
-  _getGuildFromCache(guildID) {
+  _getGuildFromCache(guildID: string) {
     return this.guilds.find((guild) => guild.id === guildID);
   }
 
-  async updateGuild(guildID) {
+  async updateGuild(guildID: string) {
     const guildData = await GuildData.find({ ServerID: guildID });
     let guild: any = await this.getGuild(guildID);
     if (!guild) return;

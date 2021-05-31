@@ -1,5 +1,4 @@
 import Command from '../../../Structure/Command';
-import MinecraftLinkData from '../../../Schemas/MinecraftLinkData';
 import {
   sendCustomMessage,
   createErrorMessage,
@@ -40,7 +39,6 @@ module.exports = class CheckGexp extends Command {
     let text = '';
 
     let i = 0;
-    // @ts-ignore
     for (let data of res) {
       if (mode === 'failed' && guild.data.GEXPWhitelist.includes(data.Rank))
         continue;

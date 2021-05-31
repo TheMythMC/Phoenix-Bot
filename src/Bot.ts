@@ -58,11 +58,13 @@ export default class Bot {
     this.MineflayerManager = new MineflayerManager(this, data);
   }
   async getPrefix(guild) {
-    return (
-      (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
-      (await this.GuildManager.getGuild(guild))?.data?.Prefix ||
-      '!'
-    );
+    // Commented for test  bot
+    // return (
+    //   (await this.GuildManager.getGuild(guild.id))?.data?.Prefix ||
+    //   (await this.GuildManager.getGuild(guild))?.data?.Prefix ||
+    //   '!'
+    // );
+    return '!!'
   }
 
   async parsePrefix(guildID, text: string) {
